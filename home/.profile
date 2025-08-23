@@ -1,3 +1,3 @@
-source ~/dev/environment/custom/environment
+source ~/environment/custom/environment
 
 . "$HOME/.cargo/env"

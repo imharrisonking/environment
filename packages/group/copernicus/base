@@ -43,15 +43,13 @@ nodejs
 npm
 golang-go
 default-jre
-mysql-client
-mariadb-client
 postgresql-client
 mono-complete
 xclip
 netcat-openbsd
-libaio1
 dmidecode
 dmraid
 elixir
 erlang
 tree
+libaio-dev

@@ -1,3 +1,18 @@
+# Ubuntu essentials - include .bashrc if running bash
+if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
+fi
+
+# Add standard Ubuntu bin directories to PATH if they exist
+if [ -d "$HOME/bin" ] ; then
+    export PATH="$HOME/bin:$PATH"
+fi
+
+if [ -d "$HOME/.local/bin" ] ; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
+# SSH Agent Management
 SSH_ENV="$HOME/.ssh/agent-environment"
 
 function start_agent {
@@ -10,7 +25,6 @@ function start_agent {
 }
 
 # Source SSH settings, if applicable
-
 if [ -f "${SSH_ENV}" ]; then
     . "${SSH_ENV}" > /dev/null
     #ps ${SSH_AGENT_PID} doesn't work under cywgin
@@ -21,21 +35,21 @@ else
     start_agent;
 fi
 
+# PATH extensions
 export PATH=$PATH:~/.npm/bin
 export PATH=$PATH:~/.yarn/bin
-export PATH=$PATH:~/.local/bin
 export PATH=$PATH:$HOME/dev/bin
+export PATH=$PATH:$GOPATH/bin
+
+# Environment variables
 export ERL_AFLAGS="-kernel shell_history enabled"
 export EDITOR=nvim
 export BROWSER=google-chrome-stable
 export GOPATH=$HOME/dev/gopath
-export PATH=$PATH:$GOPATH/bin
-
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DOWNLOADS=$HOME/downloads
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
-
 export SST_EXPERIMENTAL_RUN=1
 export COLORTERM=truecolor

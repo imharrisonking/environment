@@ -1,8 +1,56 @@
 #!/bin/bash
-
 export HOST=$(hostname)
+
+echo "Installing packages for Ubuntu..."
+
+# Update package list
+sudo apt update
+
 for file in ./group/$HOST/*; do
-    echo "installing $file"
-    sudo pacman -D --asexplicit - < "$file"
-    paru -S --asexplicit --needed - < "$file"
+    if [ -f "$file" ]; then
+        echo "Installing packages from $file"
+        
+        # Read packages from file and install with apt
+        if [ -s "$file" ]; then
+            sudo apt install -y $(cat "$file" | grep -v '^#' | grep -v '^$' | tr '\n' ' ')
+        fi
+    fi
 done
+
+# Install packages that need special handling
+echo "Installing additional tools that require special installation..."
+
+# Docker (requires adding Docker's official repository)
+if ! command -v docker &> /dev/null; then
+    echo "Installing Docker..."
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt update
+    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+fi
+
+# GitHub CLI
+if ! command -v gh &> /dev/null; then
+    echo "Installing GitHub CLI..."
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+    sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+    sudo apt update
+    sudo apt install -y gh
+fi
+
+# Install via npm (global packages)
+if command -v npm &> /dev/null; then
+    echo "Installing npm packages..."
+    sudo npm install -g typescript pnpm
+fi
+
+# Install Rust and Cargo packages
+if ! command -v rustc &> /dev/null; then
+    echo "Installing Rust..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    source ~/.cargo/env
+fi
+
+echo "Installation complete! Some tools may require a shell restart."
+echo "Note: Packages adapted from Arch Linux to Ubuntu equivalents."
