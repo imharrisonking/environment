@@ -112,3 +112,8 @@ export NVM_DIR="$HOME/.config/nvm"
 eval "$(zoxide init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh)"
+export FZF_BASE=/opt/homebrew/opt/fzf
+eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh)"
