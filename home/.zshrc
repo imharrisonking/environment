@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/usr/share/oh-my-zsh
+export ZSH=~/.oh-my-zsh
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export ZSH=~/.oh-my-zsh/
 fi
@@ -44,7 +44,7 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git npm autojump vi-mode)
+plugins=(git fzf npm vi-mode)
 
 # User configuration
 
@@ -78,7 +78,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 #
-for f in ~/dev/environment/custom/*; do source $f; done
+for f in ~/environment/custom/*; do source $f; done
 
 autoload -U promptinit
 promptinit
@@ -99,7 +99,7 @@ fi
 
 
 # bun completions
-[ -s "/home/thdxr/.bun/_bun" ] && source "/home/thdxr/.bun/_bun"
+[ -s "/home/hking/.bun/_bun" ] && source "/home/hking/.bun/_bun"
 
 
 # bun
@@ -114,23 +114,12 @@ source ~/dev/.env
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# add Pulumi to the PATH
-export PATH=$PATH:/home/thdxr/.pulumi/bin
-
-
 # sst
-export PATH=/home/thdxr/.sst/bin:$PATH
+export PATH=/home/hking/.sst/bin:$PATH
 
 # opencode
-export PATH=/home/thdxr/.opencode/bin:$PATH
+export PATH=/home/hking/.opencode/bin:$PATH
 
 # opencode
-export PATH=/Users/thdxr/.opencode/bin:$PATH
+export PATH=/Users/hking/.opencode/bin:$PATH
 
-# pnpm
-export PNPM_HOME="/Users/thdxr/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end

@@ -51,5 +51,4 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DOWNLOADS=$HOME/downloads
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
-export SST_EXPERIMENTAL_RUN=1
 export COLORTERM=truecolor
