@@ -40,15 +40,11 @@ DISABLE_AUTO_TITLE="true"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
+# Plugins
 plugins=(git fzf npm vi-mode)
 
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
+# Zoxide
+echo 'eval "$(zoxide init zsh)"' >> ~/environment/home/.zshrc
 
 source $ZSH/oh-my-zsh.sh
 
@@ -62,22 +58,7 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-#
-#
+# Import custom files from ~/environment/custom
 for f in ~/environment/custom/*; do source $f; done
 
 autoload -U promptinit
@@ -123,3 +104,11 @@ export PATH=/home/hking/.opencode/bin:$PATH
 # opencode
 export PATH=/Users/hking/.opencode/bin:$PATH
 
+eval "$(zoxide init zsh)"
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh)"
