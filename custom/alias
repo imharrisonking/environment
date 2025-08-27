@@ -4,6 +4,8 @@ alias clear='printf "\033c"'
 alias vim=nvim
 alias ls="ls --color -G"
 alias la="ls -la --color -G"
+alias pip="python3 -m pip"
+alias pip3="python3 -m pip"
 
 cd() {
   builtin cd "${@:-$HOME}" && ls

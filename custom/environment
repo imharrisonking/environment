@@ -41,6 +41,12 @@ export PATH=$PATH:~/.yarn/bin
 export PATH=$PATH:$HOME/dev/bin
 export PATH=$PATH:$GOPATH/bin
 
+# Homebrew Python and pip (macOS)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export PATH="/opt/homebrew/bin:$PATH"
+    export PATH="/opt/homebrew/sbin:$PATH"
+fi
+
 # Environment variables
 export ERL_AFLAGS="-kernel shell_history enabled"
 export EDITOR=nvim

@@ -1,11 +1,19 @@
-# Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
+# Oh-My-Zsh configuration
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  export ZSH=~/.oh-my-zsh/
+  export ZSH=~/.oh-my-zsh
+else
+  # Linux typically uses system-wide installation
+  if [ -d "/usr/share/oh-my-zsh" ]; then
+    export ZSH=/usr/share/oh-my-zsh
+  else
+    export ZSH=~/.oh-my-zsh
+  fi
 fi
 
+# Theme configuration
 ZSH_THEME="alanpeabody"
 
+# Oh-My-Zsh settings
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -43,8 +51,7 @@ DISABLE_AUTO_TITLE="true"
 # Plugins
 plugins=(git fzf npm vi-mode)
 
-# Zoxide
-
+# Load Oh-My-Zsh
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
@@ -57,9 +64,10 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
-# Import custom files from ~/environment/custom
+# Custom configurations
 for f in ~/environment/custom/*; do source $f; done
 
+# Shell autoloads and completions
 autoload -U promptinit
 promptinit
 autoload -U compinit
@@ -69,48 +77,55 @@ bashcompinit
 setopt NO_BEEP
 complete -C aws_completer aws
 
+# Eval command support
 if [[ $1 == eval ]]
 then
 	"$@"
 	set --
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
+# Development environment
 source ~/dev/.env
 
-[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
-[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+# FZF configuration
+if [[ "$OSTYPE" == "linux"* ]]; then
+  [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+  [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# sst
-export PATH=/home/hking/.sst/bin:$PATH
+# Development tools PATH
+export PATH=$HOME/.sst/bin:$PATH
+export PATH=$HOME/.opencode/bin:$PATH
 
-# opencode
-export PATH=/home/hking/.opencode/bin:$PATH
-
-# opencode
-export PATH=/Users/hking/.opencode/bin:$PATH
-
+# Zoxide initialization
 eval "$(zoxide init zsh)"
 
-# Corporate certificates for Node.js
-export NODE_EXTRA_CA_CERTS="/Users/harrisonking/.certs/combined-corporate-certs.pem"
+# Corporate certificates
+if [ -f "$HOME/.certs/combined-corporate-certs.pem" ]; then
+  export NODE_EXTRA_CA_CERTS="$HOME/.certs/combined-corporate-certs.pem"
+fi
 
 # NVM configuration
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Conda
-__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/anaconda3/bin:$PATH"
+# Conda/Anaconda configuration
+CONDA_PATHS=("/opt/anaconda3" "/opt/miniconda3" "$HOME/anaconda3" "$HOME/miniconda3" "/usr/local/anaconda3")
+for conda_path in "${CONDA_PATHS[@]}"; do
+    if [ -f "$conda_path/bin/conda" ]; then
+        __conda_setup="$("$conda_path/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+        if [ $? -eq 0 ]; then
+            eval "$__conda_setup"
+        else
+            if [ -f "$conda_path/etc/profile.d/conda.sh" ]; then
+                . "$conda_path/etc/profile.d/conda.sh"
+            else
+                export PATH="$conda_path/bin:$PATH"
+            fi
+        fi
+        unset __conda_setup
+        break
     fi
-fi
-unset __conda_setup
+done
