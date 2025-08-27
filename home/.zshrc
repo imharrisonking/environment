@@ -44,7 +44,6 @@ DISABLE_AUTO_TITLE="true"
 plugins=(git fzf npm vi-mode)
 
 # Zoxide
-echo 'eval "$(zoxide init zsh)"' >> ~/environment/home/.zshrc
 
 source $ZSH/oh-my-zsh.sh
 
@@ -78,17 +77,6 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
-# bun completions
-[ -s "/home/hking/.bun/_bun" ] && source "/home/hking/.bun/_bun"
-
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-eval "$(direnv hook zsh)"
-
-
 source ~/dev/.env
 
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
@@ -106,11 +94,23 @@ export PATH=/Users/hking/.opencode/bin:$PATH
 
 eval "$(zoxide init zsh)"
 
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# Corporate certificates for Node.js
+export NODE_EXTRA_CA_CERTS="/Users/harrisonking/.certs/combined-corporate-certs.pem"
+
+# NVM configuration
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-eval "$(zoxide init zsh)"
-eval "$(zoxide init zsh)"
-eval "$(zoxide init zsh)"
-eval "$(zoxide init zsh)"
-eval "$(zoxide init zsh)"
+
+# Conda
+__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
