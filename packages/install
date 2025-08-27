@@ -1,18 +1,82 @@
 #!/bin/bash
 export HOST=$(hostname)
 
-echo "Installing packages for Ubuntu..."
+# Detect OS and set package manager
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Installing packages for macOS..."
+    PACKAGE_SUFFIX="-mac"
+    
+    # Check if Homebrew is installed
+    if ! command -v brew &> /dev/null; then
+        echo "Installing Homebrew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+    
+    INSTALLER="brew install"
+else
+    echo "Installing packages for Linux..."
+    PACKAGE_SUFFIX="-linux"
+    
+    # Update package list
+    sudo apt update
+    INSTALLER="sudo apt install -y"
+fi
 
-# Update package list
-sudo apt update
+# Install base packages
+BASE_FILE="./group/base$PACKAGE_SUFFIX"
+if [ -f "$BASE_FILE" ]; then
+    echo "Installing base packages from $BASE_FILE"
+    if [ -s "$BASE_FILE" ]; then
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            # For macOS, install packages one by one to handle comments
+            cat "$BASE_FILE" | grep -v '^#' | grep -v '^$' | while read package; do
+                if [ ! -z "$package" ]; then
+                    $INSTALLER "$package"
+                fi
+            done
+        else
+            # For Linux, install all at once
+            $INSTALLER $(cat "$BASE_FILE" | grep -v '^#' | grep -v '^$' | tr '\n' ' ')
+        fi
+    fi
+fi
 
+# Install macOS GUI applications if on macOS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    MAC_FILE="./group/mac"
+    if [ -f "$MAC_FILE" ]; then
+        echo "Installing macOS applications from $MAC_FILE"
+        if [ -s "$MAC_FILE" ]; then
+            # Handle Homebrew cask installations
+            cat "$MAC_FILE" | grep -v '^#' | grep -v '^$' | while read package; do
+                if [ ! -z "$package" ]; then
+                    if [[ "$package" == --cask* ]]; then
+                        brew install "$package"
+                    else
+                        brew install "$package"
+                    fi
+                fi
+            done
+        fi
+    fi
+fi
+
+# Install host-specific packages (copernicus, etc.)
+echo "Checking for host-specific packages for: $HOST"
 for file in ./group/$HOST/*; do
     if [ -f "$file" ]; then
-        echo "Installing packages from $file"
-        
-        # Read packages from file and install with apt
+        echo "Installing host-specific packages from $file"
         if [ -s "$file" ]; then
-            sudo apt install -y $(cat "$file" | grep -v '^#' | grep -v '^$' | tr '\n' ' ')
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                cat "$file" | grep -v '^#' | grep -v '^$' | while read package; do
+                    if [ ! -z "$package" ]; then
+                        $INSTALLER "$package"
+                    fi
+                done
+            else
+                $INSTALLER $(cat "$file" | grep -v '^#' | grep -v '^$' | tr '\n' ' ')
+            fi
         fi
     fi
 done

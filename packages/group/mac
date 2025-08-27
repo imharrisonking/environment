@@ -1,0 +1,20 @@
+# macOS-specific applications (Homebrew Cask)
+--cask google-chrome
+--cask obs
+--cask slack
+--cask spotify
+--cask zoom
+--cask ghostty
+--cask visual-studio-code
+--cask discord
+--cask figma
+--cask docker
+--cask alfred
+--cask rectangle
+--cask iterm2
+--cask arc
+--cask notion
+# CLI tools for macOS
+aerospace
+mas
+duti
