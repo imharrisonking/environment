@@ -1,11 +1,6 @@
 #!/bin/bash
 
-echo "Installing packages..."
-cd ~/environment/packages
-./install
-
 echo "Setting up dotfiles..."
-cd ~/environment
 stow -R -v -t ~ -d ~/environment/home .
 
 echo "Environment setup complete!"

@@ -2,7 +2,10 @@ cursor-style = block
 shell-integration-features = no-cursor
 font-family = Lilex
 font-size = 12
-term=xterm-256color
+font-variation-bold = wght=600
+font-variation-bold-italic = wght=600
+window-colorspace = display-p3
+term = xterm-ghostty
 macos-titlebar-style = hidden
 theme= tokyonight
 gtk-adwaita = false
