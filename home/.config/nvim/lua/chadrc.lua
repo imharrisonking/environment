@@ -6,7 +6,7 @@
 local M = {}
 
 M.base46 = {
-	theme = "tokyonight",
+	-- theme = "tokyonight", -- Disabled to use custom folke/tokyonight.nvim
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },
