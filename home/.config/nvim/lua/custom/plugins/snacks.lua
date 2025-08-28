@@ -50,35 +50,14 @@ return {
     {
       "<leader>o",
       function()
-        Snacks.picker.buffers({
-          win = {
-            position = "float",
-            backdrop = 60,
-            height = 0.8,
-            width = 0.8,
-            input = {
-              keys = {
-                ["dd"] = "bufdelete",
-                ["<c-d>"] = { "bufdelete", mode = { "n", "i" } },
-              },
-            },
-            list = { keys = { ["dd"] = "bufdelete" } },
-          },
-        })
+        Snacks.picker.buffers()
       end,
       desc = "Open Buffers",
     },
     {
       "<leader>p",
       function()
-        Snacks.picker.lsp_symbols({
-          win = {
-            position = "float",
-            backdrop = 60,
-            height = 0.8,
-            width = 0.8,
-          },
-        })
+        Snacks.picker.lsp_symbols()
       end,
       desc = "LSP Document Symbols",
     },
