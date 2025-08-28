@@ -6,7 +6,6 @@ return {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-nvim-lua",
     "FelipeLema/cmp-async-path",
-    "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip",
     "rafamadriz/friendly-snippets",
   },
