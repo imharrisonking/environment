@@ -6,7 +6,15 @@ return {
   opts = {
     bigfile = { enabled = true },
     dashboard = { enabled = true },
-    explorer = { enabled = true },
+    explorer = { 
+      enabled = true,
+      win = {
+        position = "float",
+        backdrop = 60,
+        height = 0.8,
+        width = 0.8,
+      }
+    },
     indent = { enabled = false },
     input = { enabled = true },
     notifier = {
@@ -35,9 +43,9 @@ return {
     {
       "<leader>e",
       function()
-        Snacks.explorer()
+        require("neo-tree.command").execute({ toggle = true, position = "float" })
       end,
-      desc = "Snacks File Explorer",
+      desc = "Neo-tree Float Explorer",
     },
     
     -- Buffers with enhanced features (alternative to Telescope buffers)
