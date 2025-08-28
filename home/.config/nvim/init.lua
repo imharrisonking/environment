@@ -94,6 +94,9 @@ require('config.options')
 -- Load Mason verification utility (provides :MasonVerify and :MasonFixPath commands)
 require('config.mason-verify')
 
+-- Load custom color overrides
+require('config.colors').setup()
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
