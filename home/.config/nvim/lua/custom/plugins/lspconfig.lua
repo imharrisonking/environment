@@ -16,6 +16,14 @@ return {
         local opts = { buffer = event.buf }
         local client = vim.lsp.get_client_by_id(event.data.client_id)
 
+        -- Attach nvim-navic for breadcrumbs
+        if client and client.server_capabilities.documentSymbolProvider then
+          local ok, navic = pcall(require, "nvim-navic")
+          if ok then
+            navic.attach(client, event.buf)
+          end
+        end
+
         -- Custom TypeScript/JavaScript handling
         if client.name == 'vtsls' then
           vim.keymap.set('n', 'gd', function()
