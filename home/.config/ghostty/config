@@ -1,19 +1,23 @@
-cursor-style = block
-shell-integration-features = no-cursor
 font-family = Lilex
 font-size = 12
-adjust-cell-height = 1.5
-font-variation-bold = wght=600
-font-variation-bold-italic = wght=600
-window-colorspace = display-p3
+theme= gruvbox-material
+adjust-cell-height = 35%
+cursor-style = block
+shell-integration-features = no-cursor
 term = xterm-ghostty
-macos-titlebar-style = hidden
-theme= tokyonight
-gtk-adwaita = false
-gtk-titlebar = false
-window-decoration =
+mouse-hide-while-typing = true
+
+window-colorspace = display-p3
 window-padding-x = 10
 window-padding-y = 10
+window-padding-balance = true
+macos-titlebar-style = hidden
+gtk-adwaita = false
+gtk-titlebar = false
+
 confirm-close-surface = false
 copy-on-select = clipboard
 mouse-shift-capture = false
+
+keybind = cmd+s>r=reload_config
+keybind = cmd+s>x=close_surface
