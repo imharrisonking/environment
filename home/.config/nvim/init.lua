@@ -97,6 +97,9 @@ require('config.mason-verify')
 -- Load custom color overrides
 require('config.colors').setup()
 
+-- Load custom keymaps
+require('config.keymaps')
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
@@ -843,6 +846,46 @@ require('lazy').setup({
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
         return '%2l:%-2v'
+      end
+
+      -- Add Python environment info to statusline
+      ---@diagnostic disable-next-line: duplicate-set-field
+      statusline.section_fileinfo = function()
+        local filetype = vim.bo.filetype
+        
+        -- Original fileinfo
+        local fileinfo = vim.bo.filetype
+        if fileinfo ~= '' then
+          fileinfo = fileinfo .. ','
+        end
+        fileinfo = fileinfo .. vim.bo.fileencoding
+        
+        -- Add Python environment info when in Python files
+        if filetype == 'python' then
+          local venv = vim.fn.environ()["VIRTUAL_ENV"] or vim.fn.environ()["CONDA_DEFAULT_ENV"]
+          if venv then
+            local env_name = vim.fn.fnamemodify(venv, ":t")
+            -- Get Python version (cached for performance)
+            if not vim.g.python_version_cache then
+              local handle = io.popen("python --version 2>&1")
+              if handle then
+                local result = handle:read("*a")
+                handle:close()
+                vim.g.python_version_cache = result:match("Python (%d+%.%d+%.%d+)") or ""
+              end
+            end
+            local version = vim.g.python_version_cache
+            if version and version ~= "" then
+              fileinfo = string.format("%s |  %s (%s)", fileinfo, env_name, version)
+            else
+              fileinfo = string.format("%s |  %s", fileinfo, env_name)
+            end
+          else
+            fileinfo = fileinfo .. " |  system"
+          end
+        end
+        
+        return fileinfo
       end
 
       -- ... and there is more!
