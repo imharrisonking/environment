@@ -38,11 +38,13 @@ python3
 node
 npm
 go
+rust
 openjdk
 mysql-client
 postgresql
 mono
 tree
+lazygit
 # macOS-specific alternatives
 pbcopy
 netcat

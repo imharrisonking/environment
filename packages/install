@@ -123,4 +123,10 @@ if ! command -v rustc &> /dev/null; then
     source ~/.cargo/env
 fi
 
+# Install Cargo packages
+if command -v cargo &> /dev/null; then
+    echo "Installing Cargo packages..."
+    cargo install serpl
+fi
+
 echo "Installation complete! Some tools may require a shell restart."
