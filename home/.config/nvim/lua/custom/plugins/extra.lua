@@ -147,17 +147,61 @@ return {
         create_autocmd = false, -- prevent barbecue from updating itself automatically
       })
 
+      -- Function to update barbecue basename color based on diagnostics
+      local function update_barbecue_colors()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local diagnostics = vim.diagnostic.get(bufnr)
+        local has_error = false
+        local has_warning = false
+        
+        -- Check diagnostic severity
+        for _, diag in ipairs(diagnostics) do
+          if diag.severity == vim.diagnostic.severity.ERROR then
+            has_error = true
+            break
+          elseif diag.severity == vim.diagnostic.severity.WARN then
+            has_warning = true
+          end
+        end
+        
+        -- Get colors and update barbecue basename highlight
+        local ok, colors = pcall(require, "catppuccin.palettes")
+        if ok then
+          local palette = colors.get_palette()
+          if palette then
+            if has_error then
+              vim.api.nvim_set_hl(0, "barbecue_basename", { fg = palette.red })
+            elseif has_warning then
+              vim.api.nvim_set_hl(0, "barbecue_basename", { fg = palette.peach })
+            else
+              vim.api.nvim_set_hl(0, "barbecue_basename", { fg = palette.text })
+            end
+          end
+        end
+      end
+
+      -- Set up highlight autocmds
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        group = vim.api.nvim_create_augroup("barbecue_colors", { clear = true }),
+        callback = update_barbecue_colors,
+      })
+      
+      -- Apply colors immediately
+      update_barbecue_colors()
+
       vim.api.nvim_create_autocmd({
         "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
         "BufWinEnter",
         "CursorHold",
         "InsertLeave",
+        "DiagnosticChanged", -- Update when diagnostics change
 
         -- include this if you have set `show_modified` to `true`
         -- "BufModifiedSet",
       }, {
         group = vim.api.nvim_create_augroup("barbecue.updater", {}),
         callback = function()
+          update_barbecue_colors()
           require("barbecue.ui").update()
         end,
       })
