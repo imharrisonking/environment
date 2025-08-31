@@ -143,6 +143,10 @@ return {
       -- configurations go here
     },
     config = function()
+      -- Hook into barbecue's update function before setup to avoid duplicate field warning
+      local barbecue_ui = require 'barbecue.ui'
+      local original_update = barbecue_ui.update
+
       require('barbecue').setup {
         create_autocmd = false, -- prevent barbecue from updating itself automatically
       }
@@ -164,14 +168,19 @@ return {
           end
         end
 
-        -- Check git status using gitsigns
+        -- Check git status using gitsigns and untracked files
         local git_status = vim.b[bufnr].gitsigns_status_dict
         local has_git_changes = false
         local has_git_additions = false
 
-        if git_status then
-          has_git_changes = (git_status.changed and git_status.changed > 0)
-          has_git_additions = (git_status.added and git_status.added > 0)
+        -- Check if file is untracked (completely new file)
+        local current_file = vim.fn.expand('%')
+        local is_untracked = current_file ~= '' and vim.fn.system('git ls-files --others --exclude-standard ' .. vim.fn.shellescape(current_file)):match('%S')
+        
+        if is_untracked then
+          has_git_additions = true  -- New untracked file gets green
+        elseif git_status and (git_status.changed and git_status.changed > 0 or git_status.added and git_status.added > 0) then
+          has_git_changes = true  -- Modified file gets blue
         end
 
         -- Get colors and update barbecue basename highlight
@@ -207,54 +216,71 @@ return {
       -- Apply colors immediately
       update_barbecue_colors()
 
+      -- Cache git status to avoid repeated system calls
+      local git_status_cache = {}
+      
       -- Function to add git status to winbar after barbecue filename
       local function update_winbar_git_status()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local current_file = vim.fn.expand('%')
+        local git_indicator = ''
+        local git_status = vim.b[bufnr] and vim.b[bufnr].gitsigns_status_dict
+        
+        -- Check if file is untracked (completely new file)
+        local is_untracked = current_file ~= '' and vim.fn.system('git ls-files --others --exclude-standard ' .. vim.fn.shellescape(current_file)):match('%S')
+        
+        if is_untracked then
+          git_indicator = ' A'  -- New untracked file
+        elseif git_status and (git_status.changed and git_status.changed > 0 or git_status.added and git_status.added > 0) then
+          git_indicator = ' M'  -- Modified file
+        end
+
+        -- Get current winbar (barbecue) and insert git status after filename
+        local current_winbar = vim.wo.winbar or ''
+
+        if git_indicator ~= '' and not string.match(current_winbar, ' [MA]%%X') then
+          -- Insert git status after the basename but before %X%#barbecue_normal#
+          local modified_winbar = current_winbar:gsub('(%%#barbecue_basename#[^%%]+)(%%X%%#barbecue_normal#)', '%1' .. git_indicator .. '%2')
+          if modified_winbar ~= current_winbar then
+            vim.wo.winbar = modified_winbar
+          end
+        end
+      end
+      
+      -- Clear cache when files are saved (when git status might change)
+      vim.api.nvim_create_autocmd('BufWritePost', {
+        group = vim.api.nvim_create_augroup('barbecue.git_cache_clear', {}),
+        callback = function()
+          git_status_cache = {}
+        end,
+      })
+
+      -- Override barbecue's update function to always preserve git status
+      barbecue_ui.update = function()
+        -- Store current git status before barbecue overwrites it
+        local current_winbar = vim.wo.winbar or ''
+        local existing_git_status = current_winbar:match(' ([MA])%%X') or ''
+        
+        -- Let barbecue update normally
+        original_update()
+        
+        -- Always re-add git status after barbecue updates
         vim.schedule(function()
-          local bufnr = vim.api.nvim_get_current_buf()
-          local git_status = vim.b[bufnr] and vim.b[bufnr].gitsigns_status_dict
-          local git_indicator = ''
-
-          if git_status then
-            if git_status.changed and git_status.changed > 0 then
-              git_indicator = ' M'
-            elseif git_status.added and git_status.added > 0 then
-              git_indicator = ' A'
-            end
-          end
-
-          -- Get current winbar (barbecue) and insert git status after filename
-          local current_winbar = vim.wo.winbar or ''
-
-          if git_indicator ~= '' and not string.match(current_winbar, ' [MA]%%X') then
-            -- Insert git status after the basename but before %X%#barbecue_normal#
-            local modified_winbar = current_winbar:gsub('(%%#barbecue_basename#[^%%]+)(%%X%%#barbecue_normal#)', '%1' .. git_indicator .. '%2')
-            if modified_winbar ~= current_winbar then
-              vim.wo.winbar = modified_winbar
-            end
-          elseif git_indicator == '' then
-            -- Remove existing git indicators when no git changes
-            local cleaned_winbar = current_winbar:gsub(' [MA](%%X)', '%1')
-            if cleaned_winbar ~= current_winbar then
-              vim.wo.winbar = cleaned_winbar
-            end
-          end
+          update_winbar_git_status()
         end)
       end
-
 
       -- Create highlight groups for git indicators
       vim.api.nvim_set_hl(0, 'GitChangeIndicator', { fg = '#4E6A63', bold = true })
       vim.api.nvim_set_hl(0, 'GitAddIndicator', { fg = '#666E40', bold = true })
 
+      -- Barbecue updater for colors only (no git status here to avoid flickering)
       vim.api.nvim_create_autocmd({
         'WinScrolled', -- or WinResized on NVIM-v0.9 and higher
         'BufWinEnter',
         'CursorHold',
         'InsertLeave',
         'DiagnosticChanged', -- Update when diagnostics change
-        'User', -- For gitsigns events
-        'BufWritePost', -- After saving file
-        'BufModifiedSet', -- When buffer modification status changes
 
         -- include this if you have set `show_modified` to `true`
         -- "BufModifiedSet",
@@ -263,8 +289,17 @@ return {
         callback = function()
           update_barbecue_colors()
           require('barbecue.ui').update()
-          -- Add git status after barbecue renders
-          vim.defer_fn(update_winbar_git_status, 150)
+        end,
+      })
+
+      -- Separate autocmd for git status - only on meaningful events
+      vim.api.nvim_create_autocmd({
+        'BufWritePost', -- After saving file (when git status actually changes)
+        'BufWinEnter', -- When entering buffer (initial load)
+      }, {
+        group = vim.api.nvim_create_augroup('barbecue.git_status', {}),
+        callback = function()
+          vim.defer_fn(update_winbar_git_status, 200)
         end,
       })
     end,

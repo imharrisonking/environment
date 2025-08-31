@@ -38,6 +38,10 @@ return {
     name = 'catppuccin',
     config = function()
       require('catppuccin').setup {
+        float = {
+          solid = false,
+          transparent = true,
+        },
         background = {
           light = 'latte',
           dark = 'mocha',
