@@ -1,7 +1,7 @@
 font-family = Lilex
 font-size = 12
 theme= gruvbox-material
-adjust-cell-height = 35%
+adjust-cell-height = 25%
 cursor-style = block
 shell-integration-features = no-cursor
 term = xterm-ghostty
@@ -9,7 +9,7 @@ mouse-hide-while-typing = true
 
 window-colorspace = display-p3
 window-padding-x = 10
-window-padding-y = 10
+window-padding-y = 0
 window-padding-balance = true
 macos-titlebar-style = hidden
 gtk-adwaita = false
