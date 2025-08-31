@@ -231,7 +231,10 @@ return {
 
               CmpItemMenu = { fg = colors.surface2 },
               CursorLineNr = { fg = colors.text },
-              GitSignsChange = { fg = colors.peach },
+              -- Custom git line colors
+              GitSignsAdd = { fg = '#666E40' }, -- Custom color for new lines
+              GitSignsChange = { fg = '#4E6A63' }, -- Custom color for changed lines
+              GitSignsDelete = { fg = colors.red },
               LineNr = { fg = colors.overlay0 },
               LspInfoBorder = { link = 'FloatBorder' },
               VertSplit = { bg = colors.base, fg = colors.surface0 },

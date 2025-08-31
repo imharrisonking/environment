@@ -53,6 +53,14 @@ return {
         position = 'float',
         width = 35,
       },
+      renderers = {
+        file = {
+          { "icon", default = "*" }, 
+          { "name", use_git_status_colors = true },
+          { "diagnostics" },
+          { "git_status", highlight = "NeoTreeDimText" },
+        },
+      },
       filesystem = {
         use_libuv_file_watcher = true,
         filtered_items = {

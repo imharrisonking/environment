@@ -1,5 +1,7 @@
 return {
   'nvim-tree/nvim-web-devicons',
+  lazy = false, -- Load immediately to ensure other plugins can use it
+  priority = 1000, -- Load early
   config = function()
     -- Use vim.schedule to delay setup until after other plugins are loaded
     vim.schedule(function()
