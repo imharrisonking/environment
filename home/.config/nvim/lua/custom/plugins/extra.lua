@@ -172,7 +172,8 @@ return {
             if has_error then
               vim.api.nvim_set_hl(0, "barbecue_basename", { fg = palette.red })
             elseif has_warning then
-              vim.api.nvim_set_hl(0, "barbecue_basename", { fg = palette.peach })
+              -- Use the actual diagnostic warning color (yellow)
+              vim.api.nvim_set_hl(0, "barbecue_basename", { fg = palette.yellow })
             else
               vim.api.nvim_set_hl(0, "barbecue_basename", { fg = palette.text })
             end
