@@ -58,6 +58,9 @@ return {
             sapphire = '#4c7a5d',
             blue = '#45707a',
             lavender = '#45707a',
+            -- Custom git colors
+            git_add = '#666E40', -- Custom green for new/added files
+            git_change = '#4E6A63', -- Custom teal for modified files
             text = '#654735',
             subtext1 = '#73503c',
             subtext0 = '#805942',
@@ -86,6 +89,9 @@ return {
             sapphire = '#89b482',
             blue = '#7daea3',
             lavender = '#7daea3',
+            -- Custom git colors
+            git_add = '#666E40', -- Custom green for new/added files
+            git_change = '#4E6A63', -- Custom teal for modified files
             text = '#ebdbb2',
             subtext1 = '#d5c4a1',
             subtext0 = '#bdae93',
@@ -120,7 +126,7 @@ return {
           -- hop = true,
           -- illuminate = { enabled = true },
           native_lsp = { enabled = true, inlay_hints = { background = true } },
-          -- neogit = true,
+          neogit = true,
           -- neotree = true,
           semantic_tokens = true,
           treesitter = true,
