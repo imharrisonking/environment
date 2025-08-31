@@ -101,7 +101,7 @@ require('config.colors').setup()
 require('config.keymaps')
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- Additional Kickstart-specific options that don't conflict
 -- Preview substitutions live, as you type!
