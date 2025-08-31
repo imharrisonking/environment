@@ -4,16 +4,12 @@ return {
   lazy = false,
   event = { 'BufReadPost', 'BufNewFile', 'VeryLazy' },
   config = function()
+    local custom_gruvbox = require('lualine.themes.gruvbox')
+    custom_gruvbox.normal.c.bg = 'None'
+    
     require('lualine').setup {
       options = {
-        theme = {
-          normal = {
-            c = { bg = 'NONE' }
-          },
-          inactive = {
-            c = { bg = 'NONE' }
-          }
-        },
+        theme = custom_gruvbox,
         globalstatus = true,
         icons_enabled = true,
         component_separators = '',
@@ -114,5 +110,30 @@ return {
         lualine_z = {},
       },
     }
+    
+    -- Keep statusline visible for lualine (but with transparent background)
+    vim.opt.laststatus = 2
+    
+    -- Hook into lualine after setup to make backgrounds transparent for tpipeline
+    vim.defer_fn(function()
+      local lualine_config = require('lualine').get_config()
+      if lualine_config and lualine_config.options and lualine_config.options.theme then
+        local theme = lualine_config.options.theme
+        
+        -- Make all backgrounds transparent while keeping original colors
+        for mode_name, mode in pairs(theme) do
+          if type(mode) == 'table' then
+            for section_name, section in pairs(mode) do
+              if type(section) == 'table' and section.bg then
+                section.bg = 'NONE'
+              end
+            end
+          end
+        end
+        
+        -- Refresh lualine with modified theme
+        require('lualine').setup(lualine_config)
+      end
+    end, 100)
   end,
 }
