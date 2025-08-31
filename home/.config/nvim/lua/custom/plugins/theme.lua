@@ -104,7 +104,7 @@ return {
         show_end_of_buffer = false,
         integration_default = false,
         no_bold = true,
-        no_italic = true,
+        no_italic = false,
         no_underline = true,
         integrations = {
           blink_cmp = {

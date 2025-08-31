@@ -1,7 +1,7 @@
 font-family = Lilex Nerd Font
 font-size = 12
 theme= gruvbox-material
-adjust-cell-height = 25%
+adjust-cell-height = 30%
 cursor-style = block
 shell-integration-features = no-cursor
 term = xterm-ghostty

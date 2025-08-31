@@ -6,22 +6,35 @@ function M.setup()
   vim.api.nvim_create_autocmd("ColorScheme", {
     group = vim.api.nvim_create_augroup("CustomColors", { clear = true }),
     callback = function()
-      -- Override cursorline number to use normal text color without bold
-      vim.api.nvim_set_hl(0, "CursorLineNr", {
-        fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg, -- Use normal text color
-        bg = vim.api.nvim_get_hl(0, { name = "CursorLine" }).bg, -- Keep cursorline background
-        bold = false, -- Remove bold
-      })
-      
-      -- Optionally, you can also make the cursorline background more subtle
-      -- Uncomment the line below if you want a very subtle cursorline background
-      -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" })
+      -- Use vim.schedule to ensure highlights are applied after everything is loaded
+      vim.schedule(function()
+        -- Safe highlight retrieval with fallbacks
+        local function safe_get_hl(name, fallback)
+          local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = name })
+          if ok and hl and type(hl) == 'table' then
+            return hl
+          end
+          return fallback or {}
+        end
+        
+        -- Override cursorline number to use normal text color without bold
+        local normal_hl = safe_get_hl("Normal", { fg = "#ffffff" })
+        local cursorline_hl = safe_get_hl("CursorLine", { bg = "NONE" })
+        
+        vim.api.nvim_set_hl(0, "CursorLineNr", {
+          fg = normal_hl.fg,
+          bg = cursorline_hl.bg,
+          bold = false,
+        })
+      end)
     end,
   })
   
   -- Apply immediately if colorscheme is already loaded
   if vim.g.colors_name then
-    vim.api.nvim_exec_autocmds("ColorScheme", {})
+    vim.schedule(function()
+      vim.api.nvim_exec_autocmds("ColorScheme", {})
+    end)
   end
 end
 
