@@ -139,9 +139,6 @@ return {
       'SmiteshP/nvim-navic',
       'nvim-tree/nvim-web-devicons', -- optional dependency
     },
-    opts = {
-      -- configurations go here
-    },
     config = function()
       -- Hook into barbecue's update function before setup to avoid duplicate field warning
       local barbecue_ui = require 'barbecue.ui'
@@ -174,13 +171,13 @@ return {
         local has_git_additions = false
 
         -- Check if file is untracked (completely new file)
-        local current_file = vim.fn.expand('%')
-        local is_untracked = current_file ~= '' and vim.fn.system('git ls-files --others --exclude-standard ' .. vim.fn.shellescape(current_file)):match('%S')
-        
+        local current_file = vim.fn.expand '%'
+        local is_untracked = current_file ~= '' and vim.fn.system('git ls-files --others --exclude-standard ' .. vim.fn.shellescape(current_file)):match '%S'
+
         if is_untracked then
-          has_git_additions = true  -- New untracked file gets green
+          has_git_additions = true -- New untracked file gets green
         elseif git_status and (git_status.changed and git_status.changed > 0 or git_status.added and git_status.added > 0) then
-          has_git_changes = true  -- Modified file gets blue
+          has_git_changes = true -- Modified file gets blue
         end
 
         -- Get colors and update barbecue basename highlight
@@ -218,21 +215,21 @@ return {
 
       -- Cache git status to avoid repeated system calls
       local git_status_cache = {}
-      
+
       -- Function to add git status to winbar after barbecue filename
       local function update_winbar_git_status()
         local bufnr = vim.api.nvim_get_current_buf()
-        local current_file = vim.fn.expand('%')
+        local current_file = vim.fn.expand '%'
         local git_indicator = ''
         local git_status = vim.b[bufnr] and vim.b[bufnr].gitsigns_status_dict
-        
+
         -- Check if file is untracked (completely new file)
-        local is_untracked = current_file ~= '' and vim.fn.system('git ls-files --others --exclude-standard ' .. vim.fn.shellescape(current_file)):match('%S')
-        
+        local is_untracked = current_file ~= '' and vim.fn.system('git ls-files --others --exclude-standard ' .. vim.fn.shellescape(current_file)):match '%S'
+
         if is_untracked then
-          git_indicator = ' A'  -- New untracked file
+          git_indicator = ' A' -- New untracked file
         elseif git_status and (git_status.changed and git_status.changed > 0 or git_status.added and git_status.added > 0) then
-          git_indicator = ' M'  -- Modified file
+          git_indicator = ' M' -- Modified file
         end
 
         -- Get current winbar (barbecue) and insert git status after filename
@@ -246,7 +243,7 @@ return {
           end
         end
       end
-      
+
       -- Clear cache when files are saved (when git status might change)
       vim.api.nvim_create_autocmd('BufWritePost', {
         group = vim.api.nvim_create_augroup('barbecue.git_cache_clear', {}),
@@ -256,19 +253,22 @@ return {
       })
 
       -- Override barbecue's update function to always preserve git status
-      barbecue_ui.update = function()
+      local function custom_barbecue_update()
         -- Store current git status before barbecue overwrites it
         local current_winbar = vim.wo.winbar or ''
-        local existing_git_status = current_winbar:match(' ([MA])%%X') or ''
-        
+        local existing_git_status = current_winbar:match ' ([MA])%%X' or ''
+
         -- Let barbecue update normally
         original_update()
-        
+
         -- Always re-add git status after barbecue updates
         vim.schedule(function()
           update_winbar_git_status()
         end)
       end
+      
+      -- Assign our custom function to barbecue's update
+      barbecue_ui.update = custom_barbecue_update
 
       -- Create highlight groups for git indicators
       vim.api.nvim_set_hl(0, 'GitChangeIndicator', { fg = '#4E6A63', bold = true })
@@ -288,7 +288,7 @@ return {
         group = vim.api.nvim_create_augroup('barbecue.updater', {}),
         callback = function()
           update_barbecue_colors()
-          require('barbecue.ui').update()
+          barbecue_ui.update()
         end,
       })
 

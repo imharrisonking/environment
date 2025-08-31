@@ -22,7 +22,8 @@ return {
       sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = {
+        lualine_c = {},
+        lualine_x = {
           {
             'diagnostics',
             sources = { 'nvim_lsp' },
@@ -33,8 +34,6 @@ return {
               hint = require("config.icons").diagnostics.Hint,
             },
           },
-        },
-        lualine_x = {
           {
             function()
               local filetype = vim.bo.filetype
