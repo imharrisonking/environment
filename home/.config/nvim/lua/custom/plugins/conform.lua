@@ -38,7 +38,7 @@ return {
             scss = { "prettier" },
 
             -- Python
-            python = { "isort", "black" },
+            python = { "isort" }, -- black temporarily disabled
 
             -- Shell
             sh = { "shfmt" },
