@@ -26,6 +26,29 @@ function M.setup()
           bg = cursorline_hl.bg,
           bold = false,
         })
+        
+        -- Force remove italics from import-related highlight groups
+        -- This needs to be done after colorscheme loads to override theme settings
+        local import_groups = {
+          "@module",
+          "@module.python", 
+          "@variable.module",
+          "@lsp.type.namespace",
+          "@lsp.type.namespace.python",
+          "@lsp.type.module",
+          "@lsp.type.module.python",
+        }
+        
+        for _, group in ipairs(import_groups) do
+          local current_hl = safe_get_hl(group, {})
+          if current_hl.fg then
+            vim.api.nvim_set_hl(0, group, {
+              fg = current_hl.fg,
+              bg = current_hl.bg,
+              italic = false,
+            })
+          end
+        end
       end)
     end,
   })
