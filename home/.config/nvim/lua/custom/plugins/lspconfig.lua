@@ -115,10 +115,11 @@ return {
             -- Ruff LSP configuration for linting and formatting only
             init_options = {
               settings = {
-                -- Arguments to pass to ruff
+                -- Ruff configuration
+                lineLength = 88,
+                -- You can configure rule severity via ruff.toml in your project root
+                -- or set global args here
                 args = {},
-                -- Path to ruff executable (optional)
-                path = {},
               }
             }
           }
