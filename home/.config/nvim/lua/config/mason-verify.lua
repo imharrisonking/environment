@@ -26,7 +26,7 @@ function M.verify_tools()
         -- LSP Servers (Mason-managed)
         "lua-language-server", "typescript-language-server",
         "tailwindcss-language-server", "html-lsp", "css-lsp",
-        "vue-language-server", "pyright",
+        "vue-language-server", "ruff", "basedpyright",
 
         -- Formatters (Mason-managed)
         "stylua", "prettier", "black", "isort",

@@ -38,7 +38,7 @@ return {
           end, opts)
           vim.keymap.set('n', 'gI', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
         -- Custom Python handling
-        elseif client.name == 'pyright' then
+        elseif client.name == 'basedpyright' then
           vim.keymap.set('n', 'gd', function()
             local params = vim.lsp.util.make_position_params()
             local current_pos = vim.api.nvim_win_get_cursor(0)
@@ -70,6 +70,22 @@ return {
       end,
     })
 
+    -- Configure Ruff to defer hover capability to basedpyright
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+      callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client == nil then
+          return
+        end
+        if client.name == 'ruff' then
+          -- Disable hover in favor of basedpyright
+          client.server_capabilities.hoverProvider = false
+        end
+      end,
+      desc = 'LSP: Disable hover capability from Ruff',
+    })
+
     -- Mason setup
     require('mason-lspconfig').setup {
       ensure_installed = {
@@ -78,7 +94,8 @@ return {
         'vtsls',
         'cssmodules_ls',
         'lua_ls',
-        'pyright',
+        'ruff',
+        'basedpyright',
         'html',
         'marksman',
       },
@@ -92,10 +109,29 @@ return {
           lspconfig[server_name].setup { capabilities = capabilities }
         end,
 
-        ['pyright'] = function()
-          lspconfig.pyright.setup {
+        ['ruff'] = function()
+          lspconfig.ruff.setup {
+            capabilities = capabilities,
+            -- Ruff LSP configuration for linting and formatting only
+            init_options = {
+              settings = {
+                -- Arguments to pass to ruff
+                args = {},
+                -- Path to ruff executable (optional)
+                path = {},
+              }
+            }
+          }
+        end,
+
+        ['basedpyright'] = function()
+          lspconfig.basedpyright.setup {
             capabilities = capabilities,
             settings = {
+              basedpyright = {
+                -- Using Ruff's import organizer
+                disableOrganizeImports = true,
+              },
               python = {
                 analysis = {
                   -- Type checking mode (off, basic, strict)
@@ -108,16 +144,16 @@ return {
                   useLibraryCodeForTypes = true,
                   -- Diagnostic mode
                   diagnosticMode = 'workspace',
-                  -- Inlay hints (similar to VSCode Python settings)
+                  -- Inlay hints
                   inlayHints = {
                     variableTypes = true,
                     functionReturnTypes = true,
                     parameterTypes = true,
                     pytestParameters = true,
                   },
-                  -- Enable specific diagnostics similar to VSCode defaults
+                  -- Enable specific diagnostics
                   diagnosticSeverityOverrides = {
-                    reportUnusedImport = 'warning',
+                    reportUnusedImport = 'none', -- Let Ruff handle this
                     reportUnusedVariable = 'warning',
                     reportUnusedFunction = 'warning',
                     reportUnusedClass = 'warning',

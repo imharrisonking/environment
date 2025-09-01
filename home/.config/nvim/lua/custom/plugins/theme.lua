@@ -334,7 +334,7 @@ return {
               TSStorageClass = { fg = colors.peach },
               TSStorageClassLifetime = { fg = colors.peach },
               TSStrike = { fg = colors.subtext1 },
-              TSString = { fg = colors.yellow },
+              TSString = { fg = colors.yellow, italic = false },
               TSStringEscape = { fg = colors.green },
               TSStringRegex = { fg = colors.green },
               TSStringSpecial = { link = 'SpecialChar' },
@@ -355,7 +355,7 @@ return {
               TSVariableBuiltin = { fg = colors.mauve },
 
               ['@annotation'] = { link = 'TSAnnotation' },
-              ['@attribute'] = { link = 'TSAttribute' },
+              ['@attribute'] = { fg = colors.green },
               ['@boolean'] = { link = 'TSBoolean' },
               ['@character'] = { link = 'TSCharacter' },
               ['@character.special'] = { link = 'TSCharacterSpecial' },
@@ -375,7 +375,7 @@ return {
               ['@field'] = { fg = colors.green },
               ['@float'] = { link = 'TSFloat' },
               ['@function'] = { link = 'TSFunction' },
-              ['@function.builtin'] = { link = 'TSFuncBuiltin' },
+              ['@function.builtin'] = { fg = colors.green, style = { 'bold' } },
               ['@function.call'] = { link = 'TSFunctionCall' },
               ['@function.macro'] = { link = 'TSFuncMacro' },
               ['@include'] = { fg = colors.red, italic = false },
@@ -391,7 +391,7 @@ return {
               ['@none'] = { link = 'TSNone' },
               ['@number'] = { link = 'TSNumber' },
               ['@operator'] = { link = 'TSOperator' },
-              ['@parameter'] = { link = 'TSParameter' },
+              ['@parameter'] = { fg = colors.text },
               ['@parameter.reference'] = { link = 'TSParameterReference' },
               ['@preproc'] = { link = 'TSPreProc' },
               ['@property'] = { fg = colors.green },
@@ -448,8 +448,7 @@ return {
               ['@module'] = { fg = colors.blue, italic = false },
               ['@variable.module'] = { fg = colors.blue, italic = false },
 
-
-              ['@lsp.type.class'] = { link = 'TSType' },
+              ['@lsp.type.class'] = { fg = colors.teal, style = { 'bold' } },
               ['@lsp.type.comment'] = { link = 'TSComment' },
               ['@lsp.type.decorator'] = { link = 'TSFunction' },
               ['@lsp.type.enum'] = { link = 'TSType' },
@@ -463,27 +462,21 @@ return {
               ['@lsp.type.modifier'] = { link = 'TSTypeQualifier' },
               ['@lsp.type.namespace'] = { fg = colors.blue, italic = false },
               ['@lsp.type.module'] = { fg = colors.blue, italic = false },
-              
-              -- Python-specific attribute/method access
-              ['@attribute'] = { fg = colors.green },
+              ['@lsp.type.module.python'] = { fg = colors.blue, italic = false },
+              ['@lsp.type.class.python'] = { fg = colors.teal, style = { 'bold' } },
               ['@lsp.type.attribute'] = { fg = colors.green },
-              
-              -- Force all italic styles off for modules/namespaces
               ['@lsp.mod.italic'] = { italic = false },
               ['@lsp.type.number'] = { link = 'TSNumber' },
               ['@lsp.type.operator'] = { link = 'TSOperator' },
               ['@lsp.type.parameter'] = { fg = colors.text },
               ['@lsp.type.variable'] = { fg = colors.text },
-              ['@parameter'] = { fg = colors.text },
               ['@variable.parameter'] = { fg = colors.text },
-              ['@lsp.mod.definition'] = { fg = colors.text },
               ['@lsp.type.property'] = { fg = colors.green },
               ['@lsp.type.regexp'] = { link = 'TSStringRegex' },
               ['@lsp.type.string'] = { link = 'TSString' },
               ['@lsp.type.struct'] = { link = 'TSType' },
               ['@lsp.type.type'] = { link = 'TSType' },
               ['@lsp.type.typeParameter'] = { link = 'TSTypeDefinition' },
-              ['@lsp.type.variable'] = { link = 'TSVariable' },
             }
           end,
           latte = function(colors)

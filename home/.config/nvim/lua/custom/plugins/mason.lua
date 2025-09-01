@@ -14,7 +14,8 @@ return {
                 "html-lsp",                    -- HTML LSP
                 "css-lsp",                     -- CSS LSP
                 "vue-language-server",         -- Vue LSP
-                "pyright",                     -- Python LSP
+                "ruff",                        -- Python linter/formatter
+                "basedpyright",                -- Python LSP for type checking
 
                 -- Formatters (only for installed languages)
                 "stylua",         -- Lua formatter
