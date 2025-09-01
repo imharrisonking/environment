@@ -111,8 +111,8 @@ return {
       },
     }
     
-    -- Keep statusline visible for lualine (but with transparent background)
-    vim.opt.laststatus = 2
+    -- Hide vim statusline since tpipeline handles it in tmux
+    vim.opt.laststatus = 0
     
     -- Hook into lualine after setup to make backgrounds transparent for tpipeline
     vim.defer_fn(function()
