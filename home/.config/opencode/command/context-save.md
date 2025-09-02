@@ -1,9 +1,9 @@
 ---
-description: Save current project context for future agent coordination:
+description: Save current project context for future agent coordination
 agent: build
 model: anthropic/claude-sonnet-4-20250514
 ---
-Save current project context for future agent coordination:
+Save current project context for future agent coordination
 
 [Extended thinking: This tool uses the context-manager agent to capture and preserve project state, decisions, and patterns. This enables better continuity across sessions and improved agent coordination.]
 

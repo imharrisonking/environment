@@ -1,9 +1,9 @@
 ---
-description: Restore saved project context for agent coordination:
+description: Restore saved project context for agent coordination
 agent: build
 model: anthropic/claude-sonnet-4-20250514
 ---
-Restore saved project context for agent coordination:
+Restore saved project context for agent coordination
 
 [Extended thinking: This tool uses the context-manager agent to restore previously saved project context, enabling continuity across sessions and providing agents with comprehensive project knowledge.]
 
