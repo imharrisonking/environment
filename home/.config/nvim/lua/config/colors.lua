@@ -49,6 +49,30 @@ function M.setup()
             })
           end
         end
+        
+        -- Set cursor colors to match text color with base background
+        local normal_hl = safe_get_hl("Normal", { fg = "#ebdbb2" })
+        local base_color = "#1d2021" -- colors.base from mocha theme
+        
+        vim.api.nvim_set_hl(0, "Cursor", {
+          fg = base_color,
+          bg = normal_hl.fg,
+        })
+        
+        vim.api.nvim_set_hl(0, "nCursor", {
+          fg = base_color,
+          bg = normal_hl.fg,
+        })
+        
+        vim.api.nvim_set_hl(0, "vCursor", {
+          fg = base_color,
+          bg = normal_hl.fg,
+        })
+        
+        vim.api.nvim_set_hl(0, "iCursor", {
+          fg = base_color,
+          bg = normal_hl.fg,
+        })
       end)
     end,
   })

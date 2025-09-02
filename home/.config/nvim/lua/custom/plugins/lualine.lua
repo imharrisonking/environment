@@ -111,7 +111,8 @@ return {
       },
     }
     
-    -- Hide vim statusline since tpipeline handles it in tmux
+    -- Configure statusline behavior for tpipeline
+    -- Let tpipeline control the statusline display entirely
     vim.opt.laststatus = 0
     
     -- Hook into lualine after setup to make backgrounds transparent for tpipeline
