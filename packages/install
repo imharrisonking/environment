@@ -113,7 +113,7 @@ fi
 # Install via npm (global packages)
 if command -v npm &> /dev/null; then
     echo "Installing npm packages..."
-    sudo npm install -g typescript pnpm
+    sudo npm install -g typescript pnpm opencode-ai
 fi
 
 # Install Rust and Cargo packages

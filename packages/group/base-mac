@@ -45,6 +45,8 @@ postgresql
 mono
 tree
 lazygit
+# AI development tools
+opencode
 # macOS-specific alternatives
 pbcopy
 netcat

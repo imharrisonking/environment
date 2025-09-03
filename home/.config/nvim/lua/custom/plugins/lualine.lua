@@ -31,6 +31,10 @@ return {
             },
           },
           {
+            'branch',
+            icon = require("config.icons").git.Branch,
+          },
+          {
             function()
               local filetype = vim.bo.filetype
               if filetype == '' then
