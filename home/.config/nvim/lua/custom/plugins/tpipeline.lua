@@ -7,7 +7,7 @@ return {
 
     -- Disable auto-embedding so we can manually configure tmux positioning
     vim.g.tpipeline_autoembed = 0
-    vim.g.tpipeline_restore = 1
+    vim.g.tpipeline_restore = 0
     vim.g.tpipeline_clearstl = 1
     
     -- Force statusline to stay hidden in all modes including command mode
