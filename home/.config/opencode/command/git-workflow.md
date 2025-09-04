@@ -1,5 +1,5 @@
 ---
-description: Complete Git workflow using specialized agents:
+description: Complete Git workflow using specialized agents
 agent: build
 model: anthropic/claude-sonnet-4-20250514
 ---

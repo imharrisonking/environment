@@ -1,5 +1,5 @@
 ---
-description: Optimize application stack using specialized optimization agents:
+description: Optimize application stack using specialized optimization agents
 agent: ai-engineer
 model: anthropic/claude-opus-4-20250514
 ---

@@ -1,5 +1,5 @@
 ---
-description: Optimize application performance end-to-end using specialized performance and optimization agents:
+description: Optimize application performance end-to-end using specialized performance and optimization agents
 agent: performance-engineer
 model: anthropic/claude-sonnet-4-20250514
 ---

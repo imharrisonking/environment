@@ -1,5 +1,5 @@
 ---
-description: Debug complex issues using specialized debugging agents:
+description: Debug complex issues using specialized debugging agents
 agent: code-reviewer
 model: anthropic/claude-sonnet-4-20250514
 ---

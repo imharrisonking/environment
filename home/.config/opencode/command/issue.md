@@ -1,5 +1,5 @@
 ---
-description: Please analyze and fix the GitHub issue: $ARGUMENTS.
+description: "Please analyze and fix the GitHub issue: $ARGUMENTS."
 agent: build
 model: anthropic/claude-sonnet-4-20250514
 ---

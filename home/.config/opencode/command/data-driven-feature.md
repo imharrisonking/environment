@@ -1,5 +1,5 @@
 ---
-description: Build data-driven features with integrated pipelines and ML capabilities using specialized agents:
+description: Build data-driven features with integrated pipelines and ML capabilities using specialized agents
 agent: build
 model: anthropic/claude-sonnet-4-20250514
 ---

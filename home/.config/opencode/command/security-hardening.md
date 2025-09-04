@@ -1,5 +1,5 @@
 ---
-description: Implement security-first architecture and hardening measures with coordinated agent orchestration:
+description: Implement security-first architecture and hardening measures with coordinated agent orchestration
 agent: build
 model: anthropic/claude-sonnet-4-20250514
 ---

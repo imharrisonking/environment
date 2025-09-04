@@ -129,5 +129,3 @@ for conda_path in "${CONDA_PATHS[@]}"; do
         break
     fi
 done
-
-alias claude="/Users/harrisonking/.claude/local/claude"

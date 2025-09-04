@@ -1,5 +1,5 @@
 ---
-description: Build the same feature across multiple platforms:
+description: Build the same feature across multiple platforms
 agent: build
 model: anthropic/claude-sonnet-4-20250514
 ---

@@ -1,5 +1,5 @@
 ---
-description: Intelligently fix the issue using automatic agent selection with explicit Task tool invocations:
+description: Intelligently fix the issue using automatic agent selection with explicit Task tool invocations
 agent: build
 model: anthropic/claude-sonnet-4-20250514
 ---

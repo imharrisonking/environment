@@ -1,5 +1,5 @@
 ---
-description: Perform comprehensive multi-agent code review with specialized reviewers:
+description: Perform comprehensive multi-agent code review with specialized reviewers
 agent: architect-review
 model: anthropic/claude-opus-4-20250514
 ---

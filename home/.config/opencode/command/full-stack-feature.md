@@ -1,5 +1,5 @@
 ---
-description: Implement a full-stack feature across multiple platforms with coordinated agent orchestration:
+description: Implement a full-stack feature across multiple platforms with coordinated agent orchestration
 agent: ai-engineer
 model: anthropic/claude-opus-4-20250514
 ---

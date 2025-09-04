@@ -1,5 +1,5 @@
 ---
-description: Perform a comprehensive review using multiple specialized agents with explicit Task tool invocations:
+description: Perform a comprehensive review using multiple specialized agents with explicit Task tool invocations
 agent: architect-review
 model: anthropic/claude-opus-4-20250514
 ---

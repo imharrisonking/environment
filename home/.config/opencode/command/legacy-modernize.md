@@ -1,5 +1,5 @@
 ---
-description: Modernize legacy code using expert agents:
+description: Modernize legacy code using expert agents
 agent: ai-engineer
 model: anthropic/claude-opus-4-20250514
 ---

@@ -1,5 +1,5 @@
 ---
-description: Implement a new feature using specialized agents with explicit Task tool invocations:
+description: Implement a new feature using specialized agents with explicit Task tool invocations
 agent: ai-engineer
 model: anthropic/claude-opus-4-20250514
 ---

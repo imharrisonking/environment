@@ -1,5 +1,5 @@
 ---
-description: Improve an existing agent based on recent performance:
+description: Improve an existing agent based on recent performance
 agent: build
 model: anthropic/claude-sonnet-4-20250514
 ---

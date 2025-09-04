@@ -1,5 +1,5 @@
 ---
-description: Respond to production incidents with coordinated agent expertise for rapid resolution:
+description: Respond to production incidents with coordinated agent expertise for rapid resolution
 agent: build
 model: anthropic/claude-sonnet-4-20250514
 ---
