@@ -39,6 +39,29 @@ return {
     },
   },
   keys = {
+    -- Replace Telescope keymaps with Snacks equivalents
+    {
+      "<leader>ff",
+      function()
+        Snacks.picker.files()
+      end,
+      desc = "Find Files (Snacks)",
+    },
+    {
+      "<leader>fi",
+      function()
+        Snacks.picker.grep()
+      end,
+      desc = "Find in Files (Snacks)",
+    },
+    {
+      "<leader>fa",
+      function()
+        Snacks.picker.files({ hidden = true })
+      end,
+      desc = "Find All Files (Snacks)",
+    },
+
     -- Alternative file explorer (keep Neo-tree for <leader><tab>)
     {
       "<leader>e",

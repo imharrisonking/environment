@@ -125,6 +125,10 @@ return {
           live_grep = {
             only_sort_text = true,
             previewer = true,
+            debounce = 100,
+            dynamic_preview_title = true,
+            disable_coordinates = true,
+            path_display = { "tail" },
           },
           grep_string = {
             only_sort_text = true,
@@ -184,9 +188,10 @@ return {
       telescope.load_extension 'git_file_history'
     end,
     keys = {
-      { '<leader>ff', '<cmd>Telescope git_files<cr>', desc = 'Find files' },
-      { '<leader>fa', '<cmd>Telescope find_files<cr>', desc = 'Find all files' },
-      { '<leader>fi', '<cmd>Telescope live_grep<cr>', desc = 'Find in files' },
+      -- Keep these for now, but you can remove them if you prefer Snacks entirely
+      -- { '<leader>ff', '<cmd>Telescope git_files<cr>', desc = 'Find files' },
+      -- { '<leader>fa', '<cmd>Telescope find_files<cr>', desc = 'Find all files' },
+      -- { '<leader>fi', '<cmd>Telescope live_grep<cr>', desc = 'Find in files' },
     },
   },
 }
