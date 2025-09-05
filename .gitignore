@@ -1,0 +1,13 @@
+# Certificate files - should not be committed
+*.pem
+*.crt
+*certs.pem
+corporate_certs.pem
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# macOS
+.DS_Store

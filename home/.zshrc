@@ -106,26 +106,16 @@ if [ -f "$HOME/.certs/combined-corporate-certs.pem" ]; then
   export NODE_EXTRA_CA_CERTS="$HOME/.certs/combined-corporate-certs.pem"
 fi
 
+# UV/Python certificate configuration
+if [ -f "$HOME/.certs/uv-certs.pem" ]; then
+  export SSL_CERT_FILE="$HOME/.certs/uv-certs.pem"
+  export REQUESTS_CA_BUNDLE="$HOME/.certs/uv-certs.pem"
+  export CURL_CA_BUNDLE="$HOME/.certs/uv-certs.pem"
+fi
+
 # NVM configuration
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Conda/Anaconda configuration
-CONDA_PATHS=("/opt/anaconda3" "/opt/miniconda3" "$HOME/anaconda3" "$HOME/miniconda3" "/usr/local/anaconda3")
-for conda_path in "${CONDA_PATHS[@]}"; do
-    if [ -f "$conda_path/bin/conda" ]; then
-        __conda_setup="$("$conda_path/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
-        if [ $? -eq 0 ]; then
-            eval "$__conda_setup"
-        else
-            if [ -f "$conda_path/etc/profile.d/conda.sh" ]; then
-                . "$conda_path/etc/profile.d/conda.sh"
-            else
-                export PATH="$conda_path/bin:$PATH"
-            fi
-        fi
-        unset __conda_setup
-        break
-    fi
-done
+. "$HOME/.local/share/../bin/env"

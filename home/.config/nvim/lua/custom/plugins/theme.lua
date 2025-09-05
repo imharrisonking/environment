@@ -486,6 +486,21 @@ return {
               IblScope = { fg = colors.surface1 },
 
               LineNr = { fg = colors.surface1 },
+              
+              -- Cursor colors for light theme
+              Cursor = { bg = colors.text, fg = colors.base },
+              CursorIM = { bg = colors.text, fg = colors.base },
+              TermCursor = { bg = colors.text, fg = colors.base },
+              TermCursorNC = { bg = colors.text, fg = colors.base },
+            }
+          end,
+          mocha = function(colors)
+            return {
+              -- Cursor colors for dark theme
+              Cursor = { bg = colors.text, fg = colors.base },
+              CursorIM = { bg = colors.text, fg = colors.base },
+              TermCursor = { bg = colors.text, fg = colors.base },
+              TermCursorNC = { bg = colors.text, fg = colors.base },
             }
           end,
         },
@@ -495,6 +510,9 @@ return {
       vim.api.nvim_set_hl(0, 'NavicSeparator', { default = true, bg = 'none', fg = '#eedaad' })
 
       vim.api.nvim_command 'colorscheme catppuccin'
+      
+      -- Set cursor colors to match text color and enable blinking in command/visual modes
+      vim.opt.guicursor = 'n-v-c:block-Cursor/lCursor,i-ci-ve:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,o:hor50-Cursor/lCursor,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-Cursor/lCursor'
     end,
   },
 }
