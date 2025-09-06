@@ -39,6 +39,13 @@ return {
         },
         config = function(_, opts)
             require("mason").setup(opts)
+            
+            -- Ensure Mason bin directory is in PATH
+            local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+            local current_path = vim.env.PATH or ""
+            if not string.find(current_path, mason_bin, 1, true) then
+                vim.env.PATH = mason_bin .. ":" .. current_path
+            end
 
             -- Auto-install ensure_installed tools with better error handling
             local mr = require("mason-registry")

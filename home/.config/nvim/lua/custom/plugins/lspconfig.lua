@@ -112,6 +112,24 @@ return {
         ['ruff'] = function()
           lspconfig.ruff.setup {
             capabilities = capabilities,
+            -- Use uv.nvim for better virtual environment detection
+            root_dir = function(fname)
+              local ok, uv = pcall(require, 'uv')
+              if ok and uv.get_project_root then
+                local uv_root = uv.get_project_root(fname)
+                if uv_root then
+                  return uv_root
+                end
+              end
+              
+              return lspconfig.util.root_pattern(
+                'pyproject.toml',
+                'ruff.toml', 
+                '.ruff.toml',
+                'setup.py',
+                '.git'
+              )(fname)
+            end,
             -- Ruff LSP configuration for linting and formatting only
             init_options = {
               settings = {
@@ -126,8 +144,19 @@ return {
         end,
 
         ['basedpyright'] = function()
+          -- Try uv run first (project-local), then fall back to global
+          local function get_basedpyright_cmd()
+            -- Check if project has basedpyright
+            if vim.fn.isdirectory(vim.fn.getcwd() .. '/.venv') == 1 then
+              return { "uv", "run", "basedpyright-langserver", "--stdio" }
+            end
+            -- Fall back to global installation
+            return { "basedpyright-langserver", "--stdio" }
+          end
+          
           lspconfig.basedpyright.setup {
             capabilities = capabilities,
+            cmd = get_basedpyright_cmd(),
             settings = {
               basedpyright = {
                 -- Using Ruff's import organizer

@@ -88,6 +88,13 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Ensure Mason bin directory is in PATH early
+local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+local current_path = vim.env.PATH or ""
+if not string.find(current_path, mason_bin, 1, true) then
+  vim.env.PATH = mason_bin .. ":" .. current_path
+end
+
 -- Load rest of options configuration
 require('config.options')
 
@@ -99,6 +106,9 @@ require('config.colors').setup()
 
 -- Load custom keymaps
 require('config.keymaps')
+
+-- Load pyright setup utility
+require('config.pyright-setup')
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true

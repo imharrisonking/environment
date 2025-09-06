@@ -1,0 +1,13 @@
+{
+  "exclude": [
+    ".venv",
+    "node_modules"
+  ],
+  "venvPath": ".",
+  "venv": ".venv",
+  "reportUnusedCallResult": false,
+  "reportUnknownMemberType": false,
+  "reportMissingImports": "error",
+  "reportGeneralTypeIssues": "error",
+  "typeCheckingMode": "basic"
+}
