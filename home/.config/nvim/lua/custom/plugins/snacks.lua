@@ -141,6 +141,36 @@ return {
       desc = "Git Log File",
     },
 
+    -- LSP Navigation
+    {
+      "<leader>gd",
+      function()
+        Snacks.picker.lsp_definitions()
+      end,
+      desc = "LSP Definitions",
+    },
+    {
+      "<leader>gr",
+      function()
+        Snacks.picker.lsp_references()
+      end,
+      desc = "LSP References",
+    },
+    {
+      "<leader>gi",
+      function()
+        Snacks.picker.lsp_implementations()
+      end,
+      desc = "LSP Implementations",
+    },
+    {
+      "<leader>gt",
+      function()
+        Snacks.picker.lsp_type_definitions()
+      end,
+      desc = "LSP Type Definitions",
+    },
+
     -- Search enhancements (non-conflicting with Telescope)
     {
       '<leader>s"',
