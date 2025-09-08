@@ -22,3 +22,6 @@ mouse-shift-capture = false
 
 keybind = cmd+s>r=reload_config
 keybind = cmd+s>x=close_surface
+
+# Override bright black to use foreground color
+palette = 8=#d4be98
