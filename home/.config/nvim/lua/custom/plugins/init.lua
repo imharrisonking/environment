@@ -7,4 +7,5 @@ return {
   require('custom.plugins.lspconfig'),
   require('custom.plugins.cmp'),
   require('custom.plugins.treesitter'),
+  require('custom.plugins.indent-blankline'),
 }

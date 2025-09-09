@@ -13,7 +13,14 @@ return {
         backdrop = 60,
         height = 0.8,
         width = 0.8,
-      }
+        border = "rounded",
+      },
+      -- Show hidden files by default
+      hidden = true,
+      -- Follow current file
+      follow = true,
+      -- Auto refresh when files change
+      refresh = true,
     },
     indent = { enabled = false },
     input = { enabled = true },
@@ -25,6 +32,18 @@ return {
       enabled = true,
       sources = {
         files = { hidden = true },
+        grep = {
+          delay = 300, -- Wait for user to finish typing
+        },
+      },
+      win = {
+        input = {
+          keys = {
+            -- Disable any problematic key mappings
+            ["<C-c>"] = "close",
+            ["<Esc>"] = "close",
+          },
+        },
       },
     },
     quickfile = { enabled = true },
@@ -50,7 +69,7 @@ return {
     {
       "<leader>fi",
       function()
-        Snacks.picker.grep()
+        Snacks.picker.grep({ delay = 300 }) -- Wait for user to finish typing
       end,
       desc = "Find in Files (Snacks)",
     },
@@ -62,13 +81,25 @@ return {
       desc = "Find All Files (Snacks)",
     },
 
-    -- Alternative file explorer (keep Neo-tree for <leader><tab>)
+    -- File Explorer - replaces neo-tree
     {
       "<leader>e",
       function()
-        require("neo-tree.command").execute({ toggle = true, position = "float" })
+        Snacks.explorer()
       end,
-      desc = "Neo-tree Float Explorer",
+      desc = "Explorer (Float)",
+    },
+    {
+      "<leader><tab>",
+      function()
+        Snacks.explorer({
+          win = {
+            position = "left",
+            width = 35,
+          }
+        })
+      end,
+      desc = "Explorer (Sidebar)",
     },
     {
       "<leader>o",

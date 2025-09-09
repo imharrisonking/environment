@@ -1,0 +1,115 @@
+#!/bin/bash
+# VS Code-style remote development script for copernicus
+
+set -e
+
+REMOTE_HOST="copernicus"
+SOCKET_DIR="$HOME/.ssh/sockets"
+SOCKET_PATH="$SOCKET_DIR/%r@%h-%p"
+
+# Ensure socket directory exists
+mkdir -p "$SOCKET_DIR"
+
+# Function to establish master connection
+establish_master() {
+    echo "Establishing master connection to $REMOTE_HOST..."
+    ssh -fN -M -S "$SOCKET_PATH" "$REMOTE_HOST"
+    echo "Master connection established"
+}
+
+# Function to check if master connection exists
+check_master() {
+    ssh -S "$SOCKET_PATH" -O check "$REMOTE_HOST" 2>/dev/null
+}
+
+# Function to forward a port on demand
+forward_port() {
+    local local_port=$1
+    local remote_port=${2:-$1}
+    
+    if ! check_master; then
+        establish_master
+    fi
+    
+    echo "Forwarding localhost:$local_port -> $REMOTE_HOST:$remote_port"
+    ssh -S "$SOCKET_PATH" -L "$local_port:localhost:$remote_port" -fN "$REMOTE_HOST"
+}
+
+# Function to stop port forwarding
+stop_forward() {
+    local local_port=$1
+    pkill -f "ssh.*-L $local_port:localhost"
+    echo "Stopped forwarding port $local_port"
+}
+
+# Function to connect with shell
+connect() {
+    if ! check_master; then
+        establish_master
+    fi
+    
+    echo "Connecting to $REMOTE_HOST (using master connection)..."
+    ssh -S "$SOCKET_PATH" "$REMOTE_HOST"
+}
+
+# Function to run a command
+run_cmd() {
+    if ! check_master; then
+        establish_master
+    fi
+    
+    ssh -S "$SOCKET_PATH" "$REMOTE_HOST" "$@"
+}
+
+# Function to cleanup
+cleanup() {
+    if check_master; then
+        ssh -S "$SOCKET_PATH" -O exit "$REMOTE_HOST"
+        echo "Master connection closed"
+    fi
+    pkill -f "ssh.*$REMOTE_HOST" 2>/dev/null || true
+}
+
+# Main command handling
+case "${1:-connect}" in
+    "master")
+        establish_master
+        ;;
+    "forward")
+        forward_port "$2" "$3"
+        ;;
+    "stop-forward")
+        stop_forward "$2"
+        ;;
+    "connect"|"ssh")
+        connect
+        ;;
+    "run")
+        shift
+        run_cmd "$@"
+        ;;
+    "cleanup"|"stop")
+        cleanup
+        ;;
+    "status")
+        if check_master; then
+            echo "Master connection active"
+            ps aux | grep "ssh.*$REMOTE_HOST" | grep -v grep
+        else
+            echo "No master connection"
+        fi
+        ;;
+    *)
+        echo "Usage: $0 {master|forward <port> [remote_port]|stop-forward <port>|connect|run <cmd>|cleanup|status}"
+        echo ""
+        echo "Examples:"
+        echo "  $0 master              # Establish master connection"
+        echo "  $0 forward 3000        # Forward port 3000"
+        echo "  $0 forward 3000 3001   # Forward local 3000 to remote 3001"
+        echo "  $0 connect             # Connect with shell (default)"
+        echo "  $0 run 'npm run dev'   # Run command remotely"
+        echo "  $0 stop-forward 3000   # Stop forwarding port 3000"
+        echo "  $0 cleanup             # Close all connections"
+        exit 1
+        ;;
+esac

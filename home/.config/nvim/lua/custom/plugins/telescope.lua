@@ -47,7 +47,6 @@ return {
               ['<esc>'] = actions.close,
               ['<C-t>'] = trouble.open,
             },
-
             n = { ['<C-t>'] = trouble.open },
           },
           previewer = false,
@@ -55,7 +54,6 @@ return {
           selection_caret = icons.ui.BoldArrowRight .. ' ',
           file_ignore_patterns = { 'node_modules', 'package-lock.json' },
           initial_mode = 'insert',
-          select_strategy = 'reset',
           sorting_strategy = 'ascending',
           color_devicons = true,
           set_env = { ['COLORTERM'] = 'truecolor' },
@@ -78,26 +76,27 @@ return {
         pickers = {
           find_files = {
             previewer = false,
-            path_display = formattedName,
             layout_config = {
               height = 0.4,
               prompt_position = 'top',
-              preview_cutoff = 120,
             },
             hidden = true,
           },
           git_files = {
             previewer = false,
-            path_display = formattedName,
             layout_config = {
               height = 0.4,
               prompt_position = 'top',
-              preview_cutoff = 120,
             },
             hidden = true,
           },
+        live_grep = {
+          debounce = 300, -- Wait for user to finish typing
+        },
+          grep_string = {
+            previewer = true,
+          },
           buffers = {
-            path_display = formattedName,
             mappings = {
               i = {
                 ['<c-d>'] = actions.delete_buffer,
@@ -112,38 +111,7 @@ return {
               height = 0.4,
               width = 0.6,
               prompt_position = 'top',
-              preview_cutoff = 120,
             },
-          },
-          current_buffer_fuzzy_find = {
-            previewer = true,
-            layout_config = {
-              prompt_position = 'top',
-              preview_cutoff = 120,
-            },
-          },
-          live_grep = {
-            only_sort_text = true,
-            previewer = true,
-            debounce = 100,
-            dynamic_preview_title = true,
-            disable_coordinates = true,
-            path_display = { "tail" },
-          },
-          grep_string = {
-            only_sort_text = true,
-            previewer = true,
-          },
-          lsp_references = {
-            show_line = false,
-            previewer = true,
-          },
-          treesitter = {
-            show_line = false,
-            previewer = true,
-          },
-          colorscheme = {
-            enable_preview = true,
           },
         },
         extensions = {
