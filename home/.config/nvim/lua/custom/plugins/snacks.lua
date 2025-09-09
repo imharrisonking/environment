@@ -8,19 +8,6 @@ return {
     dashboard = { enabled = true },
     explorer = { 
       enabled = true,
-      win = {
-        position = "float",
-        backdrop = 60,
-        height = 0.8,
-        width = 0.8,
-        border = "rounded",
-      },
-      -- Show hidden files by default
-      hidden = true,
-      -- Follow current file
-      follow = true,
-      -- Auto refresh when files change
-      refresh = true,
     },
     indent = { enabled = false },
     input = { enabled = true },
@@ -85,19 +72,17 @@ return {
     {
       "<leader>e",
       function()
-        Snacks.explorer()
+        Snacks.picker.files({ 
+          cwd = vim.uv.cwd(),
+          hidden = true,
+        })
       end,
-      desc = "Explorer (Float)",
+      desc = "File Picker (Float)",
     },
     {
-      "<leader><tab>",
+      "<leader><tab>", 
       function()
-        Snacks.explorer({
-          win = {
-            position = "left",
-            width = 35,
-          }
-        })
+        Snacks.explorer()
       end,
       desc = "Explorer (Sidebar)",
     },
