@@ -72,17 +72,18 @@ return {
     {
       "<leader>e",
       function()
-        Snacks.picker.files({ 
+        Snacks.picker.explorer({ 
           cwd = vim.uv.cwd(),
           hidden = true,
+          layout = { preset = "default" },
         })
       end,
-      desc = "File Picker (Float)",
+      desc = "File Explorer (Float)",
     },
     {
       "<leader><tab>", 
       function()
-        Snacks.explorer()
+        Snacks.explorer({ hidden = true })
       end,
       desc = "Explorer (Sidebar)",
     },
