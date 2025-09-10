@@ -19,18 +19,7 @@ return {
       enabled = true,
       sources = {
         files = { hidden = true },
-        grep = {
-          delay = 300, -- Wait for user to finish typing
-        },
-      },
-      win = {
-        input = {
-          keys = {
-            -- Disable any problematic key mappings
-            ["<C-c>"] = "close",
-            ["<Esc>"] = "close",
-          },
-        },
+        grep = {},
       },
     },
     quickfile = { enabled = true },
@@ -56,9 +45,16 @@ return {
     {
       "<leader>fi",
       function()
-        Snacks.picker.grep({ delay = 300 }) -- Wait for user to finish typing
+        Snacks.picker.grep()
       end,
       desc = "Find in Files (Snacks)",
+    },
+    {
+      "<leader>fg", -- Alternative telescope grep
+      function()
+        require('telescope.builtin').live_grep()
+      end,
+      desc = "Find in Files (Telescope)",
     },
     {
       "<leader>fa",

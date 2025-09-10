@@ -6,7 +6,11 @@ return {
     main = 'ibl',
     opts = {
       indent = {
-        char = "▏", -- Thinner line character
+        char = '▏', -- Thinner line character
+      },
+      scope = {
+        show_start = false,
+        show_end = false,
       },
     },
   },

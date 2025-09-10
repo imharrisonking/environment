@@ -43,10 +43,26 @@ api.nvim_create_autocmd('FileType', { pattern = 'man', command = [[nnoremap <buf
 local cursorGrp = api.nvim_create_augroup('CursorLine', { clear = true })
 api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
   pattern = '*',
-  command = 'set cursorline',
+  callback = function()
+    -- Skip snacks picker buffers
+    if vim.bo.filetype == 'snacks_picker_input' or vim.bo.filetype == 'snacks_picker_list' then
+      return
+    end
+    vim.cmd('set cursorline')
+  end,
   group = cursorGrp,
 })
-api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, { pattern = '*', command = 'set nocursorline', group = cursorGrp })
+api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, { 
+  pattern = '*', 
+  callback = function()
+    -- Skip snacks picker buffers
+    if vim.bo.filetype == 'snacks_picker_input' or vim.bo.filetype == 'snacks_picker_list' then
+      return
+    end
+    vim.cmd('set nocursorline')
+  end,
+  group = cursorGrp 
+})
 
 -- Enable spell checking for certain file types
 api.nvim_create_autocmd(
