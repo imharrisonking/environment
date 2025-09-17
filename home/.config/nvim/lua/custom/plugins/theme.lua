@@ -478,6 +478,9 @@ return {
               ['@lsp.type.struct'] = { link = 'TSType' },
               ['@lsp.type.type'] = { link = 'TSType' },
               ['@lsp.type.typeParameter'] = { link = 'TSTypeDefinition' },
+
+              -- C/C++ preprocessor highlighting
+              ['@keyword.import.cpp'] = { fg = colors.red, italic = false },
             }
           end,
           latte = function(colors)

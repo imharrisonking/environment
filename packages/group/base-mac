@@ -2,6 +2,7 @@
 autoconf
 automake
 make
+cmake
 pkg-config
 git
 curl
@@ -41,6 +42,9 @@ npm
 go
 rust
 openjdk
+# C++ development tools
+llvm
+gdb
 mysql-client
 postgresql
 mono

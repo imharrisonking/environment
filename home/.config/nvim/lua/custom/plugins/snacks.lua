@@ -72,6 +72,7 @@ return {
           cwd = vim.uv.cwd(),
           hidden = true,
           layout = { preset = "default" },
+          jump = { close = true },
         })
       end,
       desc = "File Explorer (Float)",

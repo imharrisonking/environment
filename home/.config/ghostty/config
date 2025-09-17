@@ -13,7 +13,6 @@ window-padding-x = 10
 window-padding-y = 0
 window-padding-balance = true
 macos-titlebar-style = hidden
-gtk-adwaita = false
 gtk-titlebar = false
 
 confirm-close-surface = false

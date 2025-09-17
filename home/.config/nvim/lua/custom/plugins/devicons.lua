@@ -49,6 +49,14 @@ return {
             name = 'JavaScript',
           },
 
+          -- C++ files
+          cpp = {
+            icon = icons.languages.Cpp,
+            color = '#7DAFA4',
+            cterm_color = '204',
+            name = 'CPlusPlus',
+          },
+
           -- -- Additional language files using your icons
           -- lua = {
           --   icon = icons.languages.Lua,

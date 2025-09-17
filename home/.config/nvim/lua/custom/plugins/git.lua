@@ -128,6 +128,11 @@ return {
         end,
         desc = "Git Diff HEAD",
       },
+      {
+        "<leader>Gv",
+        ":Gvdiffsplit!<CR>",
+        desc = "Git Vertical Diff Split",
+      },
     },
   },
   {
