@@ -79,6 +79,20 @@ return {
                 local venv = vim.fn.environ()['VIRTUAL_ENV'] or vim.fn.environ()['CONDA_DEFAULT_ENV']
                 if venv then
                   local env_name = vim.fn.fnamemodify(venv, ':t')
+                  
+                  -- Check for pyvenv.cfg to get the actual project name
+                  local pyvenv_cfg = venv .. '/pyvenv.cfg'
+                  if vim.fn.filereadable(pyvenv_cfg) == 1 then
+                    local lines = vim.fn.readfile(pyvenv_cfg)
+                    for _, line in ipairs(lines) do
+                      local project_name = line:match('^prompt = "?([^"]*)"?')
+                      if project_name then
+                        env_name = project_name
+                        break
+                      end
+                    end
+                  end
+                  
                   if not vim.g.python_version_cache then
                     local handle = io.popen 'python --version 2>&1'
                     if handle then
