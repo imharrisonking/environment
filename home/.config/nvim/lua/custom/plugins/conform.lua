@@ -55,9 +55,6 @@ return {
             dockerfile = { 'hadolint' },
         },
         formatters = {
-            ['clang-format'] = {
-                prepend_args = { '--style={IndentWidth: 4, UseTab: Never}' },
-            },
             prettier = {
                 prepend_args = { '--tab-width', '4', '--use-tabs', 'false' },
             },
