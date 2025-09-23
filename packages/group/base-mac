@@ -45,6 +45,7 @@ openjdk
 # C++ development tools
 llvm
 gdb
+meson
 mysql-client
 postgresql
 mono

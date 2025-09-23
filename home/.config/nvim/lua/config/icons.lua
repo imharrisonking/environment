@@ -1,6 +1,6 @@
 return {
     kind = {
-        Array = ' ',
+        Array = '',
         Boolean = ' ',
         Class = ' ',
         Color = ' ',
@@ -49,7 +49,7 @@ return {
         Diff = ' ',
         Repo = ' ',
         Octoface = ' ',
-        Branch = ' ',
+        Branch = '',
     },
     ui = {
         ArrowCircleDown = ' ',
