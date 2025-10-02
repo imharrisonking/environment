@@ -51,15 +51,15 @@ vim.opt.winborder = 'single' -- https://neovim.io/doc/user/options.html#'winbord
 -- vim.opt.laststatus = 0 -- Always display the status line
 
 vim.filetype.add {
-  extension = {
-    env = 'dotenv',
-  },
-  filename = {
-    ['.env'] = 'dotenv',
-    ['env'] = 'dotenv',
-  },
-  pattern = {
-    ['[jt]sconfig.*.json'] = 'jsonc',
-    ['%.env%.[%w_.-]+'] = 'dotenv',
-  },
+    extension = {
+        env = 'dotenv',
+    },
+    filename = {
+        ['.env'] = 'dotenv',
+        ['env'] = 'dotenv',
+    },
+    pattern = {
+        ['[jt]sconfig.*.json'] = 'jsonc',
+        ['%.env%.[%w_.-]+'] = 'dotenv',
+    },
 }
