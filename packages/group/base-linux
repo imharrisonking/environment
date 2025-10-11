@@ -28,6 +28,9 @@ traceroute
 iperf3
 lsof
 btop
+htop
+direnv
+zoxide
 ncdu
 pv
 speedtest-cli
@@ -40,8 +43,10 @@ stow
 python3
 python3-pip
 uv
+pipx
 nodejs
 npm
+typescript
 golang-go
 cargo
 rustc
@@ -59,3 +64,6 @@ elixir
 erlang
 tree
 lazygit
+# Python development tools (install via pipx after pipx is installed)
+# pipx install ruff
+# pipx install basedpyright
