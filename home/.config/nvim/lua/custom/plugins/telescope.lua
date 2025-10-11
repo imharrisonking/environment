@@ -61,6 +61,8 @@ return {
             prompt_position = 'top',
             preview_cutoff = 120,
           },
+          -- Disable dynamic preview which might cause cursor jumping
+          dynamic_preview_title = false,
           vimgrep_arguments = {
             'rg',
             '--color=never',
@@ -91,7 +93,7 @@ return {
             hidden = true,
           },
         live_grep = {
-          debounce = 300, -- Wait for user to finish typing
+          -- Remove debounce completely to test
         },
           grep_string = {
             previewer = true,
