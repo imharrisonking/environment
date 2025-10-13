@@ -151,11 +151,29 @@ return {
           },
         },
       }
-      telescope.load_extension 'fzf'
-      telescope.load_extension 'ui-select'
-      telescope.load_extension 'frecency'
-      telescope.load_extension 'undo'
-      telescope.load_extension 'git_file_history'
+      local function safe_load(ext)
+        local ok, err = pcall(telescope.load_extension, ext)
+        if not ok then
+          if ext == 'fzf' and vim.fn.executable('make') == 1 then
+            -- Attempt to (re)build fzf-native automatically if missing
+            local fzf_root = vim.fn.stdpath('data') .. '/lazy/telescope-fzf-native.nvim'
+            if vim.loop.fs_stat(fzf_root .. '/Makefile') and not vim.loop.fs_stat(fzf_root .. '/build/libfzf.so') then
+              vim.fn.system({'make'}, fzf_root)
+              ok = pcall(telescope.load_extension, ext)
+              if ok then return end
+            end
+          end
+          vim.schedule(function()
+            vim.notify(('telescope: failed to load extension %s: %s'):format(ext, err), vim.log.levels.WARN)
+          end)
+        end
+      end
+
+      safe_load 'fzf'
+      safe_load 'ui-select'
+      safe_load 'frecency'
+      safe_load 'undo'
+      safe_load 'git_file_history'
     end,
     keys = {
       -- Keep these for now, but you can remove them if you prefer Snacks entirely

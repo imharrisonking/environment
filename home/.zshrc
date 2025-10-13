@@ -85,7 +85,7 @@ then
 fi
 
 # Development environment
-source ~/dev/.env
+[ -f ~/dev/.env ] && source ~/dev/.env
 
 # FZF configuration
 if [[ "$OSTYPE" == "linux"* ]]; then
@@ -97,6 +97,10 @@ fi
 # Development tools PATH
 export PATH=$HOME/.sst/bin:$PATH
 export PATH=$HOME/.opencode/bin:$PATH
+# bob-nvim version manager
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
+bob use >/dev/null 2>&1 || true
 
 # Zoxide initialization
 eval "$(zoxide init zsh)"
