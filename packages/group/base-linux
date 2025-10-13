@@ -57,6 +57,7 @@ dmidecode
 elixir
 erlang
 tree
+
 # Python development tools (install via pipx after pipx is installed)
 # pipx install ruff
 # pipx install basedpyright

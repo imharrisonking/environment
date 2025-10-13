@@ -50,7 +50,7 @@ mysql-client
 postgresql
 mono
 tree
-lazygit
+
 # Python development tools (install via pipx after pipx is installed)
 # pipx install ruff
 # pipx install basedpyright

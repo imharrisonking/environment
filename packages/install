@@ -134,10 +134,36 @@ if ! command -v gh &> /dev/null; then
     sudo apt install -y gh
 fi
 
+# Lazygit (manual install to control version and arch)
+if ! command -v lazygit &> /dev/null; then
+    echo "Installing lazygit..."
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        brew install lazygit
+    else
+        ARCH=$(uname -m)
+        if [[ "$ARCH" == "x86_64" ]]; then
+            LG_ARCH="x86_64"
+        elif [[ "$ARCH" == "aarch64" || "$ARCH" == "arm64" ]]; then
+            LG_ARCH="arm64"
+        else
+            echo "Unsupported architecture for lazygit: $ARCH" >&2
+            LG_ARCH=""
+        fi
+        if [[ -n "$LG_ARCH" ]]; then
+            LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": *"v\K[^"]*')
+            echo "Latest lazygit version: $LAZYGIT_VERSION ($LG_ARCH)"
+            curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_${LG_ARCH}.tar.gz"
+            tar xf lazygit.tar.gz lazygit
+            sudo install lazygit -D -t /usr/local/bin/
+            rm -f lazygit.tar.gz lazygit
+        fi
+    fi
+fi
+
 # Install via npm (global packages)
 if command -v npm &> /dev/null; then
     echo "Installing npm packages..."
-    sudo npm install -g typescript pnpm opencode-ai
+    npm install -g typescript pnpm opencode-ai
 fi
 
 # Install Rust and Cargo packages
