@@ -8,6 +8,11 @@ return {
     dashboard = { enabled = true },
     explorer = { 
       enabled = true,
+      git_untracked = true,
+      git_status = true,
+      git_status_open = true,
+      hidden = true,
+      ignored = false,
     },
     indent = { enabled = false },
     input = { enabled = true },
@@ -71,6 +76,10 @@ return {
         Snacks.picker.explorer({ 
           cwd = vim.uv.cwd(),
           hidden = true,
+          git_untracked = true,
+          git_status = true,
+          git_status_open = true,
+          ignored = false,
           layout = { preset = "default" },
           jump = { close = true },
         })
@@ -80,7 +89,13 @@ return {
     {
       "<leader><tab>", 
       function()
-        Snacks.explorer({ hidden = true })
+        Snacks.explorer({ 
+          hidden = true,
+          git_untracked = true,
+          git_status = true,
+          git_status_open = true,
+          ignored = false,
+        })
       end,
       desc = "Explorer (Sidebar)",
     },

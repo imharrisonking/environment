@@ -38,6 +38,7 @@ return {
                 "shellcheck",     -- Shell linter (works with system shell)
                 "markdownlint",   -- Markdown linting
                 "jsonlint",       -- JSON linting
+                "mdx-analyzer",   -- MDX language server
             },
         },
         config = function(_, opts)

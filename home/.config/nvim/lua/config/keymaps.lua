@@ -93,3 +93,7 @@ vim.keymap.set("n", "<leader>gt", ':lua require("config.utils").toggle_go_test()
 vim.keymap.set("v", "<leader>ln", ':lua require("config.utils").get_highlighted_line_numbers()<CR>', opts)
 
 vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", opts)
+-- Toggle line comment (like VSCode Cmd+/)
+vim.keymap.set("n", "<D-/>", "gcc", { desc = "Toggle line comment", remap = true })
+vim.keymap.set("v", "<D-/>", "gc", { desc = "Toggle block comment", remap = true })
+vim.keymap.set("i", "<D-/>", "<Esc>I<C-o>gcc<Esc>A", { desc = "Toggle line comment in insert mode" })

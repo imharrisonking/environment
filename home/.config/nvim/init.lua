@@ -88,6 +88,13 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Set filetype for MDX files (must be very early)
+vim.filetype.add({
+  extension = {
+    mdx = 'markdown',
+  },
+})
+
 -- Ensure Mason bin directory is in PATH early
 local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
 local current_path = vim.env.PATH or ""
