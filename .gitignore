@@ -11,3 +11,7 @@ corporate_certs.pem
 
 # macOS
 .DS_Store
+
+# Runtime/cache directories
+home/.config/btop/
+home/.config/sst/
