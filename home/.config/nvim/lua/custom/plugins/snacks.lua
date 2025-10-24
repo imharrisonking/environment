@@ -80,7 +80,7 @@ return {
           git_status = true,
           git_status_open = true,
           ignored = false,
-          layout = { preset = "default" },
+          layout = { preset = "default", preview = true },
           jump = { close = true },
         })
       end,
