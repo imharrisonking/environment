@@ -4,4 +4,4 @@
 	name = imharrisonking
 	email = hi@harrisonk.ing
 [pull]
-	ff = only
+	ff = false
