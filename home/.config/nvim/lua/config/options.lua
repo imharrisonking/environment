@@ -23,7 +23,7 @@ vim.opt.termguicolors = true -- set term gui colors (most terminals support this
 vim.opt.timeoutlen = 1000 -- time to wait for a mapped sequence to complete (in milliseconds)
 vim.opt.undofile = true -- enable persistent undo
 vim.opt.undodir = vim.fn.stdpath 'data' .. '/undo' -- set an undo directory
-vim.opt.updatetime = 100 -- faster completion (4000ms default)
+vim.opt.updatetime = 300 -- faster completion (4000ms default)
 vim.opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 vim.opt.expandtab = true -- convert tabs to spaces
 vim.opt.shiftwidth = 4 -- the number of spaces inserted for each indentation
@@ -43,7 +43,7 @@ vim.opt.title = true -- set the title of window to the value of the titlestring
 vim.opt.confirm = true -- confirm to save changes before exiting modified buffer
 vim.opt.fillchars = { eob = ' ' } -- change the character at the end of buffer
 -- vim.opt.winborder = "rounded" -- solid
-vim.opt.winborder = 'single' -- https://neovim.io/doc/user/options.html#'winborder'
+-- vim.opt.winborder = 'single' -- https://neovim.io/doc/user/options.html#'winborder'
 
 -- vim.opt.guicursor = ""                          -- set the cursor to be a vertical bar
 

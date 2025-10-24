@@ -1,7 +1,7 @@
 [init]
 	defaultBranch = main
 [user]
-	name = Harrison King
+	name = imharrisonking
 	email = hi@harrisonk.ing
 [pull]
 	rebase = false

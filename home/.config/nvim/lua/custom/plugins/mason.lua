@@ -9,7 +9,7 @@ return {
             ensure_installed = {
                 -- LSP servers (only for installed languages)
                 "lua-language-server",         -- Lua LSP
-                "typescript-language-server",  -- TypeScript LSP
+                "vtsls",                       -- TypeScript LSP (using vtsls instead of ts_ls)
                 "tailwindcss-language-server", -- Tailwind CSS LSP
                 "html-lsp",                    -- HTML LSP
                 "css-lsp",                     -- CSS LSP

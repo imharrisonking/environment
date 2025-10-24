@@ -24,7 +24,7 @@ function M.verify_tools()
     print("")
     local mason_tools = {
         -- LSP Servers (Mason-managed)
-        "lua-language-server", "typescript-language-server",
+        "lua-language-server", "vtsls",
         "tailwindcss-language-server", "html-lsp", "css-lsp",
         "vue-language-server", "ruff", "basedpyright",
 

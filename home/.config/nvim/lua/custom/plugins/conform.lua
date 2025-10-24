@@ -26,7 +26,7 @@ return {
             go = { 'goimports', 'gofmt' },
 
             -- Lua
-            lua = { 'stylua' },
+            lua = (vim.fn.executable('stylua') == 1) and { 'stylua' } or {},
 
             -- Web technologies
             javascript = { 'prettier' },

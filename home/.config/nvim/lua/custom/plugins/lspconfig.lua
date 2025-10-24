@@ -108,6 +108,9 @@ return {
     require('mason-lspconfig').setup {
       handlers = {
         function(server_name)
+          if server_name == 'ts_ls' then
+            return
+          end
           lspconfig[server_name].setup { capabilities = capabilities }
         end,
 
@@ -208,7 +211,15 @@ return {
         ['vtsls'] = function()
           lspconfig.vtsls.setup {
             capabilities = capabilities,
-            root_dir = lspconfig.util.root_pattern('.git', 'pnpm-workspace.yaml', 'pnpm-lock.yaml', 'yarn.lock', 'package-lock.json', 'bun.lockb'),
+            root_dir = lspconfig.util.root_pattern(
+              'package-lock.json', 
+              'yarn.lock', 
+              'pnpm-lock.yaml', 
+              'bun.lockb', 
+              'bun.lock',
+              'package.json',
+              '.git'
+            ),
             settings = {
               typescript = {
                 preferences = {

@@ -28,6 +28,9 @@ traceroute
 iperf3
 lsof
 btop
+htop
+direnv
+zoxide
 ncdu
 pv
 speedtest-cli
@@ -37,8 +40,10 @@ sshfs
 stow
 python3
 uv
+pipx
 node
 npm
+typescript
 go
 rust
 openjdk
@@ -50,7 +55,10 @@ mysql-client
 postgresql
 mono
 tree
-lazygit
+
+# Python development tools (install via pipx after pipx is installed)
+# pipx install ruff
+# pipx install basedpyright
 # AI development tools
 opencode
 # macOS-specific alternatives
