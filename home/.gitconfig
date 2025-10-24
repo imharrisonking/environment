@@ -4,4 +4,4 @@
 	name = Harrison King
 	email = hi@harrisonk.ing
 [pull]
-	ff = only
+	rebase = false
