@@ -5,3 +5,4 @@
 	email = hi@harrisonk.ing
 [pull]
 	ff = false
+	rebase = false

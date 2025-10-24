@@ -5,3 +5,8 @@ nvim
 
 spell/
 lazy-lock.json
+
+# Node.js dependencies for MDX LSP support
+package.json
+package-lock.json
+node_modules/

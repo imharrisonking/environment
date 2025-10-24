@@ -98,6 +98,8 @@ return {
         'basedpyright',
         'html',
         'marksman',
+        'clangd',
+        'mdx_analyzer',
       },
       automatic_installation = true,
     }
@@ -243,6 +245,52 @@ return {
                   propertyDeclarationTypes = { enabled = true },
                   functionLikeReturnTypes = { enabled = true },
                   enumMemberValues = { enabled = true },
+                },
+              },
+            },
+          }
+        end,
+
+        ['clangd'] = function()
+          lspconfig.clangd.setup {
+            capabilities = capabilities,
+            cmd = {
+              'clangd',
+              '--background-index',
+              '--clang-tidy',
+              '--header-insertion=iwyu',
+              '--completion-style=detailed',
+              '--function-arg-placeholders',
+              '--fallback-style=llvm',
+            },
+            init_options = {
+              usePlaceholders = true,
+              completeUnimported = true,
+              clangdFileStatus = true,
+            },
+            root_dir = lspconfig.util.root_pattern(
+              '.clangd',
+              '.clang-tidy',
+              '.clang-format',
+              'compile_commands.json',
+              'compile_flags.txt',
+              'configure.ac',
+              '.git'
+            ),
+          }
+        end,
+
+        ['mdx_analyzer'] = function()
+          lspconfig.mdx_analyzer.setup {
+            capabilities = capabilities,
+            cmd = { vim.fn.stdpath('data') .. '/mason/bin/mdx-language-server', '--stdio' },
+            root_dir = lspconfig.util.root_pattern('package.json', '.git'),
+            filetypes = { 'mdx' },
+            settings = {
+              mdx = {
+                validate = true,
+                experimentalFeatures = {
+                  frontmatter = true,
                 },
               },
             },

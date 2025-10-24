@@ -4,7 +4,7 @@ return {
     ensure_installed = {
       "vim", "lua", "vimdoc",
       "html", "css", "typescript", "javascript", "tsx", "python", "json", "yaml", "markdown", "markdown_inline",
-      "bash", "c", "diff", "luadoc", "query"
+      "bash", "c", "cpp", "diff", "luadoc", "query"
     },
     highlight = {
       enable = true,

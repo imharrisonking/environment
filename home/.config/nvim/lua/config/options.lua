@@ -51,15 +51,15 @@ vim.opt.fillchars = { eob = ' ' } -- change the character at the end of buffer
 -- vim.opt.laststatus = 0 -- Always display the status line
 
 vim.filetype.add {
-  extension = {
-    env = 'dotenv',
-  },
-  filename = {
-    ['.env'] = 'dotenv',
-    ['env'] = 'dotenv',
-  },
-  pattern = {
-    ['[jt]sconfig.*.json'] = 'jsonc',
-    ['%.env%.[%w_.-]+'] = 'dotenv',
-  },
+    extension = {
+        env = 'dotenv',
+    },
+    filename = {
+        ['.env'] = 'dotenv',
+        ['env'] = 'dotenv',
+    },
+    pattern = {
+        ['[jt]sconfig.*.json'] = 'jsonc',
+        ['%.env%.[%w_.-]+'] = 'dotenv',
+    },
 }

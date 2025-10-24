@@ -1,5 +1,12 @@
 local api = vim.api
 
+-- Set filetype for MDX files (must be at the top)
+vim.filetype.add({
+  extension = {
+    mdx = 'mdx',
+  },
+})
+
 -- don't auto comment new line
 api.nvim_create_autocmd('BufEnter', { command = [[set formatoptions-=cro]] })
 
@@ -76,6 +83,8 @@ api.nvim_create_autocmd(
     end,
   }
 )
+
+
 
 -- vim.api.nvim_create_autocmd("ColorScheme", {
 --   callback = function()

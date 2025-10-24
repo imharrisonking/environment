@@ -16,12 +16,14 @@ return {
                 "vue-language-server",         -- Vue LSP
                 "ruff",                        -- Python linter/formatter
                 "basedpyright",                -- Python LSP for type checking
+                "clangd",                      -- C++ LSP server
 
                 -- Formatters (only for installed languages)
                 "stylua",         -- Lua formatter
                 "prettier",       -- JS/TS/JSON/HTML/CSS formatter
                 "black",          -- Python formatter
                 "isort",          -- Python import sorter
+                "clang-format",   -- C++ formatter
 
                 -- Linters (only for installed languages)
                 "eslint_d",       -- JS/TS linting
@@ -30,11 +32,13 @@ return {
 
                 -- Debuggers (only for installed languages)
                 "debugpy",        -- Python debugger
+                "codelldb",       -- C++ debugger
 
                 -- System tools (don't require specific language toolchains)
                 "shellcheck",     -- Shell linter (works with system shell)
                 "markdownlint",   -- Markdown linting
                 "jsonlint",       -- JSON linting
+                "mdx-analyzer",   -- MDX language server
             },
         },
         config = function(_, opts)
