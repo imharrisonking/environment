@@ -1,18 +1,34 @@
+-- Custom jupytext integration using CLI (more reliable than the nvim plugin)
+vim.api.nvim_create_autocmd({"BufReadPost"}, {
+  pattern = "*.ipynb",
+  callback = function()
+    -- Use vim.schedule to avoid blocking
+    vim.schedule(function()
+      local file = vim.fn.expand("%:p")  -- Use full path
+      local cmd = string.format("jupytext --to=py --output=- %s", vim.fn.shellescape(file))
+      
+      -- Run jupytext and get output
+      local result = vim.fn.system(cmd)
+      
+      if vim.v.shell_error == 0 and result and result ~= "" then
+        -- Clear buffer and set content
+        local lines = vim.split(result, "\n", { plain = true })
+        vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
+        -- Set filetype to python for syntax highlighting
+        vim.bo.filetype = "python"
+        -- Mark buffer as not modified
+        vim.bo.modified = false
+        -- Make buffer read-only to prevent accidental changes
+        vim.bo.readonly = true
+        vim.notify("Jupyter notebook converted to Python format", vim.log.levels.INFO)
+      else
+        vim.notify("Failed to convert notebook: " .. (result or "unknown error"), vim.log.levels.ERROR)
+      end
+    end)
+  end,
+})
+
 return {
-  -- Jupytext for .ipynb file handling
-  {
-    "GCBallesteros/jupytext.nvim",
-    config = function()
-      require("jupytext").setup({
-        style = "percent",
-        output_extension = "py",
-        force_ft = "python",
-        custom_language_formatting = {},
-      })
-    end,
-    ft = { "ipynb" },
-  },
-  
   -- Molten for code execution
   {
     "benlubas/molten-nvim",

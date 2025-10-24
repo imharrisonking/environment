@@ -92,6 +92,7 @@ vim.g.maplocalleader = " "
 vim.filetype.add({
   extension = {
     mdx = 'markdown',
+    ipynb = 'ipynb',
   },
 })
 
