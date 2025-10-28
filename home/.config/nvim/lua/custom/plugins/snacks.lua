@@ -13,6 +13,7 @@ return {
       git_status_open = true,
       hidden = true,
       ignored = false,
+      respect_gitignore = false,
     },
     indent = { enabled = false },
     input = { enabled = true },
@@ -23,7 +24,11 @@ return {
     picker = {
       enabled = true,
       sources = {
-        files = { hidden = true },
+        files = { 
+          hidden = true,
+          ignored = false,
+          respect_gitignore = false,
+        },
         grep = {},
       },
     },
@@ -43,7 +48,12 @@ return {
     {
       "<leader>ff",
       function()
-        Snacks.picker.files()
+        Snacks.picker.files({ 
+          hidden = true,
+          ignored = true,
+          no_ignore = true,
+          no_ignore_vcs = true,
+        })
       end,
       desc = "Find Files (Snacks)",
     },
@@ -76,10 +86,12 @@ return {
         Snacks.picker.explorer({ 
           cwd = vim.uv.cwd(),
           hidden = true,
+          ignored = true,
+          no_ignore = true,
+          no_ignore_vcs = true,
           git_untracked = true,
           git_status = true,
           git_status_open = true,
-          ignored = false,
           layout = { preset = "default", preview = true },
           jump = { close = true },
         })
