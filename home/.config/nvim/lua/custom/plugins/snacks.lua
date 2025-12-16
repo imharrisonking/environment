@@ -50,9 +50,8 @@ return {
       function()
         Snacks.picker.files({ 
           hidden = true,
-          ignored = true,
-          no_ignore = true,
-          no_ignore_vcs = true,
+          ignored = false,
+          respect_gitignore = true,
         })
       end,
       desc = "Find Files (Snacks)",

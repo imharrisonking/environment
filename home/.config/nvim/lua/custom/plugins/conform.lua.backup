@@ -36,6 +36,7 @@ return {
             json = { 'prettier' },
             jsonc = { 'prettier' },
             yaml = { 'prettier' },
+            markdown = { 'prettier' },
             html = { 'prettier' },
             css = { 'prettier' },
             scss = { 'prettier' },

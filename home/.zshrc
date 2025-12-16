@@ -117,6 +117,11 @@ if [ -f "$HOME/.certs/uv-certs.pem" ]; then
   export CURL_CA_BUNDLE="$HOME/.certs/uv-certs.pem"
 fi
 
+# Neovim LSP log cleanup function
+nvim-log-cleanup() {
+    ~/.local/bin/nvim-log-cleanup.sh
+}
+
 # NVM configuration
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
