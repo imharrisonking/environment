@@ -15,3 +15,7 @@ corporate_certs.pem
 # Runtime/cache directories
 home/.config/btop/
 home/.config/sst/
+
+# Dependencies and build output
+node_modules/
+.sst/

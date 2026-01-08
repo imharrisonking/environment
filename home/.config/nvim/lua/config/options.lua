@@ -63,3 +63,7 @@ vim.filetype.add {
         ['%.env%.[%w_.-]+'] = 'dotenv',
     },
 }
+
+-- Set LSP log level to reduce log verbosity (prevents huge log files)
+-- Available levels: TRACE, DEBUG, INFO, WARN, ERROR, OFF
+vim.lsp.set_log_level('WARN')

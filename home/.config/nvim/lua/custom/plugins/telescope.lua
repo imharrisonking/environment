@@ -52,7 +52,7 @@ return {
           previewer = false,
           prompt_prefix = ' ' .. icons.ui.Telescope .. ' ',
           selection_caret = icons.ui.BoldArrowRight .. ' ',
-          file_ignore_patterns = { 'node_modules', 'package-lock.json' },
+          file_ignore_patterns = { 'node_modules', '.sst', 'package-lock.json' },
           initial_mode = 'insert',
           sorting_strategy = 'ascending',
           color_devicons = true,
