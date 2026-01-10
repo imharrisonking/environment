@@ -28,23 +28,6 @@
             }
         }
     },
-    "agent": {
-        "playwright-ui": {
-            "description": "Browser-required UI/frontend tasks: checks, page navigation, element cloning, dev server/console inspections",
-            "model": "zen:glm-4.7",
-            "tools": {
-                "playwright": true
-            }
-        }
-    },
-    "rules": {
-        "routing": [
-            {
-                "match": ["playwright", "browser", "ui check", "frontend check", "page navigation", "element cloning", "dev server", "console logs"],
-                "agent": "playwright-ui"
-            }
-        ]
-    },
     "mcp": {
         "playwright": {
             "type": "local",
