@@ -1,12 +1,13 @@
 {
     "$schema": "https://opencode.ai/config.json",
     "theme": "gruvbox-material-dark",
-    "model": "github-copilot/gpt-5",
+    "model": "opencode/glm-4.7-free",
     "keybinds": {
         "leader": "ctrl+x",
         "messages_half_page_up": "ctrl+u",
         "messages_half_page_down": "ctrl+d"
     },
+    "instructions": ["~/.config/opencode/rules/*.md"],
     "provider": {
         "openrouter": {
             "npm": "@openrouter/ai-sdk-provider",
@@ -24,7 +25,182 @@
         "zen": {
             "npm": "@opencode-ai/sdk",
             "models": {
-                "zen:glm-4.7": {}
+                "zen:glm-4.7": {},
+                "opencode/glm-4.7-free": {}
+            }
+        }
+    },
+    "agent": {
+        "boomerang": {
+            "mode": "primary",
+            "temperature": 0.3,
+            "description": "Orchestration agent that decomposes complex tasks and delegates to specialized subagents working in parallel",
+            "tools": {
+                "bash": true,
+                "edit": true,
+                "write": true,
+                "read": true,
+                "glob": true,
+                "grep": true,
+                "task": true,
+                "todowrite": true,
+                "todoread": true
+            }
+        },
+        "coder": {
+            "mode": "subagent",
+            "temperature": 0.2,
+            "description": "Implementation-focused subagent for coding tasks delegated by Boomerang orchestrator",
+            "tools": {
+                "bash": true,
+                "edit": true,
+                "write": true,
+                "read": true,
+                "glob": true,
+                "grep": true
+            }
+        },
+        "build": {
+            "mode": "primary",
+            "description": "Default development agent with all tools enabled",
+            "tools": {
+                "write": true,
+                "edit": true,
+                "bash": true,
+                "webfetch": true
+            }
+        },
+        "plan": {
+            "mode": "primary",
+            "description": "Restricted planning/analysis agent; no writes by default",
+            "permission": {
+                "edit": "ask",
+                "write": "ask",
+                "bash": {
+                    // File reading - comprehensive
+                    "ls *": "allow",
+                    "cat *": "allow",
+                    "head *": "allow",
+                    "tail *": "allow",
+                    "wc *": "allow",
+                    "file *": "allow",
+                    "stat *": "allow",
+                    "which *": "allow",
+                    "type *": "allow",
+                    "less *": "allow",
+                    "more *": "allow",
+                    "bat *": "allow",
+                    // Search/grep - comprehensive
+                    "rg *": "allow",
+                    "grep *": "allow",
+                    "find *": "allow",
+                    "fd *": "allow",
+                    "fzf *": "allow",
+                    "ag *": "allow",
+                    "ack *": "allow",
+                    // Git read-only
+                    "git status *": "allow",
+                    "git diff *": "allow",
+                    "git log *": "allow",
+                    "git show *": "allow",
+                    "git branch *": "allow",
+                    "git remote *": "allow",
+                    "git blame *": "allow",
+                    "git ls-files *": "allow",
+                    // JJ - all operations (safe with undo)
+                    "jj *": "allow",
+                    // Build tools (check/dry-run modes)
+                    "make -n *": "allow",
+                    "make": "allow",
+                    "make test *": "allow",
+                    "cargo check *": "allow",
+                    "cargo clippy *": "allow",
+                    "cargo test *": "allow",
+                    "cargo build *": "allow",
+                    "go vet *": "allow",
+                    "go build *": "allow",
+                    "go test *": "allow",
+                    // Linters/formatters
+                    "ruff *": "allow",
+                    "black *": "allow",
+                    "prettier *": "allow",
+                    "eslint *": "allow",
+                    "pylint *": "allow",
+                    "mypy *": "allow",
+                    "pytest *": "allow",
+                    // Package info
+                    "npm list *": "allow",
+                    "npm run *": "allow",
+                    "pip list *": "allow",
+                    "pip show *": "allow",
+                    "cargo tree *": "allow",
+                    "go list *": "allow",
+                    "uv *": "allow",
+                    "poetry *": "allow",
+                    // Nextflow ecosystem
+                    "nextflow *": "allow",
+                    "nf-core *": "allow",
+                    "nf-test *": "allow",
+                    "ast-grep *": "allow",
+                    "tw *": "allow",
+                    // Nix read-only
+                    "nix flake *": "allow",
+                    "nix eval *": "allow",
+                    "nix search *": "allow",
+                    "nix-store *": "allow",
+                    "hey *": "allow",
+                    // Task/project management
+                    "task *": "allow",
+                    "just *": "allow",
+                    // System info
+                    "uname *": "allow",
+                    "env": "allow",
+                    "printenv *": "allow",
+                    "date *": "allow",
+                    "date": "allow",
+                    "pwd": "allow",
+                    "whoami": "allow",
+                    "id": "allow",
+                    "ps *": "allow",
+                    // Text processing
+                    "jq *": "allow",
+                    "yq *": "allow",
+                    "awk *": "allow",
+                    "sed *": "allow",
+                    "sort *": "allow",
+                    "uniq *": "allow",
+                    "cut *": "allow",
+                    "tr *": "allow",
+                    // Network (read-only)
+                    "curl *": "allow",
+                    "wget *": "allow",
+                    "dig *": "allow",
+                    "ping *": "allow",
+                    // Docker/k8s read
+                    "docker ps *": "allow",
+                    "docker logs *": "allow",
+                    "docker images *": "allow",
+                    "kubectl get *": "allow",
+                    "kubectl describe *": "allow",
+                    "kubectl logs *": "allow",
+                    // Beads issue tracker (read-only)
+                    "bd list *": "allow",
+                    "bd show *": "allow",
+                    "bd search *": "allow",
+                    "bd count *": "allow",
+                    "bd status *": "allow",
+                    "bd graph *": "allow",
+                    "bd comments *": "allow",
+                    "bd stale *": "allow",
+                    "bd activity *": "allow",
+                    "bd duplicates *": "allow",
+                    "bd ready *": "allow",
+                    "bd stats *": "allow",
+                    "bd doctor *": "allow",
+                    // Everything else asks
+                    "*": "ask"
+                },
+                "list": "allow"
             }
         }
     },
@@ -38,6 +214,24 @@
                 "/snap/bin/chromium",
                 "--isolated"
             ],
+            "enabled": true
+        },
+        "websearch": {
+            "type": "remote",
+            "url": "https://mcp.exa.ai/mcp?tools=web_search_exa",
+            "enabled": true
+        },
+        "context7": {
+            "type": "remote",
+            "url": "https://mcp.context7.com/mcp",
+            "headers": {
+                "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+            },
+            "enabled": true
+        },
+        "grep_app": {
+            "type": "remote",
+            "url": "https://mcp.grep.app",
             "enabled": true
         }
     }
