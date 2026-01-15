@@ -1,7 +1,6 @@
 {
     "$schema": "https://opencode.ai/config.json",
     "theme": "gruvbox-material-dark",
-    "model": "opencode/glm-4.7-free",
     "keybinds": {
         "leader": "ctrl+x",
         "messages_half_page_up": "ctrl+u",
@@ -33,6 +32,7 @@
     "agent": {
         "boomerang": {
             "mode": "primary",
+      "model": "google/gemini-3-pro-high"
             "temperature": 0.3,
             "description": "Orchestration agent that decomposes complex tasks and delegates to specialized subagents working in parallel",
             "tools": {
@@ -49,6 +49,7 @@
         },
         "coder": {
             "mode": "subagent",
+            "model": "opencode/glm-4.7-free",
             "temperature": 0.2,
             "description": "Implementation-focused subagent for coding tasks delegated by Boomerang orchestrator",
             "tools": {
@@ -62,6 +63,7 @@
         },
         "build": {
             "mode": "primary",
+      "model": "google/gemini-3-pro-high"
             "description": "Default development agent with all tools enabled",
             "tools": {
                 "write": true,
@@ -78,6 +80,7 @@
         },
         "plan": {
             "mode": "primary",
+            "model": "opencode/glm-4.7-free",
             "description": "Restricted planning/analysis agent; no writes by default",
             "tools": {
                 "write": false,
@@ -156,6 +159,39 @@
                     "cargo install *": "deny",
                     "go install *": "deny",
                     // Allow everything else
+                    "*": "allow"
+                }
+            }
+        },
+        "ralph": {
+            "mode": "primary",
+            "temperature": 0.2,
+            "description": "Ralph Wiggum autonomous development agent",
+            "model": "google/gemini-3-pro-high",
+            "tools": {
+                "bash": true,
+                "edit": true,
+                "write": true,
+                "read": true,
+                "glob": true,
+                "grep": true,
+                "task": true,
+                "todowrite": true,
+                "todoread": true,
+                "webfetch": true
+            },
+            "permission": {
+                "bash": {
+                    "git add *": "allow",
+                    "git commit *": "allow",
+                    "git push *": "allow",
+                    "git tag *": "allow",
+                    "npm *": "allow",
+                    "bun *": "allow",
+                    "pnpm *": "allow",
+                    "cargo *": "allow",
+                    "go *": "allow",
+                    "python *": "allow",
                     "*": "allow"
                 }
             }

@@ -1,0 +1,16 @@
+# Build & Run
+[command]: [description]
+
+# Validation
+Test: [test command]
+Typecheck: [typecheck command]
+Lint: [lint command]
+Build: [build command]
+
+# Operational Notes
+- [succinct learning 1]
+- [succinct learning 2]
+
+# Codebase Patterns
+- [discovered pattern 1]
+- [discovered pattern 2]
