@@ -1,6 +1,7 @@
 ---
 description: The Builder Agent. Executes tasks from prd.json in a loop.
 mode: primary
+model: google/gemini-3-pro-preview
 tools:
   bash: true
   read: true

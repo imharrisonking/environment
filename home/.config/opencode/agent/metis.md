@@ -1,6 +1,7 @@
 ---
 description: Architecture & Planning agent. Generates the PRD and Execution Plan.
 mode: primary
+model: google/gemini-3-pro-preview
 tools:
   bash: true
   read: true
