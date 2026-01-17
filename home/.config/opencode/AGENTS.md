@@ -4,52 +4,17 @@ This directory contains custom agent definitions for OpenCode.
 
 ## Available Agents
 
-### Boomerang (`boomerang.md`)
-
-**Description**: Orchestration agent that decomposes complex tasks and delegates to specialized subagents working in parallel.
-
-**When to Use**:
-- Task has 3+ independent components that can run in parallel
-- Task requires different specialized approaches (exploration, coding, review)
-- Task is complex enough to benefit from divide-and-conquer
-- User explicitly asks for parallel work
-
-**Model**: Claude Sonnet 4.5
-**Temperature**: 0.3 (more focused)
-**Tools**: All tools enabled (bash, edit, write, read, glob, grep, task, todowrite, todoread)
-
-**Example Usage**: "Add authentication to this Express app" → Boomerang will break this into exploration, implementation, and testing tasks, delegate to parallel subagents.
-
----
-
 ### Coder (`coder.md`)
 
-**Description**: Implementation-focused subagent for coding tasks delegated by Boomerang orchestrator.
+**Description**: Implementation-focused subagent for coding tasks delegated by an orchestrator agent.
 
-**When to Use**: Invoked automatically by Boomerang for specific coding tasks. Also can be used directly for focused implementation work.
+**When to Use**: Invoked automatically by orchestration agent for specific coding tasks. Also can be used directly for focused implementation work.
 
-**Mode**: Subagent (typically invoked by Boomerang)
+**Mode**: Subagent (typically invoked by Ralph)
 **Temperature**: 0.2 (very focused, minimal creativity)
 **Tools**: bash, edit, write, read, glob, grep
 
 **Key Characteristic**: Stays focused on assigned task, doesn't expand scope unless necessary. Provides clear summaries of changes, decisions, and notes for orchestrator.
-
----
-
-### Cursor (`cursor.md`)
-
-**Description**: Uses external GPT-5 (Cursor) for deep research, second opinions, or bug fixing help.
-
-**When to Use**:
-- Need a different AI perspective on a problem
-- Deep research requiring GPT-5
-- Second opinion on an issue or bug
-- External consultation beyond current conversation context
-
-**Model**: GPT-5 (via external cursor-agent CLI)
-**Tool**: `cursor-agent` bash command
-
-**Usage**: Runs `cursor-agent -p "PROMPT"` to get fresh perspective from external GPT-5 instance.
 
 ---
 
@@ -90,7 +55,7 @@ This directory contains custom agent definitions for OpenCode.
 **When to Use**:
 - Frontend/UI checks, interactive website inspections
 - Localhost port inspection, browser console logs
-- Any mention of "playwright"
+- Any mention of "playwright", "frontend", "ui", "browser"
 - Website navigation, form filling, taking screenshots
 - Scraping, automating browser workflows
 
@@ -106,37 +71,6 @@ This directory contains custom agent definitions for OpenCode.
 4. **Different AI perspective** → Use **Cursor** agent
 5. **Browser interaction** → Use **Dev-Browser** agent
 
-## Task Tool (for Boomerang)
-
-Boomerang uses the `task` tool to spawn child sessions with specified agents:
-
-```typescript
-task(
-  title="Brief title",
-  prompt="Detailed task instructions",
-  agent="coder|explore|general", // Defaults to "coder"
-  wait=true // Wait for result (default: true)
-)
-```
-
-## Subagent Types
-
-- **coder**: Focused implementation (Coder agent)
-- **explore**: Fast codebase exploration
-- **general**: Full-capability agent
-
-## Parallel Task Execution
-
-Use `parallel` tool for multiple independent tasks:
-
-```typescript
-parallel([
-  { title: "Task 1", prompt: "...", agent: "coder" },
-  { title: "Task 2", prompt: "...", agent: "explore" }
-])
-```
-
-All tasks start simultaneously, results collected when complete.
 
 ## Session Navigation
 

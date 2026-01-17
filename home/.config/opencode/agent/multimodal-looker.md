@@ -1,6 +1,7 @@
 ---
 description: Visual analyst for multimodal content and artifact evaluation
 mode: subagent
+model: opencode/glm-4.7-free
 temperature: 0.3
 tools:
   bash: true

@@ -1,6 +1,7 @@
 ---
 description: Implementation-focused subagent for coding tasks delegated by Boomerang orchestrator
 mode: subagent
+model: opencode/glm-4.7-free
 temperature: 0.2
 tools:
   bash: true

@@ -1,6 +1,7 @@
 ---
 description: Component craftsman with focus on UI, UX, and design patterns
 mode: subagent
+model: opencode/glm-4.7-free
 temperature: 0.3
 tools:
   bash: true

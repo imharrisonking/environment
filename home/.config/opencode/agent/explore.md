@@ -1,6 +1,7 @@
 ---
 description: Fast codebase exploration and structural mapping
 mode: subagent
+model: opencode/grok-code
 temperature: 0.2
 tools:
   bash: true
