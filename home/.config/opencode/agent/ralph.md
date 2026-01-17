@@ -91,3 +91,17 @@ If ALL stories in `specs/prd.json` are `passes: true`, output: `<promise>COMPLET
 *   **Do NOT assume.** Verify everything.
 *   **Do NOT implement stubs.** Waste of effort.
 *   **Keep AGENTS.md clean.** Only add *operational* learnings, not status updates.
+    *   *Template:*
+        ```markdown
+        # AGENTS.md
+        ## Build & Run
+        - Install: `npm install`
+        - Dev: `npm run dev`
+        ## Validation
+        - Test: `npm test`
+        - Lint: `npm run lint`
+        ## Operational Notes
+        - [Gotchas, env vars, ports]
+        ## Codebase Patterns
+        - [Architecture decisions]
+        ```

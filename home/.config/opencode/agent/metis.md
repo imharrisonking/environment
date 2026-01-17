@@ -79,3 +79,6 @@ Output the **Execution Plan** matching this schema:
 ## Commands
 *   **Update Plan:** `write specs/prd.json`
 *   **Check Spec:** `read specs/some-feature.md`
+
+## Stop Condition
+If the `specs/prd.json` is fully generated, prioritized, and aligned with the specs/codebase, output: `<promise>PLAN COMPLETE</promise>`
