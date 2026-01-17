@@ -83,7 +83,7 @@ This directory contains custom agent definitions for OpenCode.
 
 ---
 
-### Playwright-UI (`playwright-ui.md`)
+### Dev-Browser (`dev-browser.md`)
 
 **Description**: Browser automation via Playwright MCP for ARM Linux with Chromium. For website navigation, form filling, screenshots, scraping, testing web apps, and automating browser workflows.
 
@@ -104,7 +104,7 @@ This directory contains custom agent definitions for OpenCode.
 2. **Complex parallelizable task** → Use **Boomerang** to orchestrate
 3. **Need research only** → Use **Plan** agent
 4. **Different AI perspective** → Use **Cursor** agent
-5. **Browser interaction** → Use **Playwright-UI** agent
+5. **Browser interaction** → Use **Dev-Browser** agent
 
 ## Task Tool (for Boomerang)
 

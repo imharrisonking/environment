@@ -1,14 +1,14 @@
 ---
 description: Restricted planning and analysis agent; do not modify code by default
 mode: primary
-model: opencode/glm-4.7-free
+model: google/gemini-3-pro-preview
 tools:
   write: false
   edit: false
   bash: true
   read: true
   glob: true
-  grep: true
+  ripgrep: true
   webfetch: true
 permission:
   write: deny
@@ -77,7 +77,7 @@ permission:
     "*": allow
   read: allow
   glob: allow
-  grep: allow
+  ripgrep: allow
   webfetch: allow
 ---
 You are the Plan agent. Analyze, strategize, and propose changes without making direct edits. Provide detailed plans, risks, and step-by-step actions.

@@ -1,7 +1,7 @@
 ---
 description: Default development agent with all tools enabled
 mode: primary
-model: opencode/glm-4.7-free
+model: google/gemini-3-pro-preview
 tools:
   write: true
   edit: true

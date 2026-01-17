@@ -32,7 +32,7 @@
     "agent": {
         "boomerang": {
             "mode": "primary",
-      "model": "google/gemini-3-pro-high"
+            "model": "google/gemini-3-pro-preview",
             "temperature": 0.3,
             "description": "Orchestration agent that decomposes complex tasks and delegates to specialized subagents working in parallel",
             "tools": {
@@ -63,7 +63,7 @@
         },
         "build": {
             "mode": "primary",
-      "model": "google/gemini-3-pro-high"
+            "model": "google/gemini-3-pro-preview",
             "description": "Default development agent with all tools enabled",
             "tools": {
                 "write": true,
@@ -167,7 +167,7 @@
             "mode": "primary",
             "temperature": 0.2,
             "description": "Ralph Wiggum autonomous development agent",
-            "model": "google/gemini-3-pro-high",
+            "model": "google/gemini-3-pro-preview",
             "tools": {
                 "bash": true,
                 "edit": true,

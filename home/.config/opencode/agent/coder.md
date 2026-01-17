@@ -8,7 +8,7 @@ tools:
   write: true
   read: true
   glob: true
-  grep: true
+  ripgrep: true
 ---
 
 # Coder - Implementation Subagent
