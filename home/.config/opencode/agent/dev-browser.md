@@ -1,7 +1,7 @@
 ---
 description: Inspect and test frontend/UI and websites interactively. Use for non-webfetch UI checks, localhost port inspection, browser console logs, and whenever 'playwright' is mentioned. Uses Playwright MCP tools.
 mode: subagent
-model: opencode/glm-4.7-free
+model: zhipuai-coding-plan/glm-4.7
 temperature: 0.3
 tools:
   write: false

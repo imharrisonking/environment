@@ -77,3 +77,12 @@ This directory contains custom agent definitions for OpenCode.
 Child sessions created by Boomerang are navigable:
 - `ctrl+right` → Navigate to child session
 - `ctrl+left` → Navigate back to parent session
+
+## Build & Run
+- [Ralph: Add build/run commands here]
+
+## Validation
+- [Ralph: Add test/lint commands here]
+
+## Operational Notes
+- [Ralph: Add patterns and gotchas here]

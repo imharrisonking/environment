@@ -8,6 +8,28 @@
         "messages_half_page_down": "ctrl+d"
     },
     "instructions": ["~/.config/opencode/rules/*.md"],
+    "provider": {
+        "openrouter": {
+            "npm": "@openrouter/ai-sdk-provider",
+            "models": {
+                "anthropic/claude-sonnet-4": {}
+            }
+        },
+        "ollama": {
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "baseURL": "http://localhost:11434/v1"
+            },
+            "models": {}
+        },
+        "zen": {
+            "npm": "@opencode-ai/sdk",
+            "models": {
+                "zen:glm-4.7": {},
+                "opencode/glm-4.7-free": {}
+            }
+        }
+    },
     "permission": {
         "skill": {
             "*": "allow"

@@ -1,7 +1,6 @@
 ---
 description: Default development agent with all tools enabled
 mode: primary
-model: google/gemini-3-pro-preview
 tools:
   write: true
   edit: true

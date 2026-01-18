@@ -1,7 +1,6 @@
 ---
 description: Documentation specialist for requirement management and knowledge retrieval
 mode: subagent
-model: opencode/glm-4.7-free
 temperature: 0.3
 tools:
   bash: true
