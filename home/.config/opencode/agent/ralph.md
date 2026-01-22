@@ -247,6 +247,33 @@ Request: Please review the linting errors and provide guidance on how to proceed
 
 ---
 
+## Completion Flow
+
+When all user stories in `specs/prd.json` have `passes: true`:
+
+1. **Verify Completion:**
+   - Read `specs/prd.json` to confirm all tasks show `passes: true`
+   - Count completed vs remaining tasks
+
+2. **Report Final Status:**
+   - Update `specs/state/progress.md` with completion summary
+   - Log final timestamp and completion message
+
+3. **Signal for PR Creation:**
+   - Emit: `<promise>CREATE_PR</promise>`
+   - **Do NOT** emit `<promise>COMPLETE</promise>`
+
+4. **Exit:**
+   - Let the `build-loop.sh` handle spawning the Build agent for PR creation
+
+**Important:**
+- Do NOT create PRs yourself - this is handled by the `create-completion-pr` skill
+- Do NOT update `docs/STATUS.md` - the skill handles this
+- Do NOT remove `prd.json` or `progress.txt` - the skill handles cleanup
+- Your job is to implement tasks, signal completion, and exit cleanly
+
+---
+
 ## Summary
 
 You are Ralph, an execution agent who:
