@@ -51,8 +51,9 @@ local cursorGrp = api.nvim_create_augroup('CursorLine', { clear = true })
 api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
   pattern = '*',
   callback = function()
-    -- Skip snacks picker buffers
-    if vim.bo.filetype == 'snacks_picker_input' or vim.bo.filetype == 'snacks_picker_list' then
+    -- Skip snacks picker and telescope buffers
+    if vim.bo.filetype == 'snacks_picker_input' or vim.bo.filetype == 'snacks_picker_list'
+      or vim.bo.filetype == 'TelescopePrompt' or vim.bo.filetype == 'TelescopeResults' then
       return
     end
     vim.cmd('set cursorline')
@@ -62,8 +63,9 @@ api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
 api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, { 
   pattern = '*', 
   callback = function()
-    -- Skip snacks picker buffers
-    if vim.bo.filetype == 'snacks_picker_input' or vim.bo.filetype == 'snacks_picker_list' then
+    -- Skip snacks picker and telescope buffers
+    if vim.bo.filetype == 'snacks_picker_input' or vim.bo.filetype == 'snacks_picker_list'
+      or vim.bo.filetype == 'TelescopePrompt' or vim.bo.filetype == 'TelescopeResults' then
       return
     end
     vim.cmd('set nocursorline')
@@ -177,7 +179,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
         buffer = event.buf,
         group = highlight_augroup,
-        callback = vim.lsp.buf.document_highlight,
+        callback = function()
+          -- Skip picker buffers to prevent cursor interference during live search
+          local ft = vim.bo[event.buf].filetype
+          if ft:match('picker') or ft:match('Telescope') then
+            return
+          end
+          vim.lsp.buf.document_highlight()
+        end,
       })
 
       vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {

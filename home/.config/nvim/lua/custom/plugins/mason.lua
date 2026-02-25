@@ -1,3 +1,9 @@
+-- Helper to detect unsupported platforms for certain Mason packages
+local function is_arm64_linux()
+    local uname = vim.loop.os_uname()
+    return uname.sysname == "Linux" and uname.machine == "aarch64"
+end
+
 return {
     {
         "williamboman/mason.nvim",
@@ -5,8 +11,8 @@ return {
         cmd = "Mason",
         keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
         build = ":MasonUpdate",
-        opts = {
-            ensure_installed = {
+        opts = function()
+            local ensure_installed = {
                 -- LSP servers (only for installed languages)
                 "lua-language-server",         -- Lua LSP
                 "vtsls",                       -- TypeScript LSP (using vtsls instead of ts_ls)
@@ -16,7 +22,6 @@ return {
                 "vue-language-server",         -- Vue LSP
                 "ruff",                        -- Python linter/formatter
                 "basedpyright",                -- Python LSP for type checking
-                "clangd",                      -- C++ LSP server
 
                 -- Formatters (only for installed languages)
                 "stylua",         -- Lua formatter
@@ -39,8 +44,16 @@ return {
                 "markdownlint",   -- Markdown linting
                 "jsonlint",       -- JSON linting
                 "mdx-analyzer",   -- MDX language server
-            },
-        },
+            }
+
+            -- clangd: Mason doesn't provide ARM64 Linux prebuilts
+            -- Install via `sudo apt install clangd` on ARM64 Linux
+            if not is_arm64_linux() then
+                table.insert(ensure_installed, "clangd")
+            end
+
+            return { ensure_installed = ensure_installed }
+        end,
         config = function(_, opts)
             require("mason").setup(opts)
             

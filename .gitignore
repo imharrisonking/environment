@@ -19,3 +19,7 @@ home/.config/sst/
 # Dependencies and build output
 node_modules/
 .sst/
+
+home/.config/gh/
+home/.config/.wrangler/
+home/.config/chromium/

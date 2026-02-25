@@ -32,3 +32,8 @@ This repository is primarily a dotfiles/configuration management system with no 
 - Focus on system configuration, shell scripts, and dotfile management
 - No traditional build/lint/test cycle - emphasis on functional shell scripts and valid configs
 - OpenCode commands provide development workflow automation via stow integration
+
+## Agent Hints
+- For frontend/UI checks, interactive website inspections, localhost ports, and browser console logs, use `@playwright-ui` with Playwright MCP tools.
+- Any mention of "playwright" should invoke `@playwright-ui`.
+- Subagents that previously used Anthropic Sonnet/Opus now use `github-copilot/gpt-5`.
