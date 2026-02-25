@@ -1,0 +1,7 @@
+# Yazi theme configuration file
+# See https://yazi-rs.github.io/docs/configuration/theme for more information
+
+[flavor]
+# Use gruvbox-material theme for both light and dark modes
+dark = "gruvbox-material"
+light = "gruvbox-material"

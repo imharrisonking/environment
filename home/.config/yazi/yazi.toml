@@ -1,0 +1,6 @@
+# Yazi configuration file
+# See https://yazi-rs.github.io/docs/configuration/yazi for more information
+
+[mgr]
+# Show hidden files by default
+show_hidden = true

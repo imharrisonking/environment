@@ -50,7 +50,14 @@ fi
 # Environment variables
 export ERL_AFLAGS="-kernel shell_history enabled"
 export EDITOR=nvim
-export BROWSER=google-chrome-stable
+
+# Browser configuration (OS-aware)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export BROWSER=open
+else
+    export BROWSER=google-chrome-stable
+fi
+
 export GOPATH=$HOME/dev/gopath
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
