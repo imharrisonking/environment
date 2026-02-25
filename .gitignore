@@ -21,3 +21,5 @@ node_modules/
 .sst/
 
 home/.config/gh/
+home/.config/.wrangler/
+home/.config/chromium/

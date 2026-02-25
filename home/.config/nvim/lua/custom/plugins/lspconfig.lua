@@ -87,20 +87,33 @@ return {
         })
 
         -- Mason setup
+        -- Helper to detect ARM64 Linux (Mason doesn't provide clangd for this platform)
+        local function is_arm64_linux()
+            local uname = vim.loop.os_uname()
+            return uname.sysname == "Linux" and uname.machine == "aarch64"
+        end
+
+        local servers = {
+            'astro',
+            'cssls',
+            'vtsls',
+            'cssmodules_ls',
+            'lua_ls',
+            'ruff',
+            'basedpyright',
+            'html',
+            'marksman',
+            'mdx_analyzer',
+        }
+
+        -- clangd: Mason doesn't provide ARM64 Linux prebuilts
+        -- Install via `sudo apt install clangd` on ARM64 Linux
+        if not is_arm64_linux() then
+            table.insert(servers, 'clangd')
+        end
+
         require('mason-lspconfig').setup {
-            ensure_installed = {
-                'astro',
-                'cssls',
-                'vtsls',
-                'cssmodules_ls',
-                'lua_ls',
-                'ruff',
-                'basedpyright',
-                'html',
-                'marksman',
-                'clangd',
-                'mdx_analyzer',
-            },
+            ensure_installed = servers,
             automatic_installation = true,
         }
 
@@ -143,13 +156,17 @@ return {
                 end,
 
                 ['basedpyright'] = function()
-                    -- Try uv run first (project-local), then fall back to global
+                    -- Use Mason-installed binary by default (most reliable)
                     local function get_basedpyright_cmd()
-                        -- Check if project has basedpyright
+                        local mason_bin = vim.fn.stdpath('data') .. '/mason/bin/basedpyright-langserver'
+                        if vim.fn.executable(mason_bin) == 1 then
+                            return { mason_bin, '--stdio' }
+                        end
+                        -- Fallback to project-local uv run
                         if vim.fn.isdirectory(vim.fn.getcwd() .. '/.venv') == 1 then
                             return { 'uv', 'run', 'basedpyright-langserver', '--stdio' }
                         end
-                        -- Fall back to global installation
+                        -- Last resort: global installation
                         return { 'basedpyright-langserver', '--stdio' }
                     end
 
@@ -215,22 +232,22 @@ return {
                             '.git'
                         ),
                         settings = {
-                            typescript = {
-                                preferences = {
-                                    importModuleSpecifier = 'relative',
+                                typescript = {
+                                    preferences = {
+                                        importModuleSpecifier = 'relative',
+                                    },
+                                    inlayHints = {
+                                        parameterNames = { enabled = 'literals' },
+                                        parameterTypes = { enabled = true },
+                                        variableTypes = { enabled = true },
+                                        propertyDeclarationTypes = { enabled = true },
+                                        functionLikeReturnTypes = { enabled = true },
+                                        enumMemberValues = { enabled = true },
+                                    },
+                                    tsserver = {
+                                        maxTsServerMemory = 4096,
+                                    },
                                 },
-                                inlayHints = {
-                                    parameterNames = { enabled = 'literals' },
-                                    parameterTypes = { enabled = true },
-                                    variableTypes = { enabled = true },
-                                    propertyDeclarationTypes = { enabled = true },
-                                    functionLikeReturnTypes = { enabled = true },
-                                    enumMemberValues = { enabled = true },
-                                },
-                                tsserver = {
-                                    maxTsServerMemory = 12288,
-                                },
-                            },
                             javascript = {
                                 inlayHints = {
                                     parameterNames = { enabled = 'literals' },

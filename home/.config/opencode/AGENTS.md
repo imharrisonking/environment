@@ -146,7 +146,7 @@ Outputs the Execution Plan with strict prioritization:
 - To track progress and handle dependencies
 
 **Mode**: Primary
-**Tools**: Comprehensive bash/read/write permissions, task orchestration, all playwright tools
+**Tools**: Comprehensive bash/read/write permissions, task orchestration, bash access for agent-browser CLI
 
 **Core Constraint: SINGLE TASK ITERATION**
 - An ITERATIVE agent running inside a loop
@@ -236,7 +236,7 @@ Outputs the Execution Plan with strict prioritization:
 
 ### Dev-Browser (`dev-browser.md`)
 
-**Description**: Browser automation via Playwright MCP for ARM Linux with Chromium. For website navigation, form filling, screenshots, scraping, testing web apps, and automating browser workflows.
+**Description**: Browser automation via agent-browser CLI for web testing, form filling, screenshots, and data extraction. For website navigation, form filling, screenshots, scraping, testing web apps, and automating browser workflows.
 
 **When to Use**:
 - Frontend/UI checks, interactive website inspections
@@ -245,9 +245,13 @@ Outputs the Execution Plan with strict prioritization:
 - Website navigation, form filling, taking screenshots
 - Scraping, automating browser workflows
 
-**Tools**: Playwright MCP browser tools
+**Tools**: bash access for agent-browser CLI commands
 
 ---
+
+## Agent Hints
+- For frontend/UI checks, interactive website inspections, localhost ports, and browser console logs, use `@dev-browser` with agent-browser CLI.
+- Any mention of "playwright", "browser", or browser automation should invoke `@dev-browser`.
 
 ## Agent Selection Guidelines
 
@@ -256,7 +260,6 @@ Outputs the Execution Plan with strict prioritization:
 3. **Need research only** → Use **Plan** agent
 4. **Different AI perspective** → Use **Cursor** agent
 5. **Browser interaction** → Use **Dev-Browser** agent
-
 
 ## Agent Skills
 

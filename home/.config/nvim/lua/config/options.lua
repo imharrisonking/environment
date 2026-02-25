@@ -20,10 +20,10 @@ vim.opt.splitbelow = true -- force all horizontal splits to go below current win
 vim.opt.splitright = true -- force all vertical splits to go to the right of current window
 vim.opt.swapfile = false -- creates a swapfile
 vim.opt.termguicolors = true -- set term gui colors (most terminals support this)
-vim.opt.timeoutlen = 1000 -- time to wait for a mapped sequence to complete (in milliseconds)
+vim.opt.timeoutlen = 300 -- time to wait for a mapped sequence to complete (in milliseconds)
 vim.opt.undofile = true -- enable persistent undo
 vim.opt.undodir = vim.fn.stdpath 'data' .. '/undo' -- set an undo directory
-vim.opt.updatetime = 300 -- faster completion (4000ms default)
+vim.opt.updatetime = 800 -- faster completion (4000ms default), reduced from 300 to lower LSP load
 vim.opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 vim.opt.expandtab = true -- convert tabs to spaces
 vim.opt.shiftwidth = 4 -- the number of spaces inserted for each indentation
@@ -67,3 +67,17 @@ vim.filetype.add {
 -- Set LSP log level to reduce log verbosity (prevents huge log files)
 -- Available levels: TRACE, DEBUG, INFO, WARN, ERROR, OFF
 vim.lsp.set_log_level('WARN')
+
+-- Rotate LSP log when it exceeds 5MB to prevent disk/memory bloat
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  callback = function()
+    local lsp_log = vim.fn.stdpath('state') .. '/lsp.log'
+    if vim.fn.filereadable(lsp_log) == 1 then
+      local size = vim.fn.getfsize(lsp_log)
+      if size > 5 * 1024 * 1024 then -- 5MB
+        vim.fn.writefile({}, lsp_log) -- Truncate log file
+      end
+    end
+  end,
+  desc = 'Rotate large LSP log on exit',
+})

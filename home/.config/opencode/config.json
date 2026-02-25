@@ -1,6 +1,6 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "model": "zai-coding-plan/glm-4.7",
+    "model": "zai-coding-plan/glm-5",
     "theme": "gruvbox-material-dark",
     "keybinds": {
         "leader": "ctrl+x",
@@ -13,26 +13,15 @@
             "*": "allow"
         }
     },
-    "server": {
-        "port": 4096,
-        "hostname": "0.0.0.0",
-        "mdns": true
-    },
     "mcp": {
-        "playwright": {
-            "type": "local",
-            "command": [
-                "npx",
-                "@playwright/mcp@latest",
-                "--executable-path",
-                "/snap/bin/chromium",
-                "--isolated"
-            ],
-            "enabled": true
-        },
         "websearch": {
             "type": "remote",
             "url": "https://mcp.exa.ai/mcp?tools=web_search_exa",
+            "enabled": true
+        },
+        "paper": {
+            "type": "remote",
+            "url": "http://127.0.0.1:29979/mcp",
             "enabled": true
         },
         "context7": {
@@ -48,5 +37,10 @@
             "url": "https://mcp.grep.app",
             "enabled": true
         }
+    },
+    "server": {
+        "port": 9999,
+        "hostname": "0.0.0.0",
+        "mdns": true
     }
 }

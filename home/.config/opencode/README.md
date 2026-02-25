@@ -27,7 +27,7 @@ This configuration includes several specialized agents:
 - **Coder** - Implementation-focused subagent
 - **Build** - Default development agent
 - **Plan** - Read-only analysis and planning
-- **Playwright-UI** - Browser automation for ARM Linux
+- **Dev-Browser** - Browser automation using agent-browser CLI
 
 See `AGENTS.md` for complete agent documentation.
 
@@ -40,7 +40,7 @@ Custom skills included in this configuration:
 - **python-scripts** - UV shebang templates for standalone Python scripts
 - **context7** - API and library documentation search
 - **grep-app** - Real-world code examples from GitHub
-- **playwright-arm** - Browser automation for ARM Linux
+- **agent-browser** - Browser automation via CLI
 - **websearch** - Real-time web search using Exa AI
 
 Each skill directory contains `SKILL.md` with detailed instructions and may include supporting documentation in `references/` subdirectories.

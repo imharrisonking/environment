@@ -1,7 +1,6 @@
 ---
 description: Project discovery and specification architect. Conducts deep interviews to generate high-quality project documentation.
 mode: primary
-model: google/gemini-3-pro-preview
 tools:
   bash: true
   read: true
