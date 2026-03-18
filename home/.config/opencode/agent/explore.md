@@ -1,7 +1,7 @@
 ---
 description: Fast codebase exploration and structural mapping
 mode: subagent
-model: opencode/grok-code
+"model": "github-copilot/gpt-5.1-mini"
 temperature: 0.2
 tools:
   bash: true

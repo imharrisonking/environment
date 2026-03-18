@@ -1,6 +1,6 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "model": "zai-coding-plan/glm-5",
+    "model": "github-copilot/gpt-4.1",
     "theme": "gruvbox-material-dark",
     "keybinds": {
         "leader": "ctrl+x",
@@ -37,10 +37,5 @@
             "url": "https://mcp.grep.app",
             "enabled": true
         }
-    },
-    "server": {
-        "port": 9999,
-        "hostname": "0.0.0.0",
-        "mdns": true
     }
 }

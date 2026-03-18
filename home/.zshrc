@@ -132,3 +132,4 @@ export PATH="/Users/harrisonking/.antigravity/antigravity/bin:$PATH"
 
 # opencode
 export PATH=/Users/harrisonking/.opencode/bin:$PATH
+export JIRA_API_TOKEN=ATATT3xFfGF0Doc7lGQvNVWeMMOWj3iue15u5LzDIKb2-guQE_DzrzssL-WxK4EA1Z80CnkwL-j-uc96yDEgstcfgQAT9vMxhTD8ztD1BlKEdU5ub9PNcuCsDvn_PQJRnH-ydO3izkXLiJowI66f1T381pFGdJro0A4W_G90XoSw_UPR1mBd9Gk=58D0D317
