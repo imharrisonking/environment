@@ -16,7 +16,51 @@ return {
             desc = 'Format buffer',
         },
     },
-    opts = {
+    opts = function()
+        local function has_tool_ruff(pyproject_path)
+            local lines = vim.fn.readfile(pyproject_path)
+            for _, line in ipairs(lines) do
+                if line:match('^%[tool%.ruff') then
+                    return true
+                end
+            end
+            return false
+        end
+
+        local function find_ruff_config(bufnr)
+            local file = vim.api.nvim_buf_get_name(bufnr)
+            if file == '' then
+                return nil
+            end
+
+            local start_dir = vim.fs.dirname(file)
+            if not start_dir then
+                return nil
+            end
+
+            local ruff_config = vim.fs.find({ 'ruff.toml', '.ruff.toml' }, {
+                upward = true,
+                path = start_dir,
+                type = 'file',
+            })[1]
+            if ruff_config then
+                return ruff_config
+            end
+
+            local pyproject = vim.fs.find({ 'pyproject.toml' }, {
+                upward = true,
+                path = start_dir,
+                type = 'file',
+            })[1]
+
+            if pyproject and has_tool_ruff(pyproject) then
+                return pyproject
+            end
+
+            return nil
+        end
+
+        return {
         formatters_by_ft = {
             -- C/C++
             c = { 'clang-format' },
@@ -54,6 +98,24 @@ return {
             dockerfile = { 'hadolint' },
         },
         formatters = {
+            ruff_format = {
+                condition = function(_, ctx)
+                    return find_ruff_config(ctx.buf) ~= nil
+                end,
+                prepend_args = function(_, ctx)
+                    local config = find_ruff_config(ctx.buf)
+                    return config and { '--config', config } or {}
+                end,
+            },
+            ruff_organize_imports = {
+                condition = function(_, ctx)
+                    return find_ruff_config(ctx.buf) ~= nil
+                end,
+                prepend_args = function(_, ctx)
+                    local config = find_ruff_config(ctx.buf)
+                    return config and { '--config', config } or {}
+                end,
+            },
             prettier = {
                 prepend_args = { '--tab-width', '4', '--use-tabs', 'false' },
             },
@@ -68,18 +130,25 @@ return {
             lsp_format = 'fallback',
         },
         format_on_save = function(bufnr)
-            -- Disable format_on_save for Python
-            local disable_filetypes = { python = true }
-            if disable_filetypes[vim.bo[bufnr].filetype] then
-                return nil
-            else
+            if vim.bo[bufnr].filetype == 'python' then
+                local ruff_config = find_ruff_config(bufnr)
+                if not ruff_config then
+                    return nil
+                end
+
                 return {
                     timeout_ms = 1000,
-                    lsp_format = 'fallback',
+                    lsp_format = 'never',
                 }
             end
+
+            return {
+                timeout_ms = 1000,
+                lsp_format = 'fallback',
+            }
         end,
-    },
+    }
+    end,
     init = function()
         vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
     end,
