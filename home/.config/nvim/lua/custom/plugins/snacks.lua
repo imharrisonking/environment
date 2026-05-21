@@ -306,11 +306,11 @@ return {
 
     -- Utility features
     {
-      "<leader>z",
+      "<leader>t",
       function()
-        Snacks.zen()
+        Snacks.terminal()
       end,
-      desc = "Toggle Zen Mode",
+      desc = "Toggle Terminal",
     },
     {
       "<leader>Z",
@@ -376,20 +376,7 @@ return {
       end,
       desc = "Dismiss All Notifications",
     },
-    {
-      "<c-/>",
-      function()
-        Snacks.terminal()
-      end,
-      desc = "Toggle Terminal",
-    },
-    {
-      "<c-_>",
-      function()
-        Snacks.terminal()
-      end,
-      desc = "which_key_ignore",
-    },
+
     {
       "]]",
       function()

@@ -21,6 +21,12 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
+-- Tab/Shift-Tab for indentation in INSERT and VISUAL mode
+vim.keymap.set("i", "<Tab>", "<C-t>", opts)
+vim.keymap.set("i", "<S-Tab>", "<C-d>", opts)
+vim.keymap.set("v", "<Tab>", ">gv", opts)
+vim.keymap.set("v", "<S-Tab>", "<gv", opts)
+
 -- paste over currently selected text without yanking it
 vim.keymap.set("v", "p", '"_dp')
 vim.keymap.set("v", "P", '"_dP')
