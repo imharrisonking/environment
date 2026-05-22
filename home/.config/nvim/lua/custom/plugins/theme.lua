@@ -19,12 +19,8 @@ return {
                     -- Leave all other class/type references unchanged.
                     hl['@lsp.typemod.class.definition'] = { link = 'Function' }
                     hl['@lsp.typemod.class.declaration'] = { link = 'Function' }
-                    hl['@lsp.typemod.class.defaultLibrary'] = { link = 'Function' }
                     hl['@lsp.typemod.struct.definition'] = { link = 'Function' }
                     hl['@lsp.typemod.struct.declaration'] = { link = 'Function' }
-                    hl['@lsp.type.class'] = { link = 'Function' }
-                    hl['@lsp.type.class.python'] = { link = 'Function' }
-                    hl['@type.python'] = { link = 'Function' }
 
                     -- Keep semantic-token constants visible as constants.
                     -- This affects enum members and readonly values while
