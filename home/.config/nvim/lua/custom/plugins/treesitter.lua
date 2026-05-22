@@ -12,4 +12,19 @@ return {
     },
     indent = { enable = true, disable = { "ruby" } },
   },
+  config = function(_, opts)
+    require('nvim-treesitter.configs').setup(opts)
+
+    -- Some sessions can fall back to legacy python syntax groups
+    -- (`pythonString`) until highlight is explicitly enabled for the buffer.
+    -- Force-enable Treesitter highlight for Python buffers so docstring
+    -- captures like `@string.documentation` are always available.
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'python',
+      group = vim.api.nvim_create_augroup('ForcePythonTreesitterHighlight', { clear = true }),
+      callback = function(args)
+        pcall(vim.treesitter.start, args.buf, 'python')
+      end,
+    })
+  end,
 }

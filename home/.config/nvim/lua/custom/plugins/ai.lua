@@ -1,3 +1,22 @@
+local function set_copilot_enabled(enabled)
+    if enabled then
+        vim.cmd 'Copilot enable'
+    else
+        vim.cmd 'Copilot disable'
+    end
+
+    vim.g.copilot_enabled = enabled
+    vim.notify('Copilot ' .. (enabled and 'enabled' or 'disabled'), vim.log.levels.INFO)
+end
+
+local function toggle_copilot()
+    local current = vim.g.copilot_enabled
+    if current == nil then
+        current = true
+    end
+    set_copilot_enabled(not current)
+end
+
 return {
     {
         'zbirenbaum/copilot.lua',
@@ -5,6 +24,13 @@ return {
         cmd = 'Copilot',
         build = ':Copilot auth',
         event = 'InsertEnter',
+        keys = {
+            {
+                '<leader>ua',
+                toggle_copilot,
+                desc = 'Toggle Copilot AI',
+            },
+        },
         config = function()
             require('copilot').setup {
                 panel = {
@@ -48,6 +74,9 @@ return {
                     ['.'] = false,
                 },
             }
+
+            -- Default on; allows runtime toggling via <leader>ua
+            vim.g.copilot_enabled = true
         end,
     },
 }

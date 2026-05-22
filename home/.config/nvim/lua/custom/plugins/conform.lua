@@ -1,3 +1,4 @@
+-- Used for code formatting supporting multiple formatters
 return {
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
@@ -20,7 +21,7 @@ return {
         local function has_tool_ruff(pyproject_path)
             local lines = vim.fn.readfile(pyproject_path)
             for _, line in ipairs(lines) do
-                if line:match('^%[tool%.ruff') then
+                if line:match '^%[tool%.ruff' then
                     return true
                 end
             end
@@ -61,93 +62,93 @@ return {
         end
 
         return {
-        formatters_by_ft = {
-            -- C/C++
-            c = { 'clang-format' },
-            cpp = { 'clang-format' },
+            formatters_by_ft = {
+                -- C/C++
+                c = { 'clang-format' },
+                cpp = { 'clang-format' },
 
-            -- Go
-            go = { 'goimports', 'gofmt' },
+                -- Go
+                go = { 'goimports', 'gofmt' },
 
-            -- Lua
-            lua = (vim.fn.executable('stylua') == 1) and { 'stylua' } or {},
+                -- Lua
+                lua = (vim.fn.executable 'stylua' == 1) and { 'stylua' } or {},
 
-            -- Web technologies
-            javascript = { 'prettier' },
-            typescript = { 'prettier' },
-            javascriptreact = { 'prettier' },
-            typescriptreact = { 'prettier' },
-            json = { 'prettier' },
-            jsonc = { 'prettier' },
-            yaml = { 'prettier' },
-            html = { 'prettier' },
-            css = { 'prettier' },
-            scss = { 'prettier' },
+                -- Web technologies
+                javascript = { 'prettier' },
+                typescript = { 'prettier' },
+                javascriptreact = { 'prettier' },
+                typescriptreact = { 'prettier' },
+                json = { 'prettier' },
+                jsonc = { 'prettier' },
+                yaml = { 'prettier' },
+                html = { 'prettier' },
+                css = { 'prettier' },
+                scss = { 'prettier' },
 
-            -- Python
-            python = { 'ruff_format', 'ruff_organize_imports' }, -- using ruff for both formatting and import sorting
+                -- Python
+                python = { 'ruff_format', 'ruff_organize_imports' }, -- using ruff for both formatting and import sorting
 
-            -- Shell
-            sh = { 'shfmt' },
-            bash = { 'shfmt' },
+                -- Shell
+                sh = { 'shfmt' },
+                bash = { 'shfmt' },
 
-            -- Other (system tools)
-            rust = { 'rustfmt' }, -- comes with Rust installations
+                -- Other (system tools)
+                rust = { 'rustfmt' }, -- comes with Rust installations
 
-            -- Docker
-            dockerfile = { 'hadolint' },
-        },
-        formatters = {
-            ruff_format = {
-                condition = function(_, ctx)
-                    return find_ruff_config(ctx.buf) ~= nil
-                end,
-                prepend_args = function(_, ctx)
-                    local config = find_ruff_config(ctx.buf)
-                    return config and { '--config', config } or {}
-                end,
+                -- Docker
+                dockerfile = { 'hadolint' },
             },
-            ruff_organize_imports = {
-                condition = function(_, ctx)
-                    return find_ruff_config(ctx.buf) ~= nil
-                end,
-                prepend_args = function(_, ctx)
-                    local config = find_ruff_config(ctx.buf)
-                    return config and { '--config', config } or {}
-                end,
+            formatters = {
+                ruff_format = {
+                    condition = function(_, ctx)
+                        return find_ruff_config(ctx.buf) ~= nil
+                    end,
+                    prepend_args = function(_, ctx)
+                        local config = find_ruff_config(ctx.buf)
+                        return config and { '--config', config } or {}
+                    end,
+                },
+                ruff_organize_imports = {
+                    condition = function(_, ctx)
+                        return find_ruff_config(ctx.buf) ~= nil
+                    end,
+                    prepend_args = function(_, ctx)
+                        local config = find_ruff_config(ctx.buf)
+                        return config and { '--config', config } or {}
+                    end,
+                },
+                prettier = {
+                    prepend_args = { '--tab-width', '4', '--use-tabs', 'false' },
+                },
+                stylua = {
+                    prepend_args = { '--indent-type', 'Spaces', '--indent-width', '4' },
+                },
+                shfmt = {
+                    prepend_args = { '-i', '4' },
+                },
             },
-            prettier = {
-                prepend_args = { '--tab-width', '4', '--use-tabs', 'false' },
+            default_format_opts = {
+                lsp_format = 'fallback',
             },
-            stylua = {
-                prepend_args = { '--indent-type', 'Spaces', '--indent-width', '4' },
-            },
-            shfmt = {
-                prepend_args = { '-i', '4' },
-            },
-        },
-        default_format_opts = {
-            lsp_format = 'fallback',
-        },
-        format_on_save = function(bufnr)
-            if vim.bo[bufnr].filetype == 'python' then
-                local ruff_config = find_ruff_config(bufnr)
-                if not ruff_config then
-                    return nil
+            format_on_save = function(bufnr)
+                if vim.bo[bufnr].filetype == 'python' then
+                    local ruff_config = find_ruff_config(bufnr)
+                    if not ruff_config then
+                        return nil
+                    end
+
+                    return {
+                        timeout_ms = 1000,
+                        lsp_format = 'never',
+                    }
                 end
 
                 return {
                     timeout_ms = 1000,
-                    lsp_format = 'never',
+                    lsp_format = 'fallback',
                 }
-            end
-
-            return {
-                timeout_ms = 1000,
-                lsp_format = 'fallback',
-            }
-        end,
-    }
+            end,
+        }
     end,
     init = function()
         vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"

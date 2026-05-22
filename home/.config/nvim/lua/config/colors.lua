@@ -49,7 +49,7 @@ function M.setup()
             })
           end
         end
-        
+
         -- Set cursor colors to match text color with base background
         local normal_hl = safe_get_hl("Normal", { fg = "#ebdbb2" })
         local base_color = "#1d2021" -- colors.base from mocha theme

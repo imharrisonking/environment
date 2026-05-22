@@ -66,9 +66,9 @@ return {
     {
       "<leader>fg", -- Alternative telescope grep
       function()
-        require('telescope.builtin').live_grep()
+        Snacks.picker.grep()
       end,
-      desc = "Find in Files (Telescope)",
+      desc = "Find in Files (Snacks)",
     },
     {
       "<leader>fa",
@@ -306,7 +306,7 @@ return {
 
     -- Utility features
     {
-      "<leader>t",
+      "<leader>`",
       function()
         Snacks.terminal()
       end,

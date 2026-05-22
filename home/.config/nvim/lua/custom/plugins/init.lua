@@ -1,11 +1,3 @@
--- You can add your own plugins here or in other files in this directory!
---  I promise not to create any merge conflicts in this directory :)
---
--- See the kickstart.nvim README for more information
-return {
-  -- Import custom plugin configurations
-  require('custom.plugins.lspconfig'),
-  require('custom.plugins.cmp'),
-  require('custom.plugins.treesitter'),
-  require('custom.plugins.indent-blankline'),
-}
+-- Lazy import is handled by `{ import = 'custom.plugins' }` in init.lua.
+-- Keep this file returning an empty spec to avoid duplicate imports.
+return {}

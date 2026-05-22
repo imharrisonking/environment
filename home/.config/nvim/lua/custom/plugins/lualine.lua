@@ -4,12 +4,20 @@ return {
   lazy = false,
   event = { 'BufReadPost', 'BufNewFile', 'VeryLazy' },
   config = function()
-    local custom_gruvbox = require('lualine.themes.gruvbox')
-    custom_gruvbox.normal.c.bg = 'None'
-    
+    local function make_lualine_backgrounds_transparent()
+      local groups = vim.fn.getcompletion('lualine_', 'highlight')
+      for _, group in ipairs(groups) do
+        -- Some nvim versions reject ctermbg=bg (E420), so guard and fallback.
+        local ok = pcall(vim.cmd, 'highlight ' .. group .. ' guibg=bg ctermbg=NONE')
+        if not ok then
+          vim.cmd('highlight ' .. group .. ' guibg=NONE ctermbg=NONE')
+        end
+      end
+    end
+
     require('lualine').setup {
       options = {
-        theme = custom_gruvbox,
+        theme = 'auto',
         globalstatus = true,
         icons_enabled = true,
         component_separators = '',
@@ -132,27 +140,16 @@ return {
     -- Configure statusline behavior for tpipeline
     -- Let tpipeline control the statusline display entirely
     vim.opt.laststatus = 0
-    
-    -- Hook into lualine after setup to make backgrounds transparent for tpipeline
-    vim.defer_fn(function()
-      local lualine_config = require('lualine').get_config()
-      if lualine_config and lualine_config.options and lualine_config.options.theme then
-        local theme = lualine_config.options.theme
-        
-        -- Make all backgrounds transparent while keeping original colors
-        for mode_name, mode in pairs(theme) do
-          if type(mode) == 'table' then
-            for section_name, section in pairs(mode) do
-              if type(section) == 'table' and section.bg then
-                section.bg = 'NONE'
-              end
-            end
-          end
-        end
-        
-        -- Refresh lualine with modified theme
-        require('lualine').setup(lualine_config)
-      end
-    end, 100)
+
+    -- Keep lualine/tpipeline bg transparent even after colorscheme changes
+    make_lualine_backgrounds_transparent()
+    vim.defer_fn(make_lualine_backgrounds_transparent, 50)
+    vim.defer_fn(make_lualine_backgrounds_transparent, 200)
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      callback = make_lualine_backgrounds_transparent,
+    })
+    vim.api.nvim_create_autocmd({ 'ModeChanged', 'WinEnter', 'BufEnter' }, {
+      callback = make_lualine_backgrounds_transparent,
+    })
   end,
 }

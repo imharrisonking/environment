@@ -1,4 +1,5 @@
 return {
+    { 'RRethy/base16-nvim' },
     {
         'oskarnurm/koda.nvim',
         name = 'koda',
@@ -9,14 +10,50 @@ return {
             require('koda').setup {
                 transparent = false,
                 auto = true,
-                cache = true,
+                cache = false,
                 styles = {
                     comments = { italic = true },
-                    keywords = {},
-                    functions = {},
-                    variables = {},
-                    classes = { bold = true },
                 },
+                on_highlights = function(hl, _)
+                    -- Only style class/struct *definitions* like functions.
+                    -- Leave all other class/type references unchanged.
+                    hl['@lsp.typemod.class.definition'] = { link = 'Function' }
+                    hl['@lsp.typemod.class.declaration'] = { link = 'Function' }
+                    hl['@lsp.typemod.class.defaultLibrary'] = { link = 'Function' }
+                    hl['@lsp.typemod.struct.definition'] = { link = 'Function' }
+                    hl['@lsp.typemod.struct.declaration'] = { link = 'Function' }
+                    hl['@lsp.type.class'] = { link = 'Function' }
+                    hl['@lsp.type.class.python'] = { link = 'Function' }
+                    hl['@type.python'] = { link = 'Function' }
+
+                    -- Keep semantic-token constants visible as constants.
+                    -- This affects enum members and readonly values while
+                    -- keeping broader type/variable styling untouched.
+                    hl['@constant'] = { link = 'Constant' }
+                    hl['@lsp.type.enumMember'] = { link = 'Constant' }
+                    hl['@lsp.typemod.variable.readonly'] = { link = 'Constant' }
+                    hl['@lsp.typemod.property.readonly'] = { link = 'Constant' }
+
+                    -- Keep normal strings as strings; only triple-quoted
+                    -- docstring-style blocks should look like comments.
+                    hl['pythonString'] = { link = 'String' }
+                    hl['pythonTripleQuotes'] = { link = 'Comment' }
+                    hl['pythonDocTest'] = { link = 'Comment' }
+
+                    -- Same approach used in catppuccin overrides:
+                    -- map documentation captures to Comment while preserving
+                    -- normal string highlighting.
+                    hl['@string.documentation'] = { link = 'Comment' }
+                    hl['@comment.documentation'] = { link = 'Comment' }
+                    hl['TSStringDocumentation'] = { link = 'Comment' }
+
+                    -- Handle LSP semantic token modifiers for docstrings.
+                    hl['@lsp.type.comment'] = { link = 'Comment' }
+                    hl['@lsp.typemod.string.documentation'] = { link = 'Comment' }
+                    hl['@lsp.typemod.string.documentation.python'] = { link = 'Comment' }
+                    hl['@lsp.typemod.comment.documentation'] = { link = 'Comment' }
+                    hl['@lsp.typemod.comment.documentation.python'] = { link = 'Comment' }
+                end,
             }
             vim.cmd 'colorscheme koda'
         end,
