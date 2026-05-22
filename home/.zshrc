@@ -11,7 +11,7 @@ else
 fi
 
 # Theme configuration
-ZSH_THEME="alanpeabody"
+ZSH_THEME="refined"
 
 # Oh-My-Zsh settings
 # Uncomment the following line to use case-sensitive completion.
@@ -121,6 +121,9 @@ fi
 nvim-log-cleanup() {
     ~/.local/bin/nvim-log-cleanup.sh
 }
+
+# Yazi shortcut
+alias y='yazi'
 
 # NVM configuration
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"

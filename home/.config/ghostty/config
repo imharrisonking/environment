@@ -1,9 +1,9 @@
-font-family = Lilex Nerd Font
-font-size = 12
-theme = koda
+font-family = IosevkaTerm NF
+font-size = 14
+theme = koda-mod.conf
 adjust-cell-height = 40%
 cursor-style = block
-shell-integration-features = no-cursor
+cursor-style-blink = true
 term = xterm-ghostty
 mouse-hide-while-typing = true
 
@@ -20,6 +20,3 @@ mouse-shift-capture = false
 
 keybind = cmd+s>r=reload_config
 keybind = cmd+s>x=close_surface
-
-# Override bright black to use foreground color
-palette = 8=#d4be98
