@@ -114,12 +114,38 @@ return {
                     local opts = { buffer = event.buf }
                     local client = vim.lsp.get_client_by_id(event.data.client_id)
 
+                    vim.keymap.set('n', '<leader>k', function()
+                        local bufnr = event.buf
+                        local enabled = false
+
+                        if vim.lsp.inlay_hint and vim.lsp.inlay_hint.is_enabled then
+                            local ok, result = pcall(vim.lsp.inlay_hint.is_enabled, { bufnr = bufnr })
+                            if not ok then
+                                ok, result = pcall(vim.lsp.inlay_hint.is_enabled, bufnr)
+                            end
+                            if ok then
+                                enabled = result
+                            end
+                        end
+
+                        if vim.lsp.inlay_hint and vim.lsp.inlay_hint.enable then
+                            local ok = pcall(vim.lsp.inlay_hint.enable, not enabled, { bufnr = bufnr })
+                            if not ok then
+                                pcall(vim.lsp.inlay_hint.enable, bufnr, not enabled)
+                            end
+                        end
+                    end, { buffer = event.buf, desc = 'Toggle Inlay Hints' })
+
                     if client and client.server_capabilities.documentSymbolProvider then
                         local ok, navic = pcall(require, 'nvim-navic')
                         if ok then
                             navic.attach(client, event.buf)
                         end
                     end
+
+                    -- Defaults for all LSPs (can be overridden per-server below)
+                    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+                    vim.keymap.set('n', 'gI', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
 
                     if client.name == 'vtsls' then
                         vim.keymap.set('n', 'gd', function()
@@ -128,7 +154,7 @@ return {
                                 if err or not result or vim.tbl_isempty(result) then
                                     vim.lsp.buf.definition()
                                 else
-                                    vim.lsp.util.jump_to_location(result[1], client.offset_encoding)
+                                    vim.lsp.util.show_document(result[1], client.offset_encoding, { focus = true, reuse_win = true })
                                 end
                             end)
                         end, opts)
@@ -150,16 +176,29 @@ return {
                                     if target_buf == current_buf and math.abs(target_line - (current_pos[1] - 1)) <= 5 then
                                         vim.lsp.buf.definition()
                                     else
-                                        vim.lsp.util.jump_to_location(target, client.offset_encoding)
+                                        vim.lsp.util.show_document(target, client.offset_encoding, { focus = true, reuse_win = true })
                                     end
                                 end
                             end)
                         end, opts)
                         vim.keymap.set('n', 'gI', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+                    elseif client.name == 'clangd' then
+                        vim.keymap.set('n', 'gd', function()
+                            local params = vim.lsp.util.make_position_params()
+                            vim.lsp.buf_request(0, 'textDocument/declaration', params, function(err, result)
+                                if err or not result or vim.tbl_isempty(result) then
+                                    vim.lsp.buf.definition()
+                                else
+                                    local target = result[1] or result
+                                    vim.lsp.util.show_document(target, client.offset_encoding, { focus = true, reuse_win = true })
+                                end
+                            end)
+                        end, opts)
+                        vim.keymap.set('n', 'gI', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
                     end
 
                     vim.keymap.set('n', '<leader>vd', '<cmd>lua vim.diagnostic.open_float()<cr>', { desc = 'View Diagnostics' })
-                    vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+                    vim.keymap.set('n', '<leader>cr', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
                     vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
                 end,
             })
@@ -227,6 +266,24 @@ return {
                                 settings = {
                                     lineLength = 88,
                                     args = {},
+                                },
+                            },
+                        }
+                    end,
+
+                    ['lua_ls'] = function()
+                        lspconfig.lua_ls.setup {
+                            capabilities = capabilities,
+                            settings = {
+                                Lua = {
+                                    hint = {
+                                        enable = true,
+                                        setType = true,
+                                        paramType = true,
+                                        paramName = 'All',
+                                        semicolon = 'Disable',
+                                        arrayIndex = 'Disable',
+                                    },
                                 },
                             },
                         }
@@ -327,6 +384,7 @@ return {
                                 'clangd',
                                 '--background-index',
                                 '--clang-tidy',
+                                '--inlay-hints=true',
                                 '--header-insertion=iwyu',
                                 '--completion-style=detailed',
                                 '--function-arg-placeholders',
