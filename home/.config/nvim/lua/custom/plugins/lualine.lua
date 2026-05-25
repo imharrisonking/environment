@@ -7,11 +7,8 @@ return {
     local function make_lualine_backgrounds_transparent()
       local groups = vim.fn.getcompletion('lualine_', 'highlight')
       for _, group in ipairs(groups) do
-        -- Some nvim versions reject ctermbg=bg (E420), so guard and fallback.
-        local ok = pcall(vim.cmd, 'highlight ' .. group .. ' guibg=bg ctermbg=NONE')
-        if not ok then
-          vim.cmd('highlight ' .. group .. ' guibg=NONE ctermbg=NONE')
-        end
+        -- Always force full transparency for lualine-derived tmux segments.
+        vim.cmd('highlight ' .. group .. ' guibg=NONE ctermbg=NONE')
       end
     end
 
@@ -141,14 +138,12 @@ return {
     -- Let tpipeline control the statusline display entirely
     vim.opt.laststatus = 0
 
-    -- Keep lualine/tpipeline bg transparent even after colorscheme changes
+    -- Keep lualine/tpipeline bg transparent after colorscheme changes
     make_lualine_backgrounds_transparent()
-    vim.defer_fn(make_lualine_backgrounds_transparent, 50)
-    vim.defer_fn(make_lualine_backgrounds_transparent, 200)
-    vim.api.nvim_create_autocmd('ColorScheme', {
+    vim.api.nvim_create_autocmd('VimEnter', {
       callback = make_lualine_backgrounds_transparent,
     })
-    vim.api.nvim_create_autocmd({ 'ModeChanged', 'WinEnter', 'BufEnter' }, {
+    vim.api.nvim_create_autocmd('ColorScheme', {
       callback = make_lualine_backgrounds_transparent,
     })
   end,
