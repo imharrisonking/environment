@@ -13,8 +13,8 @@ return {
     -- Force statusline to stay hidden in all modes including command mode
     vim.g.tpipeline_preservebg = 1
     
-    -- Ensure statusline is always hidden
-    vim.api.nvim_create_autocmd({ "ModeChanged", "CmdlineEnter", "CmdlineLeave" }, {
+    -- Ensure statusline stays hidden without mode-changed redraw churn.
+    vim.api.nvim_create_autocmd({ "CmdlineEnter", "CmdlineLeave", "WinEnter", "BufEnter" }, {
       callback = function()
         vim.opt.laststatus = 0
       end,
