@@ -88,6 +88,11 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Disable runtime matchparen plugin.
+-- It can interfere with prompt buffers (Telescope/Snacks picker input)
+-- in some nvim 0.11.x setups and cause cursor reset while typing.
+vim.g.loaded_matchparen = 1
+
 -- Set filetype for MDX files (must be very early)
 vim.filetype.add({
   extension = {
@@ -115,8 +120,14 @@ require('config.colors').setup()
 -- Load custom keymaps
 require('config.keymaps')
 
+-- Load custom autocommands
+require('config.autocmds')
+
 -- Load pyright setup utility
 require('config.pyright-setup')
+
+-- Picker input diagnostics (on-demand via :PickerDebugStart)
+require('config.picker_debug').setup()
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true

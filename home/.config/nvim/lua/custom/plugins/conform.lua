@@ -94,6 +94,7 @@ return {
 
                 -- Other (system tools)
                 rust = { 'rustfmt' }, -- comes with Rust installations
+                markdown = { 'prettier' },
 
                 -- Docker
                 dockerfile = { 'hadolint' },
