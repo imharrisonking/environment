@@ -30,30 +30,13 @@ api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- go to last loc when opening a real file buffer
--- this means when you open a file, you will be at the last position
+-- go to last loc when opening a buffer
+-- this mean that when you open a file, you will be at the last position
 api.nvim_create_autocmd('BufReadPost', {
-  callback = function(event)
-    local bufnr = event.buf
-
-    -- Only restore cursor for normal file buffers.
-    -- Skip prompt/picker/auxiliary buffers to avoid interfering with
-    -- Telescope/Snacks live grep input and preview windows.
-    if vim.bo[bufnr].buftype ~= '' then
-      return
-    end
-
-    local ft = vim.bo[bufnr].filetype
-    if ft == 'TelescopePrompt'
-      or ft == 'TelescopeResults'
-      or ft == 'snacks_picker_input'
-      or ft == 'snacks_picker_list' then
-      return
-    end
-
-    local mark = vim.api.nvim_buf_get_mark(bufnr, '"')
-    local lcount = vim.api.nvim_buf_line_count(bufnr)
-    if mark[1] > 0 and mark[1] <= lcount and vim.api.nvim_win_get_buf(0) == bufnr then
+  callback = function()
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    local lcount = vim.api.nvim_buf_line_count(0)
+    if mark[1] > 0 and mark[1] <= lcount then
       pcall(vim.api.nvim_win_set_cursor, 0, mark)
     end
   end,
@@ -62,51 +45,6 @@ api.nvim_create_autocmd('BufReadPost', {
 -- auto close brackets
 -- this
 api.nvim_create_autocmd('FileType', { pattern = 'man', command = [[nnoremap <buffer><silent> q :quit<CR>]] })
-
--- Prompt-style picker buffers can misbehave with some CursorMovedI hooks
--- (notably matchparen on prompt buftype in some nvim versions).
--- Disable matchparen for Telescope/Snacks picker prompt windows only.
-api.nvim_create_autocmd('FileType', {
-  pattern = { 'TelescopePrompt', 'TelescopeResults', 'snacks_picker_input', 'snacks_picker_list' },
-  callback = function(event)
-    -- Disable matchparen logic in this prompt buffer. Some prompt buffers
-    -- can report cursor columns in ways that make matchparen move the cursor.
-    pcall(function()
-      vim.b[event.buf].matchparen_timeout = 0
-      vim.b[event.buf].matchparen_insert_timeout = 0
-      -- Prevent matchparen from treating prompt input like normal text.
-      -- In prompt buffers this can cause cursor restoration glitches.
-      vim.bo[event.buf].matchpairs = ''
-    end)
-  end,
-})
-
--- Workaround for nvim prompt-buffer cursor regressions seen in 0.11.x with
--- picker input buffers (Snacks/Telescope): after first typed character, cursor
--- can jump one column left and stay behind input. Keep cursor at end-of-input.
-api.nvim_create_autocmd('TextChangedI', {
-  callback = function(event)
-    local ft = vim.bo[event.buf].filetype
-    if ft ~= 'TelescopePrompt' and ft ~= 'TelescopeResults' and ft ~= 'snacks_picker_input' and ft ~= 'snacks_picker_list' then
-      return
-    end
-
-    if vim.bo[event.buf].buftype ~= 'prompt' then
-      return
-    end
-
-    local line = vim.api.nvim_get_current_line()
-    local target_col = #line
-    local pos = vim.api.nvim_win_get_cursor(0)
-    if pos[2] ~= target_col then
-      vim.schedule(function()
-        if vim.api.nvim_buf_is_valid(event.buf) and vim.api.nvim_get_current_buf() == event.buf then
-          pcall(vim.api.nvim_win_set_cursor, 0, { 1, target_col })
-        end
-      end)
-    end
-  end,
-})
 
 -- show cursor line only in active window
 local cursorGrp = api.nvim_create_augroup('CursorLine', { clear = true })

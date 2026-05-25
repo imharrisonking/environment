@@ -12,15 +12,6 @@ return {
                 show_start = false,
                 show_end = false,
             },
-            exclude = {
-                buftypes = { 'prompt' },
-                filetypes = {
-                    'TelescopePrompt',
-                    'TelescopeResults',
-                    'snacks_picker_input',
-                    'snacks_picker_list',
-                },
-            },
         },
     },
 }

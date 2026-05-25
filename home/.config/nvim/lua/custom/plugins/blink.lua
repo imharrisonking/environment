@@ -19,23 +19,6 @@ return {
             'folke/lazydev.nvim',
         },
         opts = {
-            enabled = function()
-                local bt = vim.bo.buftype
-                local ft = vim.bo.filetype
-
-                if bt == 'prompt' then
-                    return false
-                end
-
-                if ft == 'TelescopePrompt'
-                    or ft == 'TelescopeResults'
-                    or ft == 'snacks_picker_input'
-                    or ft == 'snacks_picker_list' then
-                    return false
-                end
-
-                return vim.b.completion ~= false
-            end,
             keymap = {
                 preset = 'default',
             },

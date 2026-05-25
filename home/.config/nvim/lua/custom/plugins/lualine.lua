@@ -22,13 +22,6 @@ return {
         icons_enabled = true,
         component_separators = '',
         section_separators = '',
-        refresh = {
-          statusline = 100,
-          tabline = 100,
-          winbar = 100,
-          refresh_time = 16,
-          events = { 'WinEnter', 'BufEnter', 'BufWritePost', 'CursorHold' },
-        },
       },
       sections = {
         lualine_a = {},
@@ -155,7 +148,7 @@ return {
     vim.api.nvim_create_autocmd('ColorScheme', {
       callback = make_lualine_backgrounds_transparent,
     })
-    vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
+    vim.api.nvim_create_autocmd({ 'ModeChanged', 'WinEnter', 'BufEnter' }, {
       callback = make_lualine_backgrounds_transparent,
     })
   end,
