@@ -11,6 +11,48 @@ return {
         local barbecue_ui = require 'barbecue.ui'
         local original_update = barbecue_ui.update
 
+        local base_kind_icons = {
+            File = '󰈙',
+            Module = '󰏗',
+            Namespace = '󰌗',
+            Package = '󰏖',
+            Class = '󰌗',
+            Method = '󰆧',
+            Property = '󰜢',
+            Field = '󰜢',
+            Constructor = '󰆧',
+            Enum = '󰕘',
+            Interface = '󰕘',
+            Function = '󰊕',
+            Variable = '󰀫',
+            Constant = '󰏿',
+            String = '󰀬',
+            Number = '󰎠',
+            Boolean = '◩',
+            Array = '󰅪',
+            Object = '󰅩',
+            Key = '󰌋',
+            Null = '󰟢',
+            EnumMember = '󰕘',
+            Struct = '󰌗',
+            Event = '',
+            Operator = '󰆕',
+            TypeParameter = '󰊄',
+        }
+
+        local function build_kind_icons(spaced)
+            local icons = {}
+            for kind, icon in pairs(base_kind_icons) do
+                icons[kind] = spaced and (icon .. ' ') or icon
+            end
+            return icons
+        end
+
+        -- Always keep a trailing space so icon + symbol name are readable.
+        local kind_icons = build_kind_icons(true)
+
+        local ok_navic, navic = pcall(require, 'nvim-navic')
+
         local function hl_fg(group)
             local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = group, link = false })
             if ok and hl and hl.fg then
@@ -34,8 +76,15 @@ return {
             }
         end
 
+        if ok_navic then
+            navic.setup {
+                icons = kind_icons,
+            }
+        end
+
         require('barbecue').setup {
             create_autocmd = false, -- prevent barbecue from updating itself automatically
+            kinds = kind_icons,
         }
 
         -- Keep filename style stable and indicator styles theme-aware
