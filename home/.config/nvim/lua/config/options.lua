@@ -66,7 +66,7 @@ vim.filetype.add {
 
 -- Set LSP log level to reduce log verbosity (prevents huge log files)
 -- Available levels: TRACE, DEBUG, INFO, WARN, ERROR, OFF
-vim.lsp.set_log_level('WARN')
+vim.lsp.log.set_level('WARN')
 
 -- Rotate LSP log when it exceeds 5MB to prevent disk/memory bloat
 vim.api.nvim_create_autocmd('VimLeavePre', {
