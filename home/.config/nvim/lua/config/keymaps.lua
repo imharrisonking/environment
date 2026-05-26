@@ -2,9 +2,19 @@ local opts = { noremap = true, silent = true }
 -- local map = vim.keymap.set
 
 -- Keep cursor centered when scrolling
--- vim.keymap.set("n", "<C-d>", "<C-d>zz", opts)
--- vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
---
+vim.keymap.set("n", "<C-d>", "<C-d>zz", opts)
+vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
+vim.keymap.set("n", "<C-f>", "<C-f>zz", opts)
+vim.keymap.set("n", "<C-b>", "<C-b>zz", opts)
+
+-- Split helpers
+vim.keymap.set("n", "<leader>vs", ":vsplit<CR>", opts)
+vim.keymap.set("n", "<leader>hs", ":split<CR>", opts)
+vim.keymap.set("n", "<leader>wc", ":close<CR>", opts)
+
+-- Toggle local spell check
+vim.keymap.set("n", "<leader>ll", ":setlocal spell! spelllang=en_gb<CR>", opts)
+
 -- Move selected line / block of text in visual mode
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", opts)
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", opts)
@@ -53,10 +63,13 @@ vim.keymap.set("n", "<Right>", ":bnext<CR>", opts)
 vim.keymap.set("n", "<Left>", ":bprevious<CR>", opts)
 
 -- Panes resizing
-vim.keymap.set("n", "+", ":vertical resize +5<CR>")
-vim.keymap.set("n", "_", ":vertical resize -5<CR>")
-vim.keymap.set("n", "=", ":resize +5<CR>")
-vim.keymap.set("n", "-", ":resize -5<CR>")
+-- Normal mode, no leader required:
+--   = / - : wider / narrower
+--   + / _ : taller / shorter
+vim.keymap.set("n", "=", ":vertical resize +5<CR>", opts)
+vim.keymap.set("n", "-", ":vertical resize -5<CR>", opts)
+vim.keymap.set("n", "+", ":resize +5<CR>", opts)
+vim.keymap.set("n", "_", ":resize -5<CR>", opts)
 
 -- Map enter to ciw in normal mode
 -- vim.keymap.set("n", "<CR>", "ciw", opts)  -- Commented out: This overwrites word on Enter - too disruptive
