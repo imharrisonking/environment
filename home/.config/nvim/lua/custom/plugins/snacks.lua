@@ -54,7 +54,7 @@ return {
                 Snacks.picker.files {
                     hidden = true,
                     ignored = false,
-                    respect_gitignore = true,
+                    respect_gitignore = false,
                 }
             end,
             desc = 'Find Files (Snacks)',
@@ -62,14 +62,20 @@ return {
         {
             '<leader>fi',
             function()
-                Snacks.picker.grep()
+                Snacks.picker.grep {
+                    ignored = false,
+                    respect_gitignore = false,
+                }
             end,
             desc = 'Find in Files (Snacks)',
         },
         {
             '<leader>fg', -- Alternative telescope grep
             function()
-                Snacks.picker.grep()
+                Snacks.picker.grep {
+                    ignored = false,
+                    respect_gitignore = false,
+                }
             end,
             desc = 'Find in Files (Snacks)',
         },
