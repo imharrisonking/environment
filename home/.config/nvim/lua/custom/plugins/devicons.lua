@@ -57,6 +57,28 @@ return {
                         name = 'CPlusPlus',
                     },
 
+                    -- Markdown files (keep extra spacing for barbecue winbar readability)
+                    md = {
+                        -- NOTE: barbecue adds one separator space after icons.
+                        -- Keep markdown glyph itself unpadded to avoid oversized gap.
+                        icon = '󰍔',
+                        color = '#519aba',
+                        cterm_color = '67',
+                        name = 'Markdown',
+                    },
+                    markdown = {
+                        icon = '󰍔',
+                        color = '#519aba',
+                        cterm_color = '67',
+                        name = 'MarkdownLong',
+                    },
+                    mdx = {
+                        icon = '󰍔',
+                        color = '#519aba',
+                        cterm_color = '67',
+                        name = 'MarkdownMdx',
+                    },
+
                     -- -- Additional language files using your icons
                     -- lua = {
                     --   icon = icons.languages.Lua,

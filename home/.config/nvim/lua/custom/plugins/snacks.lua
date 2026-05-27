@@ -136,7 +136,7 @@ return {
 
         -- Buffers with enhanced features (alternative to Telescope buffers)
         {
-            '<leader>bo',
+            '<leader>b',
             function()
                 Snacks.picker.buffers {
                     win = {

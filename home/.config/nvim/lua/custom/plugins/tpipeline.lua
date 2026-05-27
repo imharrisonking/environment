@@ -10,8 +10,14 @@ return {
     vim.g.tpipeline_restore = 0
     vim.g.tpipeline_clearstl = 1
     
-    -- Force statusline to stay hidden in all modes including command mode
-    vim.g.tpipeline_preservebg = 1
+    -- Let tpipeline prepend/reset a stable default style each update.
+    -- This helps prevent random inherited tmux background colors.
+    vim.g.tpipeline_preservebg = 0
+
+    local function make_statusline_transparent()
+      vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'NONE', ctermbg = 'NONE' })
+      vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = 'NONE', ctermbg = 'NONE' })
+    end
 
     local function reset_tmux_status_background()
       if not vim.env.TMUX or vim.fn.executable('tmux') ~= 1 then
@@ -38,6 +44,16 @@ return {
     vim.api.nvim_create_autocmd({ 'VimEnter', 'FocusGained' }, {
       callback = reset_tmux_status_background,
     })
+
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      callback = function()
+        make_statusline_transparent()
+        reset_tmux_status_background()
+      end,
+    })
+
+    -- Apply once on startup
+    make_statusline_transparent()
 
     vim.api.nvim_create_user_command('TpipelineResetBg', reset_tmux_status_background, {
       desc = 'Reset tmux statusline background to default',
