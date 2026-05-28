@@ -27,17 +27,25 @@ return {
         lualine_x = {
           {
             'diagnostics',
-            sources = { 'nvim_lsp' },
+            -- Use Neovim's unified diagnostics API so counts include all
+            -- diagnostics providers (LSP + linters/plugins).
+            sources = { 'nvim_diagnostic' },
+            sections = { 'error', 'warn', 'hint' },
+            diagnostics_color = {
+              error = { fg = '#e86671', bg = 'NONE' },
+              warn = { fg = '#e5c07b', bg = 'NONE' },
+              hint = { fg = '#56b6c2', bg = 'NONE' },
+            },
             symbols = { 
               error = require("config.icons").diagnostics.Error,
               warn = require("config.icons").diagnostics.Warning,
-              info = require("config.icons").diagnostics.Information,
               hint = require("config.icons").diagnostics.Hint,
             },
           },
           {
             'branch',
             icon = require("config.icons").git.Branch,
+            color = { bg = 'NONE' },
           },
           {
             function()
@@ -119,6 +127,7 @@ return {
                 return display_name
               end
             end,
+            color = { bg = 'NONE' },
           },
         },
         lualine_y = {},
@@ -144,6 +153,9 @@ return {
       callback = make_lualine_backgrounds_transparent,
     })
     vim.api.nvim_create_autocmd('ColorScheme', {
+      callback = make_lualine_backgrounds_transparent,
+    })
+    vim.api.nvim_create_autocmd('DiagnosticChanged', {
       callback = make_lualine_backgrounds_transparent,
     })
   end,
