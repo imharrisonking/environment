@@ -120,13 +120,6 @@ return {
             desc = 'Explorer (Sidebar)',
         },
         {
-            '<leader>o',
-            function()
-                Snacks.picker.buffers()
-            end,
-            desc = 'Open Buffers',
-        },
-        {
             '<leader>p',
             function()
                 Snacks.picker.lsp_symbols()
@@ -150,7 +143,7 @@ return {
                     },
                 }
             end,
-            desc = 'Snacks Buffers',
+            desc = 'Open Buffers',
         },
 
         -- Git operations (complement existing git.lua)
