@@ -31,9 +31,10 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
--- Tab/Shift-Tab for indentation in INSERT and VISUAL mode
-vim.keymap.set("i", "<Tab>", "<C-t>", opts)
-vim.keymap.set("i", "<S-Tab>", "<C-d>", opts)
+-- Keep Tab/Shift-Tab indentation only for visual mode.
+-- Insert-mode <Tab> is handled by completion/snippet plugins (blink/tabout)
+-- so it can select suggestions when the popup is visible and fallback to normal
+-- tab behavior otherwise.
 vim.keymap.set("v", "<Tab>", ">gv", opts)
 vim.keymap.set("v", "<S-Tab>", "<gv", opts)
 
