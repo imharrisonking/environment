@@ -1,0 +1,502 @@
+/*
+ * Koda-inspired Obsidian theme (dark + light)
+ * Dark palette based on koda.nvim dark, plus your custom code emphasis.
+ * Light palette based on koda.nvim light.
+ */
+
+.theme-dark {
+    --background-primary: #101010;
+    --background-primary-alt: #121212;
+    --background-secondary: #181818;
+    --background-secondary-alt: #222222;
+    --background-modifier-hover: rgba(193, 193, 193, 0.06);
+    --background-modifier-active-hover: rgba(193, 193, 193, 0.09);
+    --background-modifier-border: rgba(193, 193, 193, 0.07);
+    --background-modifier-border-hover: rgba(193, 193, 193, 0.13);
+    --background-modifier-box-shadow: rgba(18, 18, 18, 0.85);
+    --background-modifier-form-field: #191919;
+    --interactive-normal: #1a1a1a;
+    --interactive-hover: #262626;
+    --interactive-accent: #c1c1c1;
+    --interactive-accent-hover: #f1f1f1;
+    --text-normal: #c1c1c1;
+    --text-muted: #b0b0b0;
+    --text-faint: #555555;
+    --text-on-accent: #101010;
+    --text-on-accent-inverted: #101010;
+    --koda-primary-button-text: #101010;
+    --text-accent: #d9d9d9;
+    --text-accent-hover: #ffffff;
+    --text-selection: rgba(193, 193, 193, 0.15);
+    --titlebar-text-color-focused: #c1c1c1;
+    --nav-item-color: #aaaaaa;
+    --nav-item-color-hover: #e0e0e0;
+    --nav-item-color-active: #ffffff;
+    --nav-item-background-hover: rgba(193, 193, 193, 0.05);
+    --nav-item-background-active: rgba(193, 193, 193, 0.09);
+    --divider-color: rgba(193, 193, 193, 0.08);
+    --divider-color-hover: rgba(193, 193, 193, 0.13);
+    --blockquote-color: #bbbbbb;
+    --blockquote-border-color: rgba(193, 193, 193, 0.12);
+    --blockquote-background-color: #101010;
+    --code-normal: #b0b0b0;
+    --code-background: #121212;
+    --hr-color: rgba(193, 193, 193, 0.09);
+    --inline-title-color: #ededed;
+    --link-color: #d9d9d9;
+    --link-color-hover: #ffffff;
+    --link-external-color: #b0b0b0;
+    --tag-color: #bbbbbb;
+    --tag-background: #151515;
+    --tag-border-color: rgba(193, 193, 193, 0.07);
+    --list-marker-color: #8c8c8c;
+    --icon-color: #7f7f7f;
+    --icon-color-hover: #c1c1c1;
+    --icon-color-focused: #ffffff;
+    --metadata-label-text-color: #a0a0a0;
+    --metadata-input-text-color: #c1c1c1;
+    --scrollbar-bg: transparent;
+    --scrollbar-thumb-bg: rgba(193, 193, 193, 0.13);
+    --scrollbar-active-thumb-bg: rgba(193, 193, 193, 0.21);
+    --graph-line: rgba(193, 193, 193, 0.18);
+    --graph-node: #aaaaaa;
+    --graph-node-focused: #ffffff;
+    --graph-node-tag: #bbbbbb;
+    --graph-node-attachment: #7f7f7f;
+    --graph-node-unresolved: #555555;
+
+    /* token vars */
+    --code-comment: #50585d;
+    --code-function: #ffffff;
+    --code-keyword: #777777;
+    --code-operator: #777777;
+    --code-property: #b0b0b0;
+    --code-punctuation: #777777;
+    --code-string: #ffffff;
+    --code-tag: #777777;
+    --code-value: #d9ba73;
+    --koda-types: #ffffff;
+
+    --koda-checkbox-danger: #ff7676;
+    --koda-checkbox-success: #a3d6a3;
+}
+
+.theme-light {
+    --background-primary: #faf9f5;
+    --background-primary-alt: #f5f3ee;
+    --background-secondary: #f0eee8;
+    --background-secondary-alt: #ebebe7;
+    --background-modifier-hover: rgba(16, 16, 16, 0.06);
+    --background-modifier-active-hover: rgba(16, 16, 16, 0.09);
+    --background-modifier-border: rgba(16, 16, 16, 0.09);
+    --background-modifier-border-hover: rgba(16, 16, 16, 0.16);
+    --background-modifier-box-shadow: rgba(16, 16, 16, 0.08);
+    --background-modifier-form-field: #f0eee8;
+    --interactive-normal: #f0eee8;
+    --interactive-hover: #ebebe7;
+    --interactive-accent: #101010;
+    --interactive-accent-hover: #000000;
+    --text-normal: #101010;
+    --text-muted: #3d3d3d;
+    --text-faint: #969ba5;
+    --text-on-accent: #faf9f5;
+    --text-on-accent-inverted: #faf9f5;
+    --koda-primary-button-text: #faf9f5;
+    --text-accent: #000000;
+    --text-accent-hover: #000000;
+    --text-selection: rgba(2, 83, 190, 0.15);
+    --titlebar-text-color-focused: #101010;
+    --nav-item-color: #3d3d3d;
+    --nav-item-color-hover: #000000;
+    --nav-item-color-active: #000000;
+    --nav-item-background-hover: rgba(16, 16, 16, 0.04);
+    --nav-item-background-active: rgba(16, 16, 16, 0.07);
+    --divider-color: rgba(16, 16, 16, 0.1);
+    --divider-color-hover: rgba(16, 16, 16, 0.18);
+    --blockquote-color: #3d3d3d;
+    --blockquote-border-color: rgba(16, 16, 16, 0.14);
+    --blockquote-background-color: #f5f3ee;
+    --code-normal: #101010;
+    --code-background: #f0eee8;
+    --hr-color: rgba(16, 16, 16, 0.1);
+    --inline-title-color: #000000;
+    --link-color: #000000;
+    --link-color-hover: #000000;
+    --link-external-color: #525252;
+    --tag-color: #3d3d3d;
+    --tag-background: #f0eee8;
+    --tag-border-color: rgba(16, 16, 16, 0.09);
+    --list-marker-color: #525252;
+    --icon-color: #525252;
+    --icon-color-hover: #101010;
+    --icon-color-focused: #000000;
+    --metadata-label-text-color: #525252;
+    --metadata-input-text-color: #101010;
+    --scrollbar-bg: transparent;
+    --scrollbar-thumb-bg: rgba(16, 16, 16, 0.13);
+    --scrollbar-active-thumb-bg: rgba(16, 16, 16, 0.21);
+    --graph-line: rgba(16, 16, 16, 0.2);
+    --graph-node: #3d3d3d;
+    --graph-node-focused: #000000;
+    --graph-node-tag: #525252;
+    --graph-node-attachment: #969ba5;
+    --graph-node-unresolved: #cccccc;
+
+    /* token vars from koda light palette */
+    --code-comment: #969ba5;
+    --code-function: #000000;
+    --code-keyword: #525252;
+    --code-operator: #3d3d3d;
+    --code-property: #101010;
+    --code-punctuation: #3d3d3d;
+    --code-string: #407f00;
+    --code-tag: #525252;
+    --code-value: #b07700;
+    --koda-types: #3d3d3d;
+
+    --koda-checkbox-danger: #ca0043;
+    --koda-checkbox-success: #407f00;
+}
+
+/* Foundation */
+.theme-dark,
+.theme-light,
+.theme-dark .workspace-leaf,
+.theme-light .workspace-leaf,
+.theme-dark .workspace-sidedock-vault-profile,
+.theme-light .workspace-sidedock-vault-profile,
+.theme-dark .view-content,
+.theme-light .view-content,
+.theme-dark .markdown-source-view,
+.theme-light .markdown-source-view,
+.theme-dark .markdown-preview-view,
+.theme-light .markdown-preview-view {
+    background-color: var(--background-primary);
+}
+
+.theme-dark .workspace-split.mod-root,
+.theme-light .workspace-split.mod-root,
+.theme-dark .workspace-split.mod-vertical > * > .workspace-leaf-resize-handle,
+.theme-light .workspace-split.mod-vertical > * > .workspace-leaf-resize-handle,
+.theme-dark .workspace-split.mod-horizontal > * > .workspace-leaf-resize-handle,
+.theme-light
+    .workspace-split.mod-horizontal
+    > *
+    > .workspace-leaf-resize-handle {
+    background-color: var(--background-secondary);
+}
+
+.theme-dark .cm-line,
+.theme-light .cm-line,
+.theme-dark .markdown-preview-view,
+.theme-light .markdown-preview-view,
+.theme-dark .inline-title,
+.theme-light .inline-title {
+    color: var(--text-normal);
+}
+
+.theme-dark .HyperMD-codeblock,
+.theme-light .HyperMD-codeblock,
+.theme-dark pre[class*='language-'],
+.theme-light pre[class*='language-'],
+.theme-dark code,
+.theme-light code {
+    border: 1px solid var(--background-modifier-border);
+}
+
+.theme-dark :not(pre) > code,
+.theme-light :not(pre) > code {
+    background: var(--code-background);
+    color: var(--code-value);
+}
+
+/* Inline code (reading + editing) */
+.theme-dark .markdown-rendered :not(pre) > code,
+.theme-light .markdown-rendered :not(pre) > code,
+.theme-dark .cm-s-obsidian span.cm-inline-code,
+.theme-light .cm-s-obsidian span.cm-inline-code,
+.theme-dark .markdown-source-view.mod-cm6 span.cm-inline-code,
+.theme-light .markdown-source-view.mod-cm6 span.cm-inline-code,
+.theme-dark .markdown-source-view.mod-cm6 .cm-hmd-code,
+.theme-light .markdown-source-view.mod-cm6 .cm-hmd-code,
+.theme-dark .markdown-source-view.mod-cm6 .HyperMD-code,
+.theme-light .markdown-source-view.mod-cm6 .HyperMD-code,
+.theme-dark .markdown-rendered code,
+.theme-light .markdown-rendered code,
+.theme-dark .cm-inline-code,
+.theme-light .cm-inline-code,
+.theme-dark .cm-hmd-code,
+.theme-light .cm-hmd-code,
+.theme-dark .HyperMD-code,
+.theme-light .HyperMD-code {
+    color: var(--code-value) !important;
+}
+
+/* Light mode: keep headings and links neutral (no blue accent) */
+.theme-light .markdown-rendered h1,
+.theme-light .markdown-rendered h2,
+.theme-light .markdown-rendered h3,
+.theme-light .markdown-rendered h4,
+.theme-light .markdown-rendered h5,
+.theme-light .markdown-rendered h6,
+.theme-light .markdown-source-view.mod-cm6 .cm-header,
+.theme-light .markdown-source-view.mod-cm6 .HyperMD-header,
+.theme-light .markdown-rendered a,
+.theme-light .cm-hmd-internal-link,
+.theme-light .cm-url,
+.theme-light .external-link {
+    color: #000000 !important;
+}
+
+.theme-dark blockquote,
+.theme-light blockquote {
+    background: var(--blockquote-background-color);
+    border-color: var(--blockquote-border-color);
+}
+
+.theme-dark .callout,
+.theme-light .callout {
+    background: var(--background-primary-alt);
+    border: 1px solid var(--background-modifier-border);
+}
+
+body:not(.is-mobile).theme-dark .search-result-file-match,
+body:not(.is-mobile).theme-light .search-result-file-match,
+body:not(.is-mobile).theme-dark .suggestion-item,
+body:not(.is-mobile).theme-light .suggestion-item,
+body:not(.is-mobile).theme-dark .menu,
+body:not(.is-mobile).theme-light .menu,
+body:not(.is-mobile).theme-dark .modal,
+body:not(.is-mobile).theme-light .modal,
+body:not(.is-mobile).theme-dark .popover,
+body:not(.is-mobile).theme-light .popover,
+body:not(.is-mobile).theme-dark .prompt,
+body:not(.is-mobile).theme-light .prompt,
+body:not(.is-mobile).theme-dark .dropdown,
+body:not(.is-mobile).theme-light .dropdown,
+body:not(.is-mobile).theme-dark input:not([type='range']),
+body:not(.is-mobile).theme-light input:not([type='range']),
+body:not(.is-mobile).theme-dark textarea,
+body:not(.is-mobile).theme-light textarea {
+    background-color: var(--background-primary-alt);
+    color: var(--text-normal);
+    border-color: var(--background-modifier-border);
+}
+
+/* Code styler */
+.theme-dark.code-styler,
+.theme-dark.code-styler body,
+.theme-light.code-styler,
+.theme-light.code-styler body {
+    --border-radius: var(--radius-s);
+    --language-border-width: 0px;
+    --header-separator-width: 1px;
+    --gradient-background-colour: transparent;
+    --code-styler-codeblock-background-colour: var(--code-background);
+    --code-styler-header-background-colour: var(--code-background);
+    --code-styler-header-separator-colour: var(
+        --background-modifier-active-hover
+    );
+    --code-styler-header-language-tag-background-colour: var(--code-background);
+    --code-styler-header-language-tag-text-colour: var(--text-muted);
+    --code-styler-header-text-colour: var(--text-muted);
+    --code-styler-button-colour: var(--background-primary);
+    --code-styler-button-active-colour: var(--text-normal);
+}
+
+.theme-dark .markdown-rendered pre code,
+.theme-light .markdown-rendered pre code,
+.theme-dark
+    .markdown-source-view.mod-cm6
+    .cm-content
+    .cm-line.HyperMD-codeblock,
+.theme-light
+    .markdown-source-view.mod-cm6
+    .cm-content
+    .cm-line.HyperMD-codeblock,
+.theme-dark .code-styler pre.code-styler-pre > code,
+.theme-light .code-styler pre.code-styler-pre > code {
+    color: var(--code-normal) !important;
+}
+
+/* Syntax (CM6 + Prism + highlight.js) */
+.theme-dark .markdown-source-view.mod-cm6 .cm-keyword,
+.theme-light .markdown-source-view.mod-cm6 .cm-keyword,
+.theme-dark .markdown-source-view.mod-cm6 .cm-controlKeyword,
+.theme-light .markdown-source-view.mod-cm6 .cm-controlKeyword,
+.theme-dark .markdown-source-view.mod-cm6 .cm-modifier,
+.theme-light .markdown-source-view.mod-cm6 .cm-modifier,
+.theme-dark .markdown-rendered pre code .token.keyword,
+.theme-light .markdown-rendered pre code .token.keyword,
+.theme-dark .markdown-rendered pre code .hljs-keyword,
+.theme-light .markdown-rendered pre code .hljs-keyword {
+    color: var(--code-keyword) !important;
+}
+
+:is(.theme-dark, .theme-light) .markdown-source-view.mod-cm6 .cm-function,
+:is(.theme-dark, .theme-light) .markdown-source-view.mod-cm6 .cm-def,
+:is(.theme-dark, .theme-light)
+    .markdown-source-view.mod-cm6
+    .cm-variableName.cm-definition,
+:is(.theme-dark, .theme-light)
+    .markdown-source-view.mod-cm6
+    .cm-line.HyperMD-codeblock
+    .cm-function,
+:is(.theme-dark, .theme-light)
+    .markdown-source-view.mod-cm6
+    .cm-line.HyperMD-codeblock
+    .cm-def,
+:is(.theme-dark, .theme-light)
+    .markdown-source-view.mod-cm6
+    .cm-line.HyperMD-codeblock
+    .cm-variableName.cm-definition,
+:is(.theme-dark, .theme-light)
+    .markdown-source-view.mod-cm6
+    .cm-hmd-codeblock
+    .cm-function,
+:is(.theme-dark, .theme-light)
+    .markdown-source-view.mod-cm6
+    .cm-hmd-codeblock
+    .cm-def,
+:is(.theme-dark, .theme-light)
+    .markdown-source-view.mod-cm6
+    .cm-hmd-codeblock
+    .cm-variableName.cm-definition,
+:is(.theme-dark, .theme-light) .markdown-rendered pre code .token.function,
+:is(.theme-dark, .theme-light) .markdown-rendered pre code .token.method,
+:is(.theme-dark, .theme-light)
+    .markdown-rendered
+    pre
+    code
+    .token.function-variable,
+:is(.theme-dark, .theme-light)
+    .markdown-rendered
+    pre
+    code
+    .hljs-function
+    .hljs-title,
+:is(.theme-dark, .theme-light)
+    .markdown-rendered
+    pre
+    code
+    .hljs-title.function_ {
+    color: var(--code-function) !important;
+    font-weight: 700 !important;
+    font-synthesis: weight !important;
+}
+
+.theme-dark .markdown-source-view.mod-cm6 .cm-typeName,
+.theme-light .markdown-source-view.mod-cm6 .cm-typeName,
+.theme-dark .markdown-source-view.mod-cm6 .cm-className,
+.theme-light .markdown-source-view.mod-cm6 .cm-className,
+.theme-dark .markdown-rendered pre code .token.class-name,
+.theme-light .markdown-rendered pre code .token.class-name,
+.theme-dark .markdown-rendered pre code .token.type,
+.theme-light .markdown-rendered pre code .token.type,
+.theme-dark .markdown-rendered pre code .hljs-type,
+.theme-light .markdown-rendered pre code .hljs-type {
+    color: var(--koda-types) !important;
+    font-weight: 700 !important;
+}
+
+.theme-dark .markdown-source-view.mod-cm6 .cm-string,
+.theme-light .markdown-source-view.mod-cm6 .cm-string,
+.theme-dark .markdown-rendered pre code .token.string,
+.theme-light .markdown-rendered pre code .token.string,
+.theme-dark .markdown-rendered pre code .hljs-string,
+.theme-light .markdown-rendered pre code .hljs-string {
+    color: var(--code-string) !important;
+}
+
+.theme-dark .markdown-source-view.mod-cm6 .cm-number,
+.theme-light .markdown-source-view.mod-cm6 .cm-number,
+.theme-dark .markdown-source-view.mod-cm6 .cm-atom,
+.theme-light .markdown-source-view.mod-cm6 .cm-atom,
+.theme-dark .markdown-rendered pre code .token.number,
+.theme-light .markdown-rendered pre code .token.number,
+.theme-dark .markdown-rendered pre code .token.boolean,
+.theme-light .markdown-rendered pre code .token.boolean,
+.theme-dark .markdown-rendered pre code .hljs-number,
+.theme-light .markdown-rendered pre code .hljs-number,
+.theme-dark .markdown-rendered pre code .hljs-literal,
+.theme-light .markdown-rendered pre code .hljs-literal {
+    color: var(--code-value) !important;
+}
+
+.theme-dark .markdown-source-view.mod-cm6 .cm-comment,
+.theme-light .markdown-source-view.mod-cm6 .cm-comment,
+.theme-dark .markdown-rendered pre code .token.comment,
+.theme-light .markdown-rendered pre code .token.comment,
+.theme-dark .markdown-rendered pre code .hljs-comment,
+.theme-light .markdown-rendered pre code .hljs-comment {
+    color: var(--code-comment) !important;
+    font-style: italic !important;
+}
+
+.theme-dark .markdown-source-view.mod-cm6 .cm-operator,
+.theme-light .markdown-source-view.mod-cm6 .cm-operator,
+.theme-dark .markdown-source-view.mod-cm6 .cm-punctuation,
+.theme-light .markdown-source-view.mod-cm6 .cm-punctuation,
+.theme-dark .markdown-rendered pre code .token.operator,
+.theme-light .markdown-rendered pre code .token.operator,
+.theme-dark .markdown-rendered pre code .token.punctuation,
+.theme-light .markdown-rendered pre code .token.punctuation,
+.theme-dark .markdown-rendered pre code .hljs-operator,
+.theme-light .markdown-rendered pre code .hljs-operator,
+.theme-dark .markdown-rendered pre code .hljs-punctuation,
+.theme-light .markdown-rendered pre code .hljs-punctuation {
+    color: var(--code-operator) !important;
+}
+
+.theme-dark .markdown-source-view.mod-cm6 .cm-variableName,
+.theme-light .markdown-source-view.mod-cm6 .cm-variableName,
+.theme-dark .markdown-source-view.mod-cm6 .cm-propertyName,
+.theme-light .markdown-source-view.mod-cm6 .cm-propertyName,
+.theme-dark .markdown-rendered pre code .token.parameter,
+.theme-light .markdown-rendered pre code .token.parameter,
+.theme-dark .markdown-rendered pre code .hljs-params,
+.theme-light .markdown-rendered pre code .hljs-params {
+    color: var(--code-property) !important;
+}
+
+/* Task checkboxes */
+.theme-dark input.task-list-item-checkbox:not(:checked),
+.theme-light input.task-list-item-checkbox:not(:checked) {
+    background-color: var(--koda-checkbox-danger) !important;
+    border-color: var(--koda-checkbox-danger) !important;
+}
+
+.theme-dark input.task-list-item-checkbox:checked,
+.theme-light input.task-list-item-checkbox:checked {
+    background-color: var(--koda-checkbox-success) !important;
+    border-color: var(--koda-checkbox-success) !important;
+    box-shadow: inset 0 0 0 1px var(--background-modifier-border-hover);
+}
+
+/* Primary buttons */
+:is(.theme-dark, .theme-light) button.mod-cta,
+:is(.theme-dark, .theme-light) button.mod-primary,
+:is(.theme-dark, .theme-light) .modal-button-container button.mod-cta,
+:is(.theme-dark, .theme-light) .modal-button-container button.mod-primary,
+:is(.theme-dark, .theme-light) .setting-item-control button.mod-cta,
+:is(.theme-dark, .theme-light) .setting-item-control button.mod-primary {
+    background-color: var(--interactive-accent) !important;
+    color: var(--koda-primary-button-text) !important;
+}
+
+:is(.theme-dark, .theme-light) button.mod-cta:hover,
+:is(.theme-dark, .theme-light) button.mod-primary:hover,
+:is(.theme-dark, .theme-light) .modal-button-container button.mod-cta:hover,
+:is(.theme-dark, .theme-light) .modal-button-container button.mod-primary:hover,
+:is(.theme-dark, .theme-light) .setting-item-control button.mod-cta:hover,
+:is(.theme-dark, .theme-light) .setting-item-control button.mod-primary:hover {
+    background-color: var(--interactive-accent-hover) !important;
+    color: var(--koda-primary-button-text) !important;
+}
+
+:is(.theme-dark, .theme-light) button.mod-cta *,
+:is(.theme-dark, .theme-light) button.mod-primary * {
+    color: inherit !important;
+    fill: currentColor !important;
+    stroke: currentColor !important;
+}
