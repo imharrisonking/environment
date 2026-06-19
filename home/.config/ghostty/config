@@ -1,7 +1,7 @@
 font-family = IosevkaTerm NF
 font-size = 13
 theme = koda-mod.conf
-adjust-cell-height = 50%
+adjust-cell-height = 35%
 cursor-style = block
 cursor-style-blink = true
 term = xterm-ghostty
