@@ -133,7 +133,12 @@ return {
         }
 
         -- Python debugging setup
-        require('dap-python').setup(vim.fn.stdpath 'data' .. '/mason/packages/debugpy/venv/bin/python')
+        -- Use uv to launch debugpy instead of Mason's debugpy venv. Mason's debugpy
+        -- package can contain stale/broken Python symlinks after Python/Homebrew
+        -- upgrades, which causes ENOENT for .../mason/packages/debugpy/venv/bin/python.
+        -- nvim-dap-python supports `uv` and will run:
+        --   uv run --with debugpy python -m debugpy.adapter
+        require('dap-python').setup 'uv'
 
         -- C/C++ debugging setup
         dap.adapters.codelldb = {
