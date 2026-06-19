@@ -1,6 +1,6 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "model": "github-copilot/gpt-4.1",
+    "model": "github-copilot/gpt-5.5",
     "theme": "vesper",
     "keybinds": {
         "leader": "ctrl+x",
@@ -17,11 +17,6 @@
         "websearch": {
             "type": "remote",
             "url": "https://mcp.exa.ai/mcp?tools=web_search_exa",
-            "enabled": true
-        },
-        "paper": {
-            "type": "remote",
-            "url": "http://127.0.0.1:29979/mcp",
             "enabled": true
         },
         "context7": {
