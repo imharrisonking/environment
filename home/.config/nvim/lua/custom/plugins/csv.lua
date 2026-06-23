@@ -1,5 +1,6 @@
 return {
     'hat0uma/csvview.nvim',
+    ft = { 'csv', 'tsv' },
     opts = {
         parser = { comments = { '#', '//' } },
         keymaps = {
@@ -17,4 +18,20 @@ return {
         },
     },
     cmd = { 'CsvViewEnable', 'CsvViewDisable', 'CsvViewToggle' },
+    config = function(_, opts)
+        require('csvview').setup(opts)
+
+        vim.api.nvim_create_autocmd('FileType', {
+            group = vim.api.nvim_create_augroup('custom-csvview-auto-enable', { clear = true }),
+            pattern = { 'csv', 'tsv' },
+            callback = function(args)
+                vim.schedule(function()
+                    if vim.api.nvim_buf_is_valid(args.buf) then
+                        vim.cmd.CsvViewEnable()
+                    end
+                end)
+            end,
+            desc = 'Enable csvview.nvim automatically for CSV/TSV buffers',
+        })
+    end,
 }

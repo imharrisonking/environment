@@ -1,6 +1,6 @@
 font-family = IosevkaTerm NF
 font-size = 13
-theme = koda-mod.conf
+theme = dark:koda-dark.conf,light:koda-dark.conf
 adjust-cell-height = 35%
 cursor-style = block
 cursor-style-blink = true
