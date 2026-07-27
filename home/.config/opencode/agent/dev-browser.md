@@ -1,6 +1,6 @@
 ---
 description: Inspect and test frontend/UI and websites interactively. Use for non-webfetch UI checks, localhost port inspection, browser console logs, and whenever browser automation is mentioned. Uses agent-browser CLI.
-"model": "github-copilot/gpt-5.1-mini"
+"model": "github-copilot/gpt-5.6-luna"
 mode: subagent
 temperature: 0.3
 tools:

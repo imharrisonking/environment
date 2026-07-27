@@ -1,7 +1,7 @@
 ---
 description: Documentation specialist for requirement management and knowledge retrieval
 mode: subagent
-"model": "github-copilot/gpt-5.1-mini"
+"model": "github-copilot/gpt-5.6-luna"
 temperature: 0.3
 tools:
   bash: true
