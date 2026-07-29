@@ -150,3 +150,6 @@ bindkey '^L' clear-screen-with-padding
 # vi-mode installs its own keymaps, so bind clear-screen there too.
 bindkey -M viins '^L' clear-screen-with-padding
 bindkey -M vicmd '^L' clear-screen-with-padding
+
+# Jira CLI configuration
+export JIRA_API_TOKEN="$(security find-generic-password -a "$USER" -s "jira-api-token" -w)"

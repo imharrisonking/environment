@@ -1,7 +1,6 @@
 ---
 description: 'Find and implement or fix the GitHub issue: $ARGUMENTS.'
 agent: build
-model: anthropic/claude-sonnet-4-20250514
 ---
 
 "Find and implement issue #$ARGUMENTS. Follow these steps:

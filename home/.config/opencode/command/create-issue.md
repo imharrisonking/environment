@@ -1,7 +1,6 @@
 ---
 description: Create a GitHub issue using the description provided
 agent: plan
-model: anthropic/claude-opus-4-20250514
 ---
 
 "Analyze the following feature request and create a comprehensive GitHub issue respecting the architecture and style defined in the CLAUDE.md file: #$ARGUMENTS

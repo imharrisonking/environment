@@ -1,7 +1,7 @@
 ---
 description: Fast codebase exploration and structural mapping
 mode: subagent
-"model": "github-copilot/gpt-5.1-mini"
+"model": "github-copilot/gpt-5.6-luna"
 temperature: 0.2
 tools:
   bash: true
