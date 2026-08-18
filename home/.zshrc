@@ -101,6 +101,14 @@ export PATH=$HOME/.opencode/bin:$PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
 bob use >/dev/null 2>&1 || true
+# Homebrew LLVM is keg-only (deliberately not linked into /opt/homebrew/bin
+# to avoid clashing with Apple's clang). Add its bin dir so clang-tidy,
+# the newer clangd, llvm-symbolizer, etc. are callable by name.
+if [ -d /opt/homebrew/opt/llvm/bin ]; then
+  export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+elif [ -d /usr/local/opt/llvm/bin ]; then
+  export PATH="/usr/local/opt/llvm/bin:$PATH"
+fi
 
 # Zoxide initialization
 eval "$(zoxide init zsh)"

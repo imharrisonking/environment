@@ -121,6 +121,9 @@ require('config.keymaps')
 -- Load pyright setup utility
 require('config.pyright-setup')
 
+-- Load clang-tidy integration (:ClangTidyFix / :ClangTidyCheck, <leader>lF)
+require('custom.clang-tidy').setup()
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
