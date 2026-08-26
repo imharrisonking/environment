@@ -100,6 +100,8 @@ export PATH=$HOME/.opencode/bin:$PATH
 # bob-nvim version manager
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
+export PATH="$HOME/.platformio/penv/bin:$PATH"
+
 bob use >/dev/null 2>&1 || true
 # Homebrew LLVM is keg-only (deliberately not linked into /opt/homebrew/bin
 # to avoid clashing with Apple's clang). Add its bin dir so clang-tidy,
